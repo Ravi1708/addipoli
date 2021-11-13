@@ -41,7 +41,7 @@ export const login = (email, password) => async (dispatch) => {
     };
 
     const { data } = await axios.post(
-      "http://api.addipoli.primespot.tech/api/users/login",
+      "http://api.adipoli.primespot.tech/user/login",
       { email, password },
       config
     );
@@ -63,45 +63,46 @@ export const login = (email, password) => async (dispatch) => {
   }
 };
 
-export const register = (name, phone, email, password) => async (dispatch) => {
-  try {
-    dispatch({
-      type: USER_REGISTER_REQUEST,
-    });
+export const register =
+  (username, phoneNumber, email, password) => async (dispatch) => {
+    try {
+      dispatch({
+        type: USER_REGISTER_REQUEST,
+      });
 
-    const config = {
-      headers: {
-        "content-Type": "application/json",
-      },
-    };
+      const config = {
+        headers: {
+          "content-Type": "application/json",
+        },
+      };
 
-    const { data } = await axios.post(
-      "http://api.addipoli.primespot.tech/api/users/",
-      { name, phone, email, password },
-      config
-    );
+      const { data } = await axios.post(
+        "http://api.adipoli.primespot.tech/user/register",
+        { username, phoneNumber, email, password },
+        config
+      );
 
-    dispatch({
-      type: USER_REGISTER_SUCCESS,
-      payload: data,
-    });
+      dispatch({
+        type: USER_REGISTER_SUCCESS,
+        payload: data,
+      });
 
-    dispatch({
-      type: USER_LOGIN_SUCCESS,
-      payload: data,
-    });
+      dispatch({
+        type: USER_LOGIN_SUCCESS,
+        payload: data,
+      });
 
-    localStorage.setItem("userInfo", JSON.stringify(data));
-  } catch (error) {
-    dispatch({
-      type: USER_REGISTER_FAIL,
-      payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
-    });
-  }
-};
+      localStorage.setItem("userInfo", JSON.stringify(data));
+    } catch (error) {
+      dispatch({
+        type: USER_REGISTER_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  };
 
 export const getUserDetails = (id) => async (dispatch, getState) => {
   try {
@@ -116,7 +117,7 @@ export const getUserDetails = (id) => async (dispatch, getState) => {
     const config = {
       headers: {
         "content-Type": "application/json",
-        Authorization: `Bearer ${userInfo.token}`,
+        "x-access-token": `${userInfo.accessTokens}`,
       },
     };
 
@@ -153,7 +154,7 @@ export const updateUserProfile = (user) => async (dispatch, getState) => {
     const config = {
       headers: {
         "content-Type": "application/json",
-        Authorization: `Bearer ${userInfo.token}`,
+        "x-access-token": `${userInfo.accessTokens}`,
       },
     };
 
@@ -198,7 +199,7 @@ export const listUsers = () => async (dispatch, getState) => {
 
     const config = {
       headers: {
-        Authorization: `Bearer ${userInfo.token}`,
+        "x-access-token": `${userInfo.accessTokens}`,
       },
     };
 
@@ -234,7 +235,7 @@ export const deleteUser = (id) => async (dispatch, getState) => {
 
     const config = {
       headers: {
-        Authorization: `Bearer ${userInfo.token}`,
+        "x-access-token": `${userInfo.accessTokens}`,
       },
     };
 
@@ -268,7 +269,7 @@ export const updateUser = (user) => async (dispatch, getState) => {
     const config = {
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${userInfo.token}`,
+        "x-access-token": `${userInfo.accessTokens}`,
       },
     };
 

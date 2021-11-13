@@ -14,7 +14,7 @@ import { CheckoutSteps } from "../components/CheckoutSteps";
 import { Link } from "react-router-dom";
 import { createOrder } from "../actions/orderActions";
 
-export const PlaceOrderScreen = ({ history }) => {
+const PlaceOrderScreen = ({ history }) => {
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart);
 
@@ -163,3 +163,5 @@ export const PlaceOrderScreen = ({ history }) => {
     </Container>
   );
 };
+
+export default PlaceOrderScreen;

@@ -8,18 +8,38 @@ import { CheckoutSteps } from "../components/CheckoutSteps";
 const CheckoutAddress = ({ history }) => {
   const cart = useSelector((state) => state.cart);
   const { shippingAddress } = cart;
-  const [address, setAddress] = useState(shippingAddress.address);
-  const [city, setCity] = useState(shippingAddress.city);
-  const [postalCode, setPostalCode] = useState(shippingAddress.postalCode);
-  const [country, setCountry] = useState(shippingAddress.country);
 
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
+
   console.log(userInfo);
+
+  const [name, setname] = useState(userInfo.userName);
+  const [phoneNumber, setPhoneNumber] = useState(userInfo.phoneNumber);
+  const [address, setAddress] = useState(shippingAddress.address);
+  const [area, setArea] = useState(shippingAddress.area);
+  const [pincode, setPincode] = useState(shippingAddress.pincode);
+  const [landmark, setLandmark] = useState(shippingAddress.landmark);
+  const [shortNote, setShortNote] = useState(shippingAddress.shortNote);
+  const [addressoption, setAddressoption] = useState(
+    shippingAddress.addressoption
+  );
+
   const dispatch = useDispatch();
   const submitHandler = (e) => {
     e.preventDefault();
-    dispatch(saveShippingAddress({ address, city, postalCode, country }));
+    dispatch(
+      saveShippingAddress({
+        name,
+        phoneNumber,
+        address,
+        area,
+        pincode,
+        landmark,
+        shortNote,
+        addressoption,
+      })
+    );
     history.push("/payment");
   };
 
@@ -137,40 +157,81 @@ const CheckoutAddress = ({ history }) => {
                   >
                     <div className="shop-checkout-left">
                       <h5>Add New Address</h5>
-                      <form className="form" method="post" name="contact-form">
+                      <form
+                        onSubmit={submitHandler}
+                        className="form"
+                        method="post"
+                        name="contact-form"
+                      >
                         <div className="row">
                           <div className="col-md-6 col-sm-6 col-xs-12">
                             <label>Name*</label>
                             <input
                               name=""
                               type="text"
-                              value=""
+                              value={name}
                               required
+                              disabled
                             ></input>
                           </div>
                           <div className="col-md-6 col-sm-6 col-xs-12">
                             <label>Phone Number*</label>
-                            <input name="" type="text" required></input>
+                            <input
+                              name=""
+                              value={phoneNumber}
+                              type="text"
+                              required
+                              disabled
+                            ></input>
                           </div>
                           <div className="col-md-6 col-sm-6 col-xs-12">
                             <label>House / Flat / Block No.*</label>
-                            <input name="" type="text" required></input>
+                            <input
+                              name={address}
+                              type="text"
+                              value={address}
+                              onChange={(e) => setAddress(e.target.value)}
+                              required
+                            ></input>
                           </div>
                           <div className="col-md-6 col-sm-6 col-xs-12">
                             <label>Apartment / Road / Area*</label>
-                            <input name="" type="text" required></input>
+                            <input
+                              name=""
+                              type="text"
+                              value={area}
+                              onChange={(e) => setArea(e.target.value)}
+                              required
+                            />
                           </div>
                           <div className="col-md-6 col-sm-6 col-xs-12">
                             <label>Pincode*</label>
-                            <input name="" type="text" required></input>
+                            <input
+                              name=""
+                              type="text"
+                              value={pincode}
+                              onChange={(e) => setPincode(e.target.value)}
+                              required
+                            />
                           </div>
                           <div className="col-md-6 col-sm-6 col-xs-12">
                             <label>Near Landmark*</label>
-                            <input name="" type="text" required></input>
+                            <input
+                              name=""
+                              type="text"
+                              value={landmark}
+                              onChange={(e) => setLandmark(e.target.value)}
+                              required
+                            />
                           </div>
                           <div className="col-md-12 col-sm-12 col-xs-12">
                             <label>Short Note</label>
-                            <textarea name="message" required></textarea>
+                            <textarea
+                              name="message"
+                              value={shortNote}
+                              onChange={(e) => setShortNote(e.target.value)}
+                              required
+                            />
                           </div>
                           <div className="col-md-12 col-sm-12 col-xs-12">
                             <div className="delivery-type">
@@ -179,6 +240,10 @@ const CheckoutAddress = ({ history }) => {
                                   className="form-check-input"
                                   type="radio"
                                   name="delivery"
+                                  value="Home"
+                                  onChange={(e) =>
+                                    setAddressoption(e.target.value)
+                                  }
                                 />
                                 <label
                                   className="form-check-label"
@@ -192,6 +257,10 @@ const CheckoutAddress = ({ history }) => {
                                   className="form-check-input"
                                   type="radio"
                                   name="delivery"
+                                  value="work"
+                                  onChange={(e) =>
+                                    setAddressoption(e.target.value)
+                                  }
                                 />
                                 <label
                                   className="form-check-label"
@@ -205,6 +274,10 @@ const CheckoutAddress = ({ history }) => {
                                   className="form-check-input"
                                   type="radio"
                                   name="delivery"
+                                  value="other"
+                                  onChange={(e) =>
+                                    setAddressoption(e.target.value)
+                                  }
                                 />
                                 <label
                                   className="form-check-label"
@@ -216,12 +289,17 @@ const CheckoutAddress = ({ history }) => {
                             </div>
                           </div>
                           <div className="col-md-12 col-sm-12 col-xs-12">
-                            <input
-                              name="submit"
-                              value="Add Address"
-                              className="btn-black pull-right send_message"
+                            <button
+                              className="btn-black pull-right"
                               type="submit"
-                            ></input>
+                            >
+                              submit
+                            </button>
+                            {/* <input
+                              name="submit"
+                              className="btn-black pull-right "
+                              type="submit"
+                            /> */}
                           </div>
                         </div>
                       </form>

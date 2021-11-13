@@ -4,6 +4,7 @@ import { Route, useHistory } from "react-router-dom";
 import { LinkContainer } from "react-router-bootstrap";
 import { login, logout, register } from "../actions/userActions";
 import { addToCart, removeFromCart } from "../actions/cartActions";
+import Message from "../components/Message";
 import "./Header.css";
 import { NavLink } from "react-router-dom";
 
@@ -13,9 +14,9 @@ const Header = ({ location }) => {
   const [opensignin, setopensignin] = useState(false);
   const [opensignup, setopensignup] = useState(false);
   const [email, setEmail] = useState("");
-  const [phone, setphone] = useState();
+  const [phoneNumber, setphoneNumber] = useState();
   const [password, setPassword] = useState("");
-  const [name, setName] = useState("");
+  const [username, setusername] = useState("");
 
   const dispatch = useDispatch();
   const userLogin = useSelector((state) => state.userLogin);
@@ -24,17 +25,26 @@ const Header = ({ location }) => {
   const cart = useSelector((state) => state.cart);
   const { cartItems } = cart;
 
+  const userRegister = useSelector((state) => state.userRegister);
+  const {
+    loading: signuploading,
+    error: signupError,
+    userInfo: userInfos,
+  } = userRegister;
+
   //   const redirect = location.search ? location.search.split("=")[1] : "/";
 
-  //   useEffect(() => {
-  //     if (userInfo) {
-  //       history.push(redirect);
-  //     }
-  //   }, [history, userInfo, redirect]);
+  useEffect(() => {
+    if (opensignup == true) {
+      if (userInfos) {
+        setopensignup(false);
+      }
+    }
+  }, [history, userInfo, dispatch]);
 
   const signupHandler = (e) => {
     e.preventDefault();
-    dispatch(register(name, phone, email, password));
+    dispatch(register(username, phoneNumber, email, password));
   };
 
   const signinHandler = (e) => {
@@ -445,7 +455,9 @@ const Header = ({ location }) => {
           <div>
             <form onSubmit={signupHandler}>
               <h1>Create Account</h1>
-              <div className="social-container">
+              {signupError && <Message>{signupError}</Message>}
+
+              {/* <div className="social-container">
                 <a href="#" className="social">
                   <i className="fa fa-facebook"></i>
                 </a>
@@ -456,13 +468,13 @@ const Header = ({ location }) => {
                   <i className="fa fa-linkedin"></i>
                 </a>
               </div>
-              <span>or use your email for registration</span>
+              <span>or use your email for registration</span> */}
               <input
                 type="text"
                 name="name"
                 placeholder="Name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
+                value={username}
+                onChange={(e) => setusername(e.target.value)}
               />
               <input
                 type="email"
@@ -475,8 +487,8 @@ const Header = ({ location }) => {
                 type="text"
                 name="phone"
                 placeholder="Phone Number"
-                value={phone}
-                onChange={(e) => setphone(e.target.value)}
+                value={phoneNumber}
+                onChange={(e) => setphoneNumber(e.target.value)}
               />
               <input
                 type="password"
@@ -485,9 +497,7 @@ const Header = ({ location }) => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
-              <button type="submit" onClick={() => setopensignup(false)}>
-                SignUp
-              </button>
+              <button type="submit">SignUp</button>
             </form>
           </div>
         </div>

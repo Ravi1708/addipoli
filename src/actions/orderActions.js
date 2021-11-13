@@ -18,6 +18,8 @@ import {
 } from "../constants/orderConstants";
 
 export const createOrder = (order) => async (dispatch, getState) => {
+  console.log(order);
+
   try {
     dispatch({
       type: ORDER_CREATE_REQUEST,
@@ -30,12 +32,14 @@ export const createOrder = (order) => async (dispatch, getState) => {
     const config = {
       headers: {
         "content-Type": "application/json",
-        Authorization: `Bearer ${userInfo.token}`,
+        "x-access-token": `${userInfo.accessToken}`,
       },
     };
 
+    console.log(order);
+
     const { data } = await axios.post(
-      "http://api.addipoli.primespot.tech/api/orders",
+      "http://api.adipoli.primespot.tech/user/order",
       order,
       config
     );
@@ -67,7 +71,7 @@ export const getOrderDetails = (id) => async (dispatch, getState) => {
 
     const config = {
       headers: {
-        Authorization: `Bearer ${userInfo.token}`,
+        "x-access-token": `${userInfo.accessTokens}`,
       },
     };
 
@@ -105,7 +109,7 @@ export const payOrder =
       const config = {
         headers: {
           "content-Type": "application/json",
-          Authorization: `Bearer ${userInfo.token}`,
+          "x-access-token": `${userInfo.accessTokens}`,
         },
       };
 
@@ -143,7 +147,7 @@ export const listMyOrders = () => async (dispatch, getState) => {
     const config = {
       headers: {
         "content-Type": "application/json",
-        Authorization: `Bearer ${userInfo.token}`,
+        "x-access-token": `${userInfo.accessTokens}`,
       },
     };
 
@@ -180,7 +184,7 @@ export const listOrders = () => async (dispatch, getState) => {
     const config = {
       headers: {
         "content-Type": "application/json",
-        Authorization: `Bearer ${userInfo.token}`,
+        "x-access-token": `${userInfo.accessTokens}`,
       },
     };
 

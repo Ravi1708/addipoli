@@ -17,6 +17,7 @@ import TrackorderScreen from "./screens/TrackorderScreen";
 import FoodPreparing from "./screens/FoodPreparing";
 import FoodReady from "./screens/FoodReady";
 import OrderhistoryScreen from "./screens/OrderhistoryScreen";
+import PlaceOrderScreen from "./screens/PlaceOrderScreen";
 
 const App = () => {
   return (
@@ -26,12 +27,13 @@ const App = () => {
         <Switch>
           <Route path="/about" component={AboutScreen}></Route>
           <Route path="/contact" component={ContactScreen}></Route>
+          <Route path="/placeorder" component={PlaceOrderScreen}></Route>
           <Route path="/checkout" component={CheckoutScreen}></Route>
           <Route path="/checkoutaddress" component={CheckoutAddress}></Route>
           <Route path="/payment" component={CheckoutPayment}></Route>
-          <Route path="/ordercompleted" component={OrderCompleted}></Route>
+          <Route path="/ordercompleted/:id" component={OrderCompleted}></Route>
           <Route path="/offer" component={OffersScreen}></Route>
-          <Route path="/track" component={TrackorderScreen}></Route>
+          <Route path="/track/:id" component={TrackorderScreen}></Route>
           <Route path="/preparing" component={FoodPreparing}></Route>
           <Route path="/foodready" component={FoodReady}></Route>
           <Route path="/history" component={OrderhistoryScreen}></Route>

@@ -6,13 +6,15 @@ function ProductCard(props) {
   const [cartbutton, setcartbutton] = useState("button");
   const [qty, setqty] = useState(0);
 
+  console.log(props.product.image);
+
   return (
     <div>
       <div className="shop-main-list">
         <div
           className="shop-product"
           style={{
-            backgroundImage: `url(http://api.addipoli.primespot.tech${props.product.image})`,
+            backgroundImage: `url(${props.product.image})`,
           }}
         ></div>
         <a href="#">

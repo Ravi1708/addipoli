@@ -183,10 +183,7 @@ const HomeScreen = ({ match, history }) => {
                                 style={{ display: "flex" }}
                               >
                                 <div className="cart-item-left">
-                                  <img
-                                    src={`http://api.addipoli.primespot.tech${item.image}`}
-                                    alt=""
-                                  />
+                                  <img src={`${item.image}`} alt="" />
                                 </div>
                                 <div
                                   className="cart-item-right"

@@ -7,16 +7,21 @@ import {
 } from "../constants/cartConstants";
 
 export const addToCart = (id, qty) => async (dispatch, getState) => {
-  const { data } = await axios.get(`http://api.addipoli.primespot.tech/api/products/${id}`);
+  const { data } = await axios.get(
+    `http://api.adipoli.primespot.tech/common/products/${id}`
+  );
+
+  console.log(data);
+
   dispatch({
     type: CART_ADD_ITEM,
     payload: {
-      product: data._id,
-      name: data.name,
-      image: data.image,
-      price: data.price,
+      product: data.productId,
+      name: data.productName,
+      image: data.productImage,
+      price: data.productPrice,
       qty,
-    }
+    },
   });
   localStorage.setItem("cartItems", JSON.stringify(getState().cart.cartItems));
 };

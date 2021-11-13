@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import ProductCard from "../components/ProductCard";
 import { addToCart, removeFromCart } from "../actions/cartActions";
+import { LinkContainer } from "react-router-bootstrap";
 
 const CheckoutScreen = ({ match, history }) => {
   const [keyword, setKeyword] = useState(match.params.keyword);
@@ -283,12 +284,11 @@ const CheckoutScreen = ({ match, history }) => {
                         </h5>
                       </div>
                       <div className="proceed-check">
-                        <a
-                          href="/checkoutaddress"
-                          className="btn-primary-gold btn-medium"
-                        >
-                          Confirm Order
-                        </a>
+                        <LinkContainer to="/checkoutaddress">
+                          <div className="btn-primary-gold btn-medium">
+                            Confirm Order
+                          </div>
+                        </LinkContainer>
                       </div>
                     </div>
                   </div>
