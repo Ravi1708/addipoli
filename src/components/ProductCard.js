@@ -26,53 +26,63 @@ function ProductCard(props) {
               <strong>&#8377; {props.product.price}</strong>
             </h5>
           </div>
-          {cartbutton === "button" && (
+          {props.product.category === "Addipoli Puttus" ? (
+            <>
+              {cartbutton === "button" && (
+                <div className="col-lg-7 col-md-7 col-sm-7 col-xs-7 shop-dish">
+                  <a
+                    type="button"
+                    onClick={() => {
+                      props.handleCart(props.product._id, 1);
+                      setcartbutton("count");
+                      setqty(1);
+                    }}
+                    className="shop-cart-btn"
+                  >
+                    Add to Cart
+                  </a>
+                </div>
+              )}{" "}
+              {cartbutton === "count" && (
+                <div className="col-lg-7 col-md-7 col-sm-7 col-xs-7 shop-dish">
+                  <button
+                    id="sub"
+                    className="cart-count"
+                    onClick={(e) => {
+                      setqty(Number(qty - 1));
+                      props.handleCart(props.product._id, qty - 1);
+                      if (qty === 1) {
+                        setcartbutton("button");
+                      }
+                    }}
+                  >
+                    -
+                  </button>
+                  <input
+                    className="count-nom"
+                    type="text"
+                    id="qtyBox"
+                    readonly=""
+                    value={qty}
+                  />
+                  <button
+                    id="add"
+                    className="cart-count"
+                    onClick={(e) => {
+                      setqty(qty + 1);
+                      props.handleCart(props.product._id, qty + 1);
+                    }}
+                  >
+                    +
+                  </button>
+                </div>
+              )}
+            </>
+          ) : (
             <div className="col-lg-7 col-md-7 col-sm-7 col-xs-7 shop-dish">
-              <a
-                type="button"
-                onClick={() => {
-                  props.handleCart(props.product._id, 1);
-                  setcartbutton("count");
-                  setqty(1);
-                }}
-                className="shop-cart-btn"
-              >
-                Add to Cart
+              <a type="button" className="shop-cart-btn-soon">
+                Comming Soon
               </a>
-            </div>
-          )}
-          {cartbutton === "count" && (
-            <div className="col-lg-7 col-md-7 col-sm-7 col-xs-7 shop-dish">
-              <button
-                id="sub"
-                className="cart-count"
-                onClick={(e) => {
-                  setqty(Number(qty - 1));
-                  props.handleCart(props.product._id, qty - 1);
-                  if (qty === 1) {
-                    setcartbutton("button");
-                  }
-                }}
-              >
-                -
-              </button>
-              <input
-                className="count-nom"
-                type="text"
-                id="qtyBox"
-                readonly=""
-                value={qty}
-              />
-              <button
-                id="add"
-                className="cart-count"
-                onClick={(e) => {
-                  setqty(qty + 1);
-                  props.handleCart(props.product._id, qty + 1);
-                }}
-              >
-                +
-              </button>
             </div>
           )}
         </div>

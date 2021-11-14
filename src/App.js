@@ -17,7 +17,13 @@ import TrackorderScreen from "./screens/TrackorderScreen";
 import FoodPreparing from "./screens/FoodPreparing";
 import FoodReady from "./screens/FoodReady";
 import OrderhistoryScreen from "./screens/OrderhistoryScreen";
-import PlaceOrderScreen from "./screens/PlaceOrderScreen";
+import ViewHistory from "./screens/ViewHistory";
+import Profile from "./screens/Profile";
+import Address from "./screens/Address";
+import AddAddress from "./screens/AddAddress";
+import EditAddress from "./screens/EditAddress";
+import TermsConditions from "./screens/TermsConditions";
+import Policy from "./screens/Policy";
 
 const App = () => {
   return (
@@ -27,7 +33,6 @@ const App = () => {
         <Switch>
           <Route path="/about" component={AboutScreen}></Route>
           <Route path="/contact" component={ContactScreen}></Route>
-          <Route path="/placeorder" component={PlaceOrderScreen}></Route>
           <Route path="/checkout" component={CheckoutScreen}></Route>
           <Route path="/checkoutaddress" component={CheckoutAddress}></Route>
           <Route path="/payment" component={CheckoutPayment}></Route>
@@ -37,9 +42,16 @@ const App = () => {
           <Route path="/preparing" component={FoodPreparing}></Route>
           <Route path="/foodready" component={FoodReady}></Route>
           <Route path="/history" component={OrderhistoryScreen}></Route>
+          <Route path="/viewhistory" component={ViewHistory}></Route>
           <Route path="/blog" component={BlogScreen}></Route>
           <Route path="/blogdetail" component={BlogdetailScreen}></Route>
           <Route path="/gallery" component={GalleryScreen}></Route>
+          <Route path="/profile" component={Profile}></Route>
+          <Route path="/address" component={Address}></Route>
+          <Route path="/addaddress" component={AddAddress}></Route>
+          <Route path="/editaddress" component={EditAddress}></Route>
+          <Route path="/termsconditions" component={TermsConditions}></Route>
+          <Route path="/policy" component={Policy}></Route>
           <Route path="/" exact component={HomeScreen}></Route>
         </Switch>
         <Footer />

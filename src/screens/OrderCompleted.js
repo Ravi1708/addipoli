@@ -8,6 +8,8 @@ import { LinkContainer } from "react-router-bootstrap";
 
 const OrderCompleted = ({ match }) => {
   const orderId = match.params.id;
+  console.log(orderId);
+
   const dispatch = useDispatch();
 
   const orderDetails = useSelector((state) => state.orderDetails);
@@ -24,7 +26,7 @@ const OrderCompleted = ({ match }) => {
               className="breadcrumb-part"
               data-stellar-offset-parent="true"
               data-stellar-background-ratio="0.5"
-              style={{ backgroundImage: "url('assets/images/breadbg1.jpg')" }}
+              style={{ backgroundImage: "url('/assets/images/breadbg1.jpg')" }}
             >
               <div className="container">
                 <div className="breadcrumb-inner">
@@ -37,7 +39,7 @@ const OrderCompleted = ({ match }) => {
             {/*<!-- End Breadcrumb Part -->*/}
             <section className="home-icon shop-cart bg-skeen">
               <div className="icon-default icon-skeen">
-                <img src="assets/images/scroll-arrow.png" alt="image" />
+                <img src="/assets/images/scroll-arrow.png" alt="image" />
               </div>
               <div className="container">
                 <div
@@ -59,7 +61,7 @@ const OrderCompleted = ({ match }) => {
                       Order ID - <span>{orderId}</span>
                     </h5>
                   </div>
-                  <div class="row">
+                  {/* <div class="row">
                     <div class="col-md-8">
                       <div className="title text-center">
                         <h5 className="text-coffee">ORDER DETAILS</h5>
@@ -69,7 +71,7 @@ const OrderCompleted = ({ match }) => {
                           <div class="col-md-12 col-sm-12 col-xs-12 isotope-item breakfast">
                             <div class="menu-list-order">
                               <span class="menu-list-product-order">
-                                <img src="assets/images/img3.png" />
+                                <img src="/assets/images/img3.png" />
                               </span>
                               <h5>
                                 Addipoli Puttu <span>$ 15.00</span>
@@ -79,7 +81,7 @@ const OrderCompleted = ({ match }) => {
                           <div class="col-md-12 col-sm-12 col-xs-12 isotope-item lunch">
                             <div class="menu-list-order">
                               <span class="menu-list-product-order">
-                                <img src="assets/images/img4.png" />
+                                <img src="/assets/images/img4.png" />
                               </span>
                               <h5>
                                 parotta with curry<span>$ 25.00</span>
@@ -105,7 +107,7 @@ const OrderCompleted = ({ match }) => {
                         </p>
                       </h6>
                     </div>
-                  </div>
+                  </div> */}
                   <p>
                     Thank you for ordering in our restaurant.
                     <br /> Now check a Food Tracker progress with your order.

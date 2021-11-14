@@ -20,7 +20,7 @@ const Header = ({ location }) => {
 
   const dispatch = useDispatch();
   const userLogin = useSelector((state) => state.userLogin);
-  const { userInfo } = userLogin;
+  const { loading, error: signinError, userInfo } = userLogin;
 
   const cart = useSelector((state) => state.cart);
   const { cartItems } = cart;
@@ -35,6 +35,11 @@ const Header = ({ location }) => {
   //   const redirect = location.search ? location.search.split("=")[1] : "/";
 
   useEffect(() => {
+    if (opensignin == true) {
+      if (userInfo) {
+        setopensignin(false);
+      }
+    }
     if (opensignup == true) {
       if (userInfos) {
         setopensignup(false);
@@ -47,6 +52,7 @@ const Header = ({ location }) => {
     dispatch(register(username, phoneNumber, email, password));
   };
 
+  console.log(userInfo);
   const signinHandler = (e) => {
     e.preventDefault();
     dispatch(login(email, password));
@@ -75,12 +81,9 @@ const Header = ({ location }) => {
             <div className="container">
               <div className="header-top-inner">
                 <div className="header-top-left">
-                  <a href="#" className="top-cell">
+                  <a href="tel:0422-3585241" className="top-cell">
                     <img src="assets/images/fon.png" alt="img" />{" "}
-                    <span>123-456-7890</span>
-                  </a>
-                  <a href="#" className="top-email">
-                    <span>support@laboom.com</span>
+                    <span>Phone - 0422-3585241 , +91 80152 56197 </span>
                   </a>
                 </div>
                 <div className="header-top-right">
@@ -113,67 +116,42 @@ const Header = ({ location }) => {
                       </a>
                       <ul>
                         <li>
-                          <a>
-                            <NavLink to="/track">
-                              <i
-                                className="fa fa-angle-right"
-                                aria-hidden="true"
-                              ></i>
-                              Track Current Order
-                            </NavLink>
-                          </a>
-                        </li>
-                        <li>
-                          <a>
-                            <NavLink to="/history">
-                              <i
-                                className="fa fa-angle-right"
-                                aria-hidden="true"
-                              ></i>
-                              Order History
-                            </NavLink>
-                          </a>
-                        </li>
-                        <li>
-                          <a>
-                            <NavLink to="/offer">
-                              <i
-                                className="fa fa-angle-right"
-                                aria-hidden="true"
-                              ></i>
-                              Deals & Offers
-                            </NavLink>
-                          </a>
-                        </li>
-                        <li>
-                          <a>
-                            <NavLink to="/">
-                              <i
-                                className="fa fa-angle-right"
-                                aria-hidden="true"
-                              ></i>
-                              Home
-                            </NavLink>
-                          </a>
-                        </li>
-                        <li>
-                          <a href="#">
+                          <a to="/profile">
                             <i
                               className="fa fa-angle-right"
                               aria-hidden="true"
                             ></i>
-                            Terms & conditions
+                            My Profile
                           </a>
                         </li>
                         <li>
-                          <a href="#">
+                          <a to="/address">
                             <i
                               className="fa fa-angle-right"
                               aria-hidden="true"
                             ></i>
-                            Feed Back
+                            My Address
                           </a>
                         </li>
+                        <li>
+                          <a to="/history">
+                            <i
+                              className="fa fa-angle-right"
+                              aria-hidden="true"
+                            ></i>
+                            My Order
+                          </a>
+                        </li>
+                        <li>
+                          <a to="/track">
+                            <i
+                              className="fa fa-angle-right"
+                              aria-hidden="true"
+                            ></i>
+                            Track Current Order
+                          </a>
+                        </li>
+                        {/* <li><a to="/offer"><i className="fa fa-angle-right" aria-hidden="true"></i>Deals &amp; Offers</a></li> */}
                         {/* <li><a href="#"><i className="fa fa-angle-right" aria-hidden="true"></i>Help Desk</a></li> */}
                         <li>
                           <a id="login" href="/" onClick={logoutHandler}>
@@ -213,7 +191,7 @@ const Header = ({ location }) => {
             <div className="container">
               <div className="header-info">
                 <div className="header-info-inner">
-                  <div className="header-collect book-md">
+                  {/* <div className="header-collect book-md">
                     <form action="#">
                       <div className="delivery-type">
                         <div className="form-check form-check-inline">
@@ -238,7 +216,7 @@ const Header = ({ location }) => {
                         </div>
                       </div>
                     </form>
-                  </div>
+                  </div> */}
                   <div
                     className="shop-cart header-collect"
                     onClick={(e) => {
@@ -274,26 +252,26 @@ const Header = ({ location }) => {
               <div className="menu-main">
                 <ul>
                   <li className="has-child">
-                    <NavLink to="/">Home</NavLink>
+                    <a href="/">Home</a>
                   </li>
                   <li className="has-child">
-                    <NavLink to="/about">About Us</NavLink>
+                    <a href="/about">About Us</a>
                   </li>
                   <li className="has-child">
-                    <NavLink to="/gallery">Gallery</NavLink>
+                    <a href="/gallery">Gallery</a>
                   </li>
+                  {/* <li className="has-child">
+                    <a href="/blog">Blog</a>
+                  </li> */}
                   <li className="has-child">
-                    <NavLink to="/blog">Blog</NavLink>
-                  </li>
-                  <li className="has-child">
-                    <NavLink to="/contact">Contact Us</NavLink>
+                    <a href="/contact">Contact Us</a>
                   </li>
                 </ul>
               </div>
               <div className="logo">
-                <NavLink to="/">
+                <a href="/">
                   <img src="assets/img/Logo.png" alt="logo" />
-                </NavLink>
+                </a>
               </div>
             </div>
           </div>
@@ -324,10 +302,7 @@ const Header = ({ location }) => {
               return (
                 <div className="cart-item">
                   <div className="cart-item-left">
-                    <img
-                      src={`http://api.addipoli.primespot.tech${item.image}`}
-                      alt=""
-                    />
+                    <img src={`${item.image}`} alt="" />
                   </div>
                   <div className="cart-item-right">
                     <h6>{item.name}</h6>
@@ -386,7 +361,7 @@ const Header = ({ location }) => {
           <div>
             <form onSubmit={signinHandler}>
               <h1>Sign In</h1>
-              <div className="social-container">
+              {/* <div className="social-container">
                 <a href="#" className="social">
                   <i className="fa fa-facebook"></i>
                 </a>
@@ -396,7 +371,7 @@ const Header = ({ location }) => {
                 <a href="#" className="social">
                   <i className="fa fa-linkedin"></i>
                 </a>
-              </div>
+              </div> */}
               <span>or use your account</span>
               <input
                 type="email"
@@ -414,9 +389,9 @@ const Header = ({ location }) => {
               />
               <a href="#">Forgot Your Password</a>
 
-              <button type="submit" onClick={() => setopensignin(false)}>
-                Sign In
-              </button>
+              {signinError && <Message>{signinError}</Message>}
+
+              <button type="submit">Sign In</button>
               <p>
                 Don't have an account?
                 <a
@@ -455,7 +430,6 @@ const Header = ({ location }) => {
           <div>
             <form onSubmit={signupHandler}>
               <h1>Create Account</h1>
-              {signupError && <Message>{signupError}</Message>}
 
               {/* <div className="social-container">
                 <a href="#" className="social">
@@ -497,6 +471,7 @@ const Header = ({ location }) => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
+              {signupError && <Message>{signupError}</Message>}
               <button type="submit">SignUp</button>
             </form>
           </div>

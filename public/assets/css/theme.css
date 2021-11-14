@@ -1410,7 +1410,7 @@ body main .txt-default {
 }
 
 .invert .build-title h6 {
-  color: #e2dadd;
+  color: #393949;
 }
 
 .invert-black h1,
@@ -5807,9 +5807,10 @@ textarea {
   box-shadow: 10px 8px 8px 0 rgb(0 0 0 / 37%);
   border-radius: 8px;
 }
-.address-cart-btn {
-  background-color: #d94022;
-  color: #fff;
+
+.shop-cart-btn-soon {
+  background-color: #04e04c;
+  color: #fff !important;
   padding: 2px 10px;
   display: inline-block;
   text-align: center;
@@ -5818,13 +5819,29 @@ textarea {
   -moz-border-radius: 50px;
   -ms-border-radius: 50px;
   -o-border-radius: 50px;
-  border-radius: 25px;
+  box-shadow: 10px 8px 8px 0 rgb(0 0 0 / 37%);
+  border-radius: 8px;
+}
+.address-cart-btn {
+  float: left;
+  background-color: #c7a17a;
+  color: #fff !important;
+  padding: 5px 25px;
+  display: inline-block;
+  text-align: center;
+  font-family: "Graviola-Regular";
+  -webkit-border-radius: 50px;
+  -moz-border-radius: 50px;
+  -ms-border-radius: 50px;
+  -o-border-radius: 50px;
+  border-radius: 10px;
+  margin-top: 10px;
 }
 .address-cart-btn-end {
   float: right;
-  background-color: #d94022;
-  color: #fff;
-  padding: 2px 10px;
+  background-color: #c7a17a;
+  color: #fff !important;
+  padding: 5px 25px;
   display: inline-block;
   text-align: center;
   font-family: "Graviola-Regular";
@@ -5832,7 +5849,8 @@ textarea {
   -moz-border-radius: 50px;
   -ms-border-radius: 50px;
   -o-border-radius: 50px;
-  border-radius: 25px;
+  border-radius: 10px;
+  margin-top: 10px;
 }
 
 .shop-cart-btn:hover {
@@ -6972,7 +6990,7 @@ table.shop-cart-table .shop-cart-close {
 .contact-blog-row {
   float: left;
   width: 100%;
-  border: 2px solid #f4f2ed;
+  border: 5px solid #f4f2ed;
   padding: 25px 45px;
   -webkit-border-radius: 17px;
   -moz-border-radius: 17px;
@@ -6981,12 +6999,27 @@ table.shop-cart-table .shop-cart-close {
   border-radius: 17px;
   color: #20202f;
   text-align: center;
-  min-height: 212px;
+  min-height: 200px;
   margin-bottom: 70px;
 }
 
 .contact-blog-row a {
   color: #20202f;
+}
+.contact-blog-row-address {
+  float: left;
+  width: 100%;
+  border: 5px solid #f4f2ed;
+  padding: 25px 45px;
+  -webkit-border-radius: 17px;
+  -moz-border-radius: 17px;
+  -ms-border-radius: 17px;
+  -o-border-radius: 17px;
+  border-radius: 17px;
+  color: #20202f;
+  text-align: left;
+  min-height: 150px;
+  margin-bottom: 70px;
 }
 
 .contact-icon {

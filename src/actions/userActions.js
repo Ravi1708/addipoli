@@ -24,6 +24,9 @@ import {
   USER_UPDATE_REQUEST,
   USER_UPDATE_SUCCESS,
   USER_UPDATE_FAIL,
+  USER_ADDRESS_DETAILS_FAIL,
+  USER_ADDRESS_DETAILS_SUCCESS,
+  USER_ADDRESS_DETAILS_REQUEST,
 } from "../constants/userConstants";
 
 import { ORDER_LIST_MY_RESET } from "../constants/orderConstants";
@@ -133,6 +136,46 @@ export const getUserDetails = (id) => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: USER_DETAILS_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const getUserAddresses = () => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: USER_ADDRESS_DETAILS_REQUEST,
+      loading: true,
+    });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        "content-Type": "application/json",
+        "x-access-token": `${userInfo.accessTokens}`,
+      },
+    };
+
+    const { data } = await axios.get(
+      `http://api.adipoli.primespot.tech/user/addresses/`,
+      config
+    );
+
+    dispatch({
+      type: USER_ADDRESS_DETAILS_SUCCESS,
+      loading: false,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: USER_ADDRESS_DETAILS_FAIL,
+      loading: false,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

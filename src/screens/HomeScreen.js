@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
+import { Link, Route, useParams, useRouteMatch } from "react-router-dom";
 import {
   listSliders,
   listProducts,
   listProductsByCombo,
 } from "../actions/productActions";
 import ProductCard from "../components/ProductCard";
+import { login, logout, register } from "../actions/userActions";
+import Message from "../components/Message";
 
 import { addToCart, removeFromCart } from "../actions/cartActions";
 
@@ -17,16 +20,23 @@ import { LinkContainer } from "react-router-bootstrap";
 
 const HomeScreen = ({ match, history }) => {
   const [opensignin, setopensignin] = useState(false);
-  const [keyword, setKeyword] = useState(match.params.keyword);
-
-  const [activeIndex, setactiveIndex] = useState(0);
-
-  const pageNumber = match.params.pageNumber || 1;
+  const [opensignup, setopensignup] = useState(false);
+  const [email, setEmail] = useState("");
+  const [phoneNumber, setphoneNumber] = useState();
+  const [password, setPassword] = useState("");
+  const [username, setusername] = useState("");
 
   const dispatch = useDispatch();
 
   const userLogin = useSelector((state) => state.userLogin);
-  const { userInfo } = userLogin;
+  const { loading: signinLoading, error: signinError, userInfo } = userLogin;
+
+  const userRegister = useSelector((state) => state.userRegister);
+  const {
+    loading: signuploading,
+    error: signupError,
+    userInfo: userInfos,
+  } = userRegister;
 
   //get sliderlist from state
   const listSlider = useSelector((state) => state.listSlider);
@@ -49,15 +59,38 @@ const HomeScreen = ({ match, history }) => {
     products: comboProducts,
   } = productListByCombo;
 
+  console.log(products);
+
   const cart = useSelector((state) => state.cart);
   const { cartItems } = cart;
 
+  console.log(userInfo);
   //get product list when dispatch changes
   useEffect(() => {
+    if (opensignin == true) {
+      if (userInfo) {
+        setopensignin(false);
+      }
+    }
+    if (opensignup == true) {
+      if (userInfos) {
+        setopensignup(false);
+      }
+    }
     dispatch(listSliders());
-    dispatch(listProducts(keyword, pageNumber));
-    dispatch(listProductsByCombo(pageNumber));
-  }, [dispatch, keyword, pageNumber]);
+    dispatch(listProducts());
+    dispatch(listProductsByCombo());
+  }, [dispatch, userInfo]);
+
+  const signupHandler = (e) => {
+    e.preventDefault();
+    dispatch(register(username, phoneNumber, email, password));
+  };
+
+  const signinHandler = (e) => {
+    e.preventDefault();
+    dispatch(login(email, password));
+  };
 
   const handleCart = (id, qty) => {
     dispatch(addToCart(id, qty));
@@ -123,7 +156,7 @@ const HomeScreen = ({ match, history }) => {
                       {products
                         .filter(
                           (filteredproducts) =>
-                            filteredproducts.category == "combo"
+                            filteredproducts.category == "COMBO"
                         )
                         .map((combo) => {
                           return (
@@ -153,9 +186,9 @@ const HomeScreen = ({ match, history }) => {
                           OFFER
                         </h6>
                         <p className="offer-text">
-                          60% off on orders above $99 | Use coupon{" "}
+                          50Rs off on orders above &#8377; 199 | Use coupon{" "}
                           <span className="text-danger font-weight-bold">
-                            ADIPOLI50
+                            ADIPOLIFIRST
                           </span>
                         </p>
                         <div className="icon-overlap">
@@ -288,6 +321,7 @@ const HomeScreen = ({ match, history }) => {
             {/* <!-- Start Menu Part --> */}
             <section
               className="special-menu bg-skeen home-icon wow fadeInDown"
+              id="menuz"
               data-wow-duration="1000ms"
               data-wow-delay="300ms"
               style={{ paddingBottom: "50px", minHeight: "750px" }}
@@ -305,7 +339,24 @@ const HomeScreen = ({ match, history }) => {
                   </h6>
                 </div>
                 <div className="menu-wrapper">
-                  <div className="portfolioFilter">
+                  {/* <div className="portfolioFilter">
+                    <div className="portfolioFilter-inner">
+                      <LinkContainer to={`${match}/`} activeclassName="current">
+                        <a>All</a>
+                      </LinkContainer>
+                      <NavLink to="/" activeClassName="current">
+                        <a>Addipoli Puttu’s</a>
+                      </NavLink>
+                      <LinkContainer to="/wrappies" activeClassName="current">
+                        <a href="/wrappies">Addipoli Wrappies</a>
+                      </LinkContainer>
+                      <LinkContainer to="/dishes" activeClassName="current">
+                        <a>Addipoli Dishes</a>
+                      </LinkContainer>
+                      <LinkContainer to="/others" activeClassName="current">
+                        <a>Others</a>
+                      </LinkContainer>
+                    </div>
                     <div className="portfolioFilter-inner">
                       <a
                         href="javascript:;"
@@ -327,36 +378,62 @@ const HomeScreen = ({ match, history }) => {
                         Others
                       </a>
                     </div>
-                  </div>
-                  <div
-                    className="row"
-                    style={{
-                      position: "relative !important",
-                      marginBottom: "10px",
-                      top: "unset",
-                    }}
-                  >
+                  </div> */}
+                  <div className="row">
                     <div
                       className="col-lg-12 col-md-12 col-sm-12 col-xs-12"
                       style={{ position: "relative" }}
                     >
-                      <div className="portfolioContainer row">
-                        {products.map((combo) => {
-                          return (
-                            <div
-                              className={`col-md-3 col-sm-3 col-xs-6 fadeInDown ${combo.category}`}
-                              data-wow-duration="1000ms"
-                              data-wow-delay="300ms"
-                            >
-                              <ProductCard
-                                product={combo}
-                                handleCart={handleCart}
-                                key={combo.id}
-                              />
-                            </div>
-                          );
-                        })}
-                      </div>
+                      <Route path="/" exact>
+                        <div className="portfolioContainer row">
+                          {products
+                            .filter(
+                              (filteredproducts) =>
+                                filteredproducts.category != "COMBO"
+                            )
+                            .map((combo) => {
+                              console.log(combo);
+                              return (
+                                <div
+                                  className={`col-md-3 col-sm-3 col-xs-6 fadeInDown ${combo.category}`}
+                                  data-wow-duration="1000ms"
+                                  data-wow-delay="300ms"
+                                >
+                                  <ProductCard
+                                    product={combo}
+                                    handleCart={handleCart}
+                                    key={combo.id}
+                                  />
+                                </div>
+                              );
+                            })}
+                        </div>
+                      </Route>
+                      <Route path="/:id">
+                        <ProductCard />
+                        {/* <div className="portfolioContainer row">
+                          {products
+                            .filter(
+                              (filteredproducts) =>
+                                filteredproducts.category == "puttu"
+                            )
+                            .map((combo) => {
+                              return (
+                                <div
+                                  className={`col-md-3 col-sm-3 col-xs-6 fadeInDown ${combo.category}`}
+                                  data-wow-duration="1000ms"
+                                  data-wow-delay="300ms"
+                                >
+                                  <ProductCard
+                                    product={combo}
+                                    handleCart={handleCart}
+                                    key={combo.id}
+                                  />
+                                </div>
+                              );
+                            })}
+                        </div> */}
+                      </Route>
                     </div>
                   </div>
                 </div>
@@ -378,6 +455,142 @@ const HomeScreen = ({ match, history }) => {
             </section>
           </div>
         </main>
+      </div>
+      {/* <!-- login popup --> */}
+
+      <div
+        className="login-popup"
+        style={{ display: opensignin ? "flex" : "none" }}
+      >
+        <div className="container" id="container">
+          <div className="close">
+            <h3
+              className="close2"
+              onClick={() => {
+                setopensignin(false);
+              }}
+            >
+              X
+            </h3>
+          </div>
+          <div>
+            <form onSubmit={signinHandler}>
+              <h1>Sign In</h1>
+              <div className="social-container">
+                <a href="#" className="social">
+                  <i className="fa fa-facebook"></i>
+                </a>
+                <a href="#" className="social">
+                  <i className="fa fa-google"></i>
+                </a>
+                <a href="#" className="social">
+                  <i className="fa fa-linkedin"></i>
+                </a>
+              </div>
+              <span>or use your account</span>
+              <input
+                type="email"
+                name="email"
+                placeholder="Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+              <input
+                type="password"
+                name="password"
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+              <a href="#">Forgot Your Password</a>
+
+              {signinError && <Message>{signinError}</Message>}
+
+              <button type="submit">Sign In</button>
+              <p>
+                Don't have an account?
+                <a
+                  href="#"
+                  id="signup"
+                  onClick={() => {
+                    setopensignin(false);
+                    setopensignup(true);
+                  }}
+                >
+                  Sign Up
+                </a>
+              </p>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      {/* <!-- signup popup --> */}
+
+      <div
+        className="signup-popup"
+        style={{ display: opensignup ? "flex" : "none" }}
+      >
+        <div className="container" id="container">
+          <div className="close">
+            <h3
+              className="close3"
+              onClick={() => {
+                setopensignup(false);
+              }}
+            >
+              X
+            </h3>
+          </div>
+          <div>
+            <form onSubmit={signupHandler}>
+              <h1>Create Account</h1>
+
+              {/* <div className="social-container">
+                <a href="#" className="social">
+                  <i className="fa fa-facebook"></i>
+                </a>
+                <a href="#" className="social">
+                  <i className="fa fa-google"></i>
+                </a>
+                <a href="#" className="social">
+                  <i className="fa fa-linkedin"></i>
+                </a>
+              </div>
+              <span>or use your email for registration</span> */}
+              <input
+                type="text"
+                name="name"
+                placeholder="Name"
+                value={username}
+                onChange={(e) => setusername(e.target.value)}
+              />
+              <input
+                type="email"
+                name="email"
+                placeholder="Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+              <input
+                type="text"
+                name="phone"
+                placeholder="Phone Number"
+                value={phoneNumber}
+                onChange={(e) => setphoneNumber(e.target.value)}
+              />
+              <input
+                type="password"
+                name="password"
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+              {signupError && <Message>{signupError}</Message>}
+              <button type="submit">SignUp</button>
+            </form>
+          </div>
+        </div>
       </div>
     </div>
   );

@@ -12,73 +12,160 @@ const AboutScreen = () => {
               className="breadcrumb-part"
               data-stellar-offset-parent="true"
               data-stellar-background-ratio="0.5"
-              style={{backgroundImage: "url('assets/images/breadbg1.jpg')"}}
+              style={{ backgroundImage: "url('/assets/images/breadbg1.jpg')" }}
             >
               <div className="container">
                 <div className="breadcrumb-inner">
-                  <h2>About Us</h2>
-                  <a href="#">Home</a>
-                  <span>About Us Style</span>
+                  <h2>ABOUT US</h2>
+                  <a href="/">Home</a>
+                  <span>About Us</span>
                 </div>
               </div>
             </section>
             {/*<!-- End Breadcrumb Part -->*/}
-            {/*<!-- Start Welcome Part -->*/}
+            {/* <!-- Start Welcome Part --> */}
             <section
-              className="welcome-part home-icon wow fadeInDown"
+              className="welcome-part invert home-icon wow fadeInDown"
               data-wow-duration="1000ms"
               data-wow-delay="300ms"
             >
               <div className="icon-default">
                 <a href="#">
-                  <img src="assets/images/scroll-arrow.png" alt="image" />
+                  <img src="/assets/images/scroll-arrow.png" />
                 </a>
               </div>
               <div className="container">
                 <div className="build-title">
-                  <h2>Welcome To The La Boom</h2>
-                  <h6>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  </h6>
+                  <h2>Welcome To Addipoli Puttu's</h2>
+                  {/* <h6>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h6> */}
                 </div>
                 <div className="row">
                   <div className="col-md-6 col-sm-6 col-xs-12">
-                    <p>
-                      Welcome. This is La Boom. Elegant &amp; sophisticated
-                      restaurant template. Royal plate offers different home
-                      page layouts with smart and unique design, showcasing
-                      beautifully designed elements every restaurant website
-                      should have. Smooth animations, fast loading and engaging
-                      user experience are just some of , the features this
-                      template offers. So, give it a try and dive into a world
-                      of La Boom restaurant websites.
-                    </p>
-                    <p>
-                      <img src="assets/images/signature.png" alt="image" />
-                    </p>
-                    <p>
-                      <a href="#" className="btn-black">
-                        LEARN MORE
-                      </a>
+                    <p style={{ fontSize: "18px" }}>
+                      Radhe Food Industries is formed by women who want to
+                      achieve. Our goal is to make the world aware of our
+                      Traditional, quality and healthy foods and to promote good
+                      health for all. Also enhance the employment of women and
+                      improve their status in the society. We have worked couple
+                      of years to bring this healthy food to the people in the
+                      best possible way and also designed exclusive cooking
+                      utensils for this project. In today’s fast-paced world we
+                      are well aware of the need for steam-based food to change
+                      the health disorders caused by adulterated food. I hope
+                      you also realize the importance of steam-based food and
+                      benefit from it in life. Addipoli Food…! Addipoli Life…!
                     </p>
                   </div>
                   <div className="col-md-6 col-sm-6 col-xs-12">
-                    <img src="assets/images/img2.png" alt="image" />
+                    <img src="/assets/images/img2.jpg" />
                   </div>
                 </div>
               </div>
             </section>
-            {/*<!-- End Welcome Part -->*/}
-            {/*<!-- Start Food Hours -->*/}
+            {/* <!-- End Welcome Part --> */}
             <section
-              className="food-hours banner-bg home-icon wow fadeInDown"
-              dataBackground={"assets/images/banner2.jpg"}
-              dataWowDuration="1000ms"
-              dataWowDelay="300ms"
-              style={{backgroundImage: "url('assets/images/banner2.jpg')"}}
+              className="bg-skeen invert home-icon wow fadeInDown"
+              data-wow-duration="1000ms"
+              data-wow-delay="300ms"
+            >
+              <div className="icon-default icon-skeen">
+                <img src="/assets/images/icon35.png" />
+              </div>
+              <div className="container">
+                <div className="build-title">
+                  <h2>Addipoli Service</h2>
+                  {/* <h6>This is what we do and we do it perfectly</h6> */}
+                </div>
+                <div className="service-track">
+                  <div className="row">
+                    <div className="col-md-3 col-sm-6 col-xs-12">
+                      <div className="service-track-inner btn-shadow">
+                        <div className="service-track-info">
+                          <h3>
+                            Addipoli<span>Puttu's</span>
+                          </h3>
+                        </div>
+                        <div
+                          className="service-track-overlay banner-bg"
+                          data-background="/assets/images/hover-img1.png"
+                        >
+                          <img src="/assets/images/img11.png" />
+                          <h3>
+                            Addipoli<span>Puttu's</span>
+                          </h3>
+                          {/* <p>Aptent taciti sociosqu ad litora euismod atras vulputate iltricies etri elit class.</p> */}
+                        </div>
+                      </div>
+                    </div>
+                    <div className="col-md-3 col-sm-6 col-xs-12">
+                      <div className="service-track-inner btn-shadow">
+                        <div className="service-track-info">
+                          <h3>
+                            Addipoli <span>Wrappies</span>
+                          </h3>
+                        </div>
+                        <div
+                          className="service-track-overlay banner-bg"
+                          data-background="/assets/images/hover-img1.png"
+                        >
+                          <img src="/assets/images/icon14.png" />
+                          <h3>
+                            Addipoli <span>Wrappies</span>
+                          </h3>
+                          {/* <p>Aptent taciti sociosqu ad litora euismod atras vulputate iltricies etri elit class.</p> */}
+                        </div>
+                      </div>
+                    </div>
+                    <div className="col-md-3 col-sm-6 col-xs-12">
+                      <div className="service-track-inner btn-shadow">
+                        <div className="service-track-info">
+                          <h3>
+                            Addipoli <span>Dishes</span>
+                          </h3>
+                        </div>
+                        <div
+                          className="service-track-overlay banner-bg"
+                          data-background="/assets/images/hover-img1.png"
+                        >
+                          <img src="/assets/images/icon12.png" />
+                          <h3>
+                            Addipoli <span>Dishes</span>
+                          </h3>
+                          {/* <p>Aptent taciti sociosqu ad litora euismod atras vulputate iltricies etri elit class.</p> */}
+                        </div>
+                      </div>
+                    </div>
+                    <div className="col-md-3 col-sm-6 col-xs-12">
+                      <div className="service-track-inner btn-shadow">
+                        <div className="service-track-info">
+                          <h3>
+                            Addipoli <span>Combo</span>
+                          </h3>
+                        </div>
+                        <div
+                          className="service-track-overlay banner-bg"
+                          data-background="/assets/images/hover-img1.png"
+                        >
+                          <img src="/assets/images/icon19.png" />
+                          <h3>
+                            Addipoli <span>Combo</span>
+                          </h3>
+                          {/* <p>Aptent taciti sociosqu ad litora euismod atras vulputate iltricies etri elit class.</p> */}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+            <section
+              className="food-hours banner-bg invert home-icon wow fadeInDown"
+              data-background="assets/images/banner2.jpg"
+              data-wow-duration="1000ms"
+              data-wow-delay="300ms"
             >
               <div className="icon-default icon-gold">
-                <img src="assets/images/icon19.png" alt="image" />
+                <img src="assets/images/icon19.png" />
               </div>
               <div className="container">
                 <div className="food-blog">
@@ -87,7 +174,7 @@ const AboutScreen = () => {
                       <div className="food-blog-inner">
                         <div className="food-item">
                           <div className="food-item-inner">
-                            <img src="assets/images/icon15.png" alt="image" />
+                            <img src="assets/images/icon15.png" />
                           </div>
                         </div>
                         <h2>Breakfast</h2>
@@ -98,7 +185,7 @@ const AboutScreen = () => {
                       <div className="food-blog-inner">
                         <div className="food-item">
                           <div className="food-item-inner">
-                            <img src="assets/images/icon16.png" alt="image" />
+                            <img src="assets/images/icon16.png" />
                           </div>
                         </div>
                         <h2>Lunch</h2>
@@ -109,7 +196,7 @@ const AboutScreen = () => {
                       <div className="food-blog-inner">
                         <div className="food-item">
                           <div className="food-item-inner">
-                            <img src="assets/images/icon17.png" alt="image" />
+                            <img src="assets/images/icon17.png" />
                           </div>
                         </div>
                         <h2>Dinner</h2>
@@ -120,7 +207,7 @@ const AboutScreen = () => {
                       <div className="food-blog-inner">
                         <div className="food-item">
                           <div className="food-item-inner">
-                            <img src="assets/images/icon18.png" alt="image" />
+                            <img src="assets/images/icon18.png" />
                           </div>
                         </div>
                         <h2>Dessert</h2>
@@ -131,549 +218,64 @@ const AboutScreen = () => {
                 </div>
               </div>
             </section>
-            {/*<!-- End Food Hours -->*/}
-            {/*<!-- Start Chef -->*/}
+            {/* <!-- End Food Hours --> */}
+
             <section
-              className="chef-part home-icon home-small-pad wow fadeInDown"
+              className="home-icon service-record invert pad-bottom-remove wow fadeInDown"
               data-wow-duration="1000ms"
               data-wow-delay="300ms"
             >
               <div className="icon-default">
-                <img src="assets/images/icon11.png" alt="image" />
+                <img src="assets/images/icon11.png" />
               </div>
               <div className="container">
                 <div className="build-title">
-                  <h2>Our Awesome Chef</h2>
-                  <h6>Meet Professional Cook Team</h6>
+                  <h2>Addipoli Service</h2>
+                  {/* <h6>This is what we do and we do it perfectly</h6> */}
                 </div>
-                <div
-                  className="owl-carousel owl-theme chef-slider"
-                  data-items="4"
-                  data-laptop="3"
-                  data-tablet="2"
-                  data-mobile="1"
-                  data-nav="true"
-                  data-dots="false"
-                  data-autoplay="true"
-                  data-speed="1800"
-                  data-autotime="5000"
-                >
-                  <div className="item">
-                    <div className="chef-blog">
-                      <div className="chef-inner">
-                        <div className="chef-member">
-                          <img src="assets/images/chef1.png" alt="image" />
+                <div className="service-port-outer">
+                  <div
+                    className="service-port odd wow fadeInDown"
+                    data-wow-duration="1000ms"
+                    data-wow-delay="300ms"
+                  >
+                    <div className="row">
+                      <div className="col-md-6 col-sm-6 col-xs-12 service-port-left">
+                        <div className="service-port-prev">
+                          <img src="assets/images/img37.jpg" />
                         </div>
-                        <div className="chef-info">
-                          <h5>Anna Taylor</h5>
-                          <span>Head Chief</span>
-                          <div className="social-top">
-                            <ul>
-                              <li>
-                                <a href="#">
-                                  <i
-                                    className="fa fa-facebook"
-                                    aria-hidden="true"
-                                  ></i>
-                                </a>
-                              </li>
-                              <li>
-                                <a href="#">
-                                  <i
-                                    className="fa fa-twitter"
-                                    aria-hidden="true"
-                                  ></i>
-                                </a>
-                              </li>
-                              <li>
-                                <a href="#">
-                                  <i
-                                    className="fa fa-instagram"
-                                    aria-hidden="true"
-                                  ></i>
-                                </a>
-                              </li>
-                              <li>
-                                <a href="#">
-                                  <i
-                                    className="fa fa-pinterest"
-                                    aria-hidden="true"
-                                  ></i>
-                                </a>
-                              </li>
-                              <li>
-                                <a href="#">
-                                  <i
-                                    className="fa fa-dribbble"
-                                    aria-hidden="true"
-                                  ></i>
-                                </a>
-                              </li>
-                              <li>
-                                <a href="#">
-                                  <i
-                                    className="fa fa-google"
-                                    aria-hidden="true"
-                                  ></i>
-                                </a>
-                              </li>
-                            </ul>
-                          </div>
+                      </div>
+                      <div className="col-md-6 col-sm-6 col-xs-12 service-port-right">
+                        <div className="service-port-next">
+                          <h5>INGREDIENT SUPPLY</h5>
+                          <p>
+                            Lorem ipsum dolor sit amet, consectetur adipisicing
+                            elit, sed do eiusmod tempor incididunt ut labore et
+                            dolore magna.
+                          </p>
                         </div>
                       </div>
                     </div>
                   </div>
-                  <div className="item">
-                    <div className="chef-blog">
-                      <div className="chef-inner">
-                        <div className="chef-member">
-                          <img src="assets/images/chef2.png" alt="image" />
-                        </div>
-                        <div className="chef-info">
-                          <h5>Alex Wilson</h5>
-                          <span>Head Chief</span>
-                          <div className="social-top">
-                            <ul>
-                              <li>
-                                <a href="#">
-                                  <i
-                                    className="fa fa-facebook"
-                                    aria-hidden="true"
-                                  ></i>
-                                </a>
-                              </li>
-                              <li>
-                                <a href="#">
-                                  <i
-                                    className="fa fa-twitter"
-                                    aria-hidden="true"
-                                  ></i>
-                                </a>
-                              </li>
-                              <li>
-                                <a href="#">
-                                  <i
-                                    className="fa fa-instagram"
-                                    aria-hidden="true"
-                                  ></i>
-                                </a>
-                              </li>
-                              <li>
-                                <a href="#">
-                                  <i
-                                    className="fa fa-pinterest"
-                                    aria-hidden="true"
-                                  ></i>
-                                </a>
-                              </li>
-                              <li>
-                                <a href="#">
-                                  <i
-                                    className="fa fa-dribbble"
-                                    aria-hidden="true"
-                                  ></i>
-                                </a>
-                              </li>
-                              <li>
-                                <a href="#">
-                                  <i
-                                    className="fa fa-google"
-                                    aria-hidden="true"
-                                  ></i>
-                                </a>
-                              </li>
-                            </ul>
-                          </div>
+                  <div
+                    className="service-port even wow fadeInDown"
+                    data-wow-duration="1000ms"
+                    data-wow-delay="300ms"
+                  >
+                    <div className="row">
+                      <div className="col-md-6 col-sm-6 col-xs-12 service-port-left">
+                        <div className="service-port-next">
+                          <h5>INGREDIENT SUPPLY</h5>
+                          <p>
+                            Lorem ipsum dolor sit amet, consectetur adipisicing
+                            elit, sed do eiusmod tempor incididunt ut labore et
+                            dolore magna.
+                          </p>
                         </div>
                       </div>
-                    </div>
-                  </div>
-                  <div className="item">
-                    <div className="chef-blog">
-                      <div className="chef-inner">
-                        <div className="chef-member">
-                          <img src="assets/images/chef3.png" alt="image" />
-                        </div>
-                        <div className="chef-info">
-                          <h5>Anita Golden</h5>
-                          <span>Head Chief</span>
-                          <div className="social-top">
-                            <ul>
-                              <li>
-                                <a href="#">
-                                  <i
-                                    className="fa fa-facebook"
-                                    aria-hidden="true"
-                                  ></i>
-                                </a>
-                              </li>
-                              <li>
-                                <a href="#">
-                                  <i
-                                    className="fa fa-twitter"
-                                    aria-hidden="true"
-                                  ></i>
-                                </a>
-                              </li>
-                              <li>
-                                <a href="#">
-                                  <i
-                                    className="fa fa-instagram"
-                                    aria-hidden="true"
-                                  ></i>
-                                </a>
-                              </li>
-                              <li>
-                                <a href="#">
-                                  <i
-                                    className="fa fa-pinterest"
-                                    aria-hidden="true"
-                                  ></i>
-                                </a>
-                              </li>
-                              <li>
-                                <a href="#">
-                                  <i
-                                    className="fa fa-dribbble"
-                                    aria-hidden="true"
-                                  ></i>
-                                </a>
-                              </li>
-                              <li>
-                                <a href="#">
-                                  <i
-                                    className="fa fa-google"
-                                    aria-hidden="true"
-                                  ></i>
-                                </a>
-                              </li>
-                            </ul>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="item">
-                    <div className="chef-blog">
-                      <div className="chef-inner">
-                        <div className="chef-member">
-                          <img src="assets/images/chef4.png" alt="image" />
-                        </div>
-                        <div className="chef-info">
-                          <h5>Benderd Dimitor</h5>
-                          <span>Head Chief</span>
-                          <div className="social-top">
-                            <ul>
-                              <li>
-                                <a href="#">
-                                  <i
-                                    className="fa fa-facebook"
-                                    aria-hidden="true"
-                                  ></i>
-                                </a>
-                              </li>
-                              <li>
-                                <a href="#">
-                                  <i
-                                    className="fa fa-twitter"
-                                    aria-hidden="true"
-                                  ></i>
-                                </a>
-                              </li>
-                              <li>
-                                <a href="#">
-                                  <i
-                                    className="fa fa-instagram"
-                                    aria-hidden="true"
-                                  ></i>
-                                </a>
-                              </li>
-                              <li>
-                                <a href="#">
-                                  <i
-                                    className="fa fa-pinterest"
-                                    aria-hidden="true"
-                                  ></i>
-                                </a>
-                              </li>
-                              <li>
-                                <a href="#">
-                                  <i
-                                    className="fa fa-dribbble"
-                                    aria-hidden="true"
-                                  ></i>
-                                </a>
-                              </li>
-                              <li>
-                                <a href="#">
-                                  <i
-                                    className="fa fa-google"
-                                    aria-hidden="true"
-                                  ></i>
-                                </a>
-                              </li>
-                            </ul>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="item">
-                    <div className="chef-blog">
-                      <div className="chef-inner">
-                        <div className="chef-member">
-                          <img src="assets/images/chef1.png" alt="image" />
-                        </div>
-                        <div className="chef-info">
-                          <h5>Anna Taylor</h5>
-                          <span>Head Chief</span>
-                          <div className="social-top">
-                            <ul>
-                              <li>
-                                <a href="#">
-                                  <i
-                                    className="fa fa-facebook"
-                                    aria-hidden="true"
-                                  ></i>
-                                </a>
-                              </li>
-                              <li>
-                                <a href="#">
-                                  <i
-                                    className="fa fa-twitter"
-                                    aria-hidden="true"
-                                  ></i>
-                                </a>
-                              </li>
-                              <li>
-                                <a href="#">
-                                  <i
-                                    className="fa fa-instagram"
-                                    aria-hidden="true"
-                                  ></i>
-                                </a>
-                              </li>
-                              <li>
-                                <a href="#">
-                                  <i
-                                    className="fa fa-pinterest"
-                                    aria-hidden="true"
-                                  ></i>
-                                </a>
-                              </li>
-                              <li>
-                                <a href="#">
-                                  <i
-                                    className="fa fa-dribbble"
-                                    aria-hidden="true"
-                                  ></i>
-                                </a>
-                              </li>
-                              <li>
-                                <a href="#">
-                                  <i
-                                    className="fa fa-google"
-                                    aria-hidden="true"
-                                  ></i>
-                                </a>
-                              </li>
-                            </ul>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="item">
-                    <div className="chef-blog">
-                      <div className="chef-inner">
-                        <div className="chef-member">
-                          <img src="assets/images/chef2.png" alt="image" />
-                        </div>
-                        <div className="chef-info">
-                          <h5>Alex Wilson</h5>
-                          <span>Head Chief</span>
-                          <div className="social-top">
-                            <ul>
-                              <li>
-                                <a href="#">
-                                  <i
-                                    className="fa fa-facebook"
-                                    aria-hidden="true"
-                                  ></i>
-                                </a>
-                              </li>
-                              <li>
-                                <a href="#">
-                                  <i
-                                    className="fa fa-twitter"
-                                    aria-hidden="true"
-                                  ></i>
-                                </a>
-                              </li>
-                              <li>
-                                <a href="#">
-                                  <i
-                                    className="fa fa-instagram"
-                                    aria-hidden="true"
-                                  ></i>
-                                </a>
-                              </li>
-                              <li>
-                                <a href="#">
-                                  <i
-                                    className="fa fa-pinterest"
-                                    aria-hidden="true"
-                                  ></i>
-                                </a>
-                              </li>
-                              <li>
-                                <a href="#">
-                                  <i
-                                    className="fa fa-dribbble"
-                                    aria-hidden="true"
-                                  ></i>
-                                </a>
-                              </li>
-                              <li>
-                                <a href="#">
-                                  <i
-                                    className="fa fa-google"
-                                    aria-hidden="true"
-                                  ></i>
-                                </a>
-                              </li>
-                            </ul>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="item">
-                    <div className="chef-blog">
-                      <div className="chef-inner">
-                        <div className="chef-member">
-                          <img src="assets/images/chef3.png" alt="image" />
-                        </div>
-                        <div className="chef-info">
-                          <h5>Anita Golden</h5>
-                          <span>Head Chief</span>
-                          <div className="social-top">
-                            <ul>
-                              <li>
-                                <a href="#">
-                                  <i
-                                    className="fa fa-facebook"
-                                    aria-hidden="true"
-                                  ></i>
-                                </a>
-                              </li>
-                              <li>
-                                <a href="#">
-                                  <i
-                                    className="fa fa-twitter"
-                                    aria-hidden="true"
-                                  ></i>
-                                </a>
-                              </li>
-                              <li>
-                                <a href="#">
-                                  <i
-                                    className="fa fa-instagram"
-                                    aria-hidden="true"
-                                  ></i>
-                                </a>
-                              </li>
-                              <li>
-                                <a href="#">
-                                  <i
-                                    className="fa fa-pinterest"
-                                    aria-hidden="true"
-                                  ></i>
-                                </a>
-                              </li>
-                              <li>
-                                <a href="#">
-                                  <i
-                                    className="fa fa-dribbble"
-                                    aria-hidden="true"
-                                  ></i>
-                                </a>
-                              </li>
-                              <li>
-                                <a href="#">
-                                  <i
-                                    className="fa fa-google"
-                                    aria-hidden="true"
-                                  ></i>
-                                </a>
-                              </li>
-                            </ul>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="item">
-                    <div className="chef-blog">
-                      <div className="chef-inner">
-                        <div className="chef-member">
-                          <img src="assets/images/chef4.png" alt="image" />
-                        </div>
-                        <div className="chef-info">
-                          <h5>Benderd Dimitor</h5>
-                          <span>Head Chief</span>
-                          <div className="social-top">
-                            <ul>
-                              <li>
-                                <a href="#">
-                                  <i
-                                    className="fa fa-facebook"
-                                    aria-hidden="true"
-                                  ></i>
-                                </a>
-                              </li>
-                              <li>
-                                <a href="#">
-                                  <i
-                                    className="fa fa-twitter"
-                                    aria-hidden="true"
-                                  ></i>
-                                </a>
-                              </li>
-                              <li>
-                                <a href="#">
-                                  <i
-                                    className="fa fa-instagram"
-                                    aria-hidden="true"
-                                  ></i>
-                                </a>
-                              </li>
-                              <li>
-                                <a href="#">
-                                  <i
-                                    className="fa fa-pinterest"
-                                    aria-hidden="true"
-                                  ></i>
-                                </a>
-                              </li>
-                              <li>
-                                <a href="#">
-                                  <i
-                                    className="fa fa-dribbble"
-                                    aria-hidden="true"
-                                  ></i>
-                                </a>
-                              </li>
-                              <li>
-                                <a href="#">
-                                  <i
-                                    className="fa fa-google"
-                                    aria-hidden="true"
-                                  ></i>
-                                </a>
-                              </li>
-                            </ul>
-                          </div>
+                      <div className="col-md-6 col-sm-6 col-xs-12 service-port-right">
+                        <div className="service-port-prev">
+                          <img src="assets/images/img38.jpg" />
                         </div>
                       </div>
                     </div>
@@ -681,61 +283,137 @@ const AboutScreen = () => {
                 </div>
               </div>
             </section>
-            {/*<!-- End Chef -->*/}
+
+            {/* <!-- Start Food Hours --> */}
+
+            {/* <!-- Start Client Say --> */}
             <section
-              className="partner-part text-center pad-top-remove wow fadeInDown"
+              className="client banner-bg invert invert-black home-icon wow fadeInDown"
+              data-background="assets/images/banner3.jpg"
               data-wow-duration="1000ms"
               data-wow-delay="300ms"
             >
               <div className="container">
-                <div
-                  className="owl-carousel owl-theme"
-                  data-items="5"
-                  data-laptop="4"
-                  data-tablet="3"
-                  data-mobile="1"
-                  data-nav="false"
-                  data-dots="false"
-                  data-autoplay="true"
-                  data-speed="1400"
-                  data-autotime="3000"
-                >
-                  <div className="item">
-                    <img src="assets/images/partner1.png" alt="image" />
-                  </div>
-                  <div className="item">
-                    <img src="assets/images/partner2.png" alt="image" />
-                  </div>
-                  <div className="item">
-                    <img src="assets/images/partner3.png" alt="image" />
-                  </div>
-                  <div className="item">
-                    <img src="assets/images/partner4.png" alt="image" />
-                  </div>
-                  <div className="item">
-                    <img src="assets/images/partner5.png" alt="image" />
-                  </div>
-                  <div className="item">
-                    <img src="assets/images/partner1.png" alt="image" />
-                  </div>
-                  <div className="item">
-                    <img src="assets/images/partner2.png" alt="image" />
-                  </div>
-                  <div className="item">
-                    <img src="assets/images/partner3.png" alt="image" />
-                  </div>
-                  <div className="item">
-                    <img src="assets/images/partner4.png" alt="image" />
-                  </div>
-                  <div className="item">
-                    <img src="assets/images/partner5.png" alt="image" />
+                <div className="build-title">
+                  <h2>What Clients Say</h2>
+                  <h6>150+ Satisfied Clients</h6>
+                </div>
+                <div className="client-say">
+                  <div
+                    className="owl-carousel owl-theme"
+                    data-items="1"
+                    data-laptop="1"
+                    data-tablet="1"
+                    data-mobile="1"
+                    data-nav="false"
+                    data-dots="true"
+                    data-autoplay="true"
+                    data-speed="1800"
+                    data-autotime="5000"
+                  >
+                    <div className="item">
+                      <p>
+                        <img src="assets/img/avatar.jpg" />
+                      </p>
+                      <h5>Amith </h5>
+                      {/* <p>Kitchen Manager</p> */}
+                      <p>
+                        Success isn’t really that difficult. There is a
+                        significant portion of the population here in Tamilnadu,
+                        that actually want and need success really no magic to
+                        be hard.
+                      </p>
+                    </div>
+                    <div className="item">
+                      <p>
+                        <img src="assets/img/avatar.jpg" />
+                      </p>
+                      <h5>Sivamurugan</h5>
+                      <p>Kitchen Manager</p>
+                      <p>
+                        Success isn’t really that difficult. There is a
+                        significant portion of the population here in Tamilnadu,
+                        that actually want and need success really no magic to
+                        be hard.
+                      </p>
+                    </div>
                   </div>
                 </div>
               </div>
             </section>
+            {/* <!-- Start Feature list --> */}
+            <section
+              className="bg-skeen feature-list text-center invert home-icon wow fadeInDown"
+              data-wow-duration="1000ms"
+              data-wow-delay="300ms"
+            >
+              <div className="icon-default icon-skeen">
+                <img src="assets/images/icon22.png" />
+              </div>
+              <div className="container">
+                <div className="build-title">
+                  <h2>Our Some Feature</h2>
+                  <h6>
+                    The role of a good cook ware in the preparation of a
+                    sumptuous meal cannot be over emphasized then one consider
+                    white bread
+                  </h6>
+                </div>
+                <div className="row">
+                  <div className="col-md-3 col-sm-6 col-xs-12">
+                    <div className="feature-list-icon">
+                      <div className="feature-icon-table">
+                        <img src="assets/images/img9.png" />
+                      </div>
+                    </div>
+                    <h5>Fresh Dishes</h5>
+                    <p>
+                      Lorem ipsum dolor sit amet, consectetur adipisicing elit,
+                      sed do eius-
+                    </p>
+                  </div>
+                  <div className="col-md-3 col-sm-6 col-xs-12">
+                    <div className="feature-list-icon">
+                      <div className="feature-icon-table">
+                        <img src="assets/images/img10.png" />
+                      </div>
+                    </div>
+                    <h5>Various Menu</h5>
+                    <p>
+                      Lorem ipsum dolor sit amet, consectetur adipisicing elit,
+                      sed do eius-
+                    </p>
+                  </div>
+                  <div className="col-md-3 col-sm-6 col-xs-12">
+                    <div className="feature-list-icon">
+                      <div className="feature-icon-table">
+                        <img src="assets/images/img11.png" />
+                      </div>
+                    </div>
+                    <h5>Well Service</h5>
+                    <p>
+                      Lorem ipsum dolor sit amet, consectetur adipisicing elit,
+                      sed do eius-
+                    </p>
+                  </div>
+                  <div className="col-md-3 col-sm-6 col-xs-12">
+                    <div className="feature-list-icon">
+                      <div className="feature-icon-table">
+                        <img src="assets/images/img12.png" />
+                      </div>
+                    </div>
+                    <h5>Fast Delivery</h5>
+                    <p>
+                      Lorem ipsum dolor sit amet, consectetur adipisicing elit,
+                      sed do eius-
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </section>
+            {/* <!-- End Feature list --> */}
           </div>
         </main>
-        {/*<!-- End Main -->*/}
       </div>
     </div>
   );

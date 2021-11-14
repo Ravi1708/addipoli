@@ -24,7 +24,7 @@ const ContactScreen = () => {
                   <h2 className="text-coffee">Contact Us</h2>
                   <h6 className="heade-xs">
                     We are a second-generation family business established in
-                    1972
+                    2020
                   </h6>
                 </div>
                 <div className="row">
@@ -35,11 +35,13 @@ const ContactScreen = () => {
                   >
                     <div className="contact-blog-row">
                       <div className="contact-icon">
-                        <img src="assets/images/location-icon.png" alt="image" />
+                        <img
+                          src="assets/images/location-icon.png"
+                          alt="image"
+                        />
                       </div>
                       <p>
-                        329 Queensberry Street, North Melbourne VIC 3051,
-                        Australia.
+                        321/171, GIRIAMMAN KOVIL STREET, PEELAMEDU, COIMBATORE.
                       </p>
                     </div>
                   </div>
@@ -53,7 +55,9 @@ const ContactScreen = () => {
                         <img src="assets/images/cell-icon.png" alt="image" />
                       </div>
                       <p>
-                        <a href="tel:1234567890">123 456 7890</a>
+                        <a href="tel:0422-3585241">
+                          0422-3585241 , +91 80152 56197
+                        </a>
                       </p>
                     </div>
                   </div>
@@ -67,8 +71,8 @@ const ContactScreen = () => {
                         <img src="assets/images/mail-icon.png" alt="image" />
                       </div>
                       <p>
-                        <a href="mailto:support@despina.com">
-                          support@despina.com
+                        <a href="mailto:radhefoodindustries@gmail.com">
+                          radhefoodindustries@gmail.com
                         </a>
                       </p>
                     </div>
@@ -81,18 +85,17 @@ const ContactScreen = () => {
                     data-wow-delay="300ms"
                   >
                     <h5 className="text-coffee">Leave us a Message</h5>
-                    <p>
+                    {/* <p>
                       Aenean massa diam, viverra vitae luctus sed, gravida eget
                       est. Etiam nec ipsum porttitor, consequat libero eu,
                       dignissim eros. Nulla auctor lacinia enim id mollis.
-                    </p>
+                    </p> */}
                     <form className="form" method="post" name="contact-form">
                       <div className="row">
                         <div className="alert-container"></div>
                         <div className="col-md-6 col-sm-6 col-xs-12">
                           <label>First Name *</label>
-                          <input name="first_name" type="text" required>
-                          </input>
+                          <input name="first_name" type="text" required></input>
                         </div>
                         <div className="col-md-6 col-sm-6 col-xs-12">
                           <label>Last Name *</label>
@@ -130,31 +133,31 @@ const ContactScreen = () => {
                     <ul className="time-list">
                       <li>
                         <span className="week-name">Monday</span>
-                        <span>12-6 PM</span>
+                        <span>8.30 AM - 10.00 PM</span>
                       </li>
                       <li>
                         <span className="week-name">Tuesday</span>
-                        <span>12-6 PM</span>
+                        <span>8.30 AM - 10.00 PM</span>
                       </li>
                       <li>
                         <span className="week-name">Wednesday</span>
-                        <span>12-6 PM</span>
+                        <span>8.30 AM - 10.00 PM</span>
                       </li>
                       <li>
                         <span className="week-name">Thursday</span>
-                        <span>12-6 PM</span>
+                        <span>8.30 AM - 10.00 PM</span>
                       </li>
                       <li>
                         <span className="week-name">Friday</span>
-                        <span>12-6 PM</span>
+                        <span>8.30 AM - 10.00 PM</span>
                       </li>
                       <li>
                         <span className="week-name">Saturday</span>
-                        <span>12-6 PM</span>
+                        <span>8.30 AM - 10.00 PM</span>
                       </li>
                       <li>
                         <span className="week-name">Sunday</span>
-                        <span>Closed</span>
+                        <span>8.30 AM - 9.00 PM</span>
                       </li>
                     </ul>
                   </div>

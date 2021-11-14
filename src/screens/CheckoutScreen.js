@@ -7,6 +7,7 @@ import { LinkContainer } from "react-router-bootstrap";
 
 const CheckoutScreen = ({ match, history }) => {
   const [keyword, setKeyword] = useState(match.params.keyword);
+  const [coupencode, setcoupencode] = useState("");
 
   const [activeIndex, setactiveIndex] = useState(0);
 
@@ -38,6 +39,17 @@ const CheckoutScreen = ({ match, history }) => {
     Number(cart.shippingPrice) +
     Number(cart.taxPrice)
   ).toFixed(2);
+
+  cart.coupenprice = 50;
+
+  const applycoupen = () => {
+    if (coupencode === "ADDIPOLIFIRST") {
+      if (cart.totalPrice > 199) {
+        cart.totalPrice = cart.totalPrice - Number(cart.coupenprice);
+        console.log(cart.totalPrice);
+      }
+    }
+  };
 
   //get product list when dispatch changes
   useEffect(() => {}, [dispatch, keyword, pageNumber]);
@@ -245,9 +257,14 @@ const CheckoutScreen = ({ match, history }) => {
                             type="text"
                             name="txt"
                             placeholder="Cupon Code"
+                            value={coupencode}
+                            onChange={(e) => setcoupencode(e.target.value)}
                           ></input>
                         </div>
-                        <a href="##" className="btn-primary-gold btn-medium">
+                        <a
+                          onClick={applycoupen}
+                          className="btn-primary-gold btn-medium"
+                        >
                           Apply Coupon
                         </a>
                       </div>

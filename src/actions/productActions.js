@@ -43,7 +43,6 @@ export const listSliders = () => async (dispatch) => {
 export const listProducts =
   (keyword = " ", pageNumber = " ") =>
   async (dispatch) => {
-    console.log("products action called");
     try {
       dispatch({ type: PRODUCT_LIST_REQUEST });
       const { data } = await axios.get(

@@ -1,77 +1,92 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Adipoli</title>
     <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous"> -->
-    <link href="assets/plugin/bootstrap/bootstrap.css" rel="stylesheet">
-    <link href="assets/css/bootstrap.min.css" rel="stylesheet">
-    <link href="assets/plugin/bootstrap/datepicker.css" rel="stylesheet">
-    <link href="assets/plugin/font-awesome/font-awesome.css" rel="stylesheet">
-    <link href="assets/plugin/form-field/jquery.formstyler.css" rel="stylesheet">
-    <link href="assets/plugin/revolution-plugin/extralayers.css" rel="stylesheet">
-    <link href="assets/plugin/revolution-plugin/settings.css" rel="stylesheet">
-    <link href="assets/plugin/owl-carousel/owl.carousel.css" rel="stylesheet">
-    <link href="assets/plugin/owl-carousel/owl.theme.default.css" rel="stylesheet">
-    <link href="assets/plugin/slick-slider/slick-theme.css" rel="stylesheet">
-    <link href="assets/plugin/magnific/magnific-popup.css" rel="stylesheet">
-    <link href="assets/plugin/scroll-bar/jquery.mCustomScrollbar.css" rel="stylesheet">
-    <link href="assets/plugin/animation/animate.min.css" rel="stylesheet">
-    <link href="assets/css/theme.css" rel="stylesheet">
-    <link href="assets/css/responsive.css" rel="stylesheet">
-   
+    <link href="assets/plugin/bootstrap/bootstrap.css" rel="stylesheet" />
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="assets/plugin/bootstrap/datepicker.css" rel="stylesheet" />
+    <link href="assets/plugin/font-awesome/font-awesome.css" rel="stylesheet" />
+    <link
+      href="assets/plugin/form-field/jquery.formstyler.css"
+      rel="stylesheet"
+    />
+    <link
+      href="assets/plugin/revolution-plugin/extralayers.css"
+      rel="stylesheet"
+    />
+    <link
+      href="assets/plugin/revolution-plugin/settings.css"
+      rel="stylesheet"
+    />
+    <link href="assets/plugin/owl-carousel/owl.carousel.css" rel="stylesheet" />
+    <link
+      href="assets/plugin/owl-carousel/owl.theme.default.css"
+      rel="stylesheet"
+    />
+    <link href="assets/plugin/slick-slider/slick-theme.css" rel="stylesheet" />
+    <link href="assets/plugin/magnific/magnific-popup.css" rel="stylesheet" />
+    <link
+      href="assets/plugin/scroll-bar/jquery.mCustomScrollbar.css"
+      rel="stylesheet"
+    />
+    <link href="assets/plugin/animation/animate.min.css" rel="stylesheet" />
+    <link href="assets/css/theme.css" rel="stylesheet" />
+    <link href="assets/css/responsive.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
   </head>
   <body>
     <div id="root"></div>
 
-
+    <script>
+      document
+        .getElementById("side-cart")
+        .addEventListener("click", function () {
+          document.querySelector(".cart-popup").style.display = "flex";
+        });
+      document.querySelector(".close1").addEventListener("click", function () {
+        document.querySelector(".cart-popup").style.display = "none";
+      });
+    </script>
 
     <script>
-      document.getElementById("side-cart").addEventListener("click", function() {
-          document.querySelector(".cart-popup").style.display = "flex";
-      })
-      document.querySelector(".close1").addEventListener("click", function() {
-          document.querySelector(".cart-popup").style.display = "none";
-      })
-  </script>
+      document.getElementById("login").addEventListener("click", function () {
+        document.querySelector(".login-popup").style.display = "flex";
+      });
+      document.querySelector(".close2").addEventListener("click", function () {
+        document.querySelector(".login-popup").style.display = "none";
+      });
+    </script>
 
-  <script>
-      document.getElementById("login").addEventListener("click", function() {
-          document.querySelector(".login-popup").style.display = "flex";
-      })
-      document.querySelector(".close2").addEventListener("click", function() {
-          document.querySelector(".login-popup").style.display = "none";
-      })
-  </script>
+    <script>
+      document.getElementById("signup").addEventListener("click", function () {
+        document.querySelector(".signup-popup").style.display = "flex";
+      });
+      document.querySelector(".close3").addEventListener("click", function () {
+        document.querySelector(".signup-popup").style.display = "none";
+      });
+    </script>
 
-  <script>
-      document.getElementById("signup").addEventListener("click", function() {
-          document.querySelector(".signup-popup").style.display = "flex";
-      })
-      document.querySelector(".close3").addEventListener("click", function() {
-          document.querySelector(".signup-popup").style.display = "none";
-      })
-  </script>
-
-<script src="assets/js/jquery.min.js"></script>
-<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script> -->
-<script src="assets/plugin/bootstrap/bootstrap.min.js"></script>
-<script src="assets/plugin/bootstrap/bootstrap-datepicker.js"></script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAf6My1Jfdi1Fmj-DUmX_CcNOZ6FLkQ4Os"></script>
-<script src="assets/plugin/form-field/jquery.formstyler.min.js"></script>
-<script src="assets/plugin/revolution-plugin/jquery.themepunch.plugins.min.js"></script>
-<script src="assets/plugin/revolution-plugin/jquery.themepunch.revolution.min.js"></script>
-<script src="assets/plugin/owl-carousel/owl.carousel.min.js"></script>
-<script src="assets/plugin/slick-slider/slick.min.js"></script>
-<script src="assets/plugin/isotop/isotop.js"></script>
-<script src="assets/plugin/isotop/packery-mode.pkgd.min.js"></script>
-<script src="assets/plugin/magnific/jquery.magnific-popup.min.js"></script>
-<script src="assets/plugin/scroll-bar/jquery.mCustomScrollbar.concat.min.js"></script>
-<script src="assets/plugin/animation/wow.min.js"></script>
-<script src="assets/plugin/parallax/jquery.stellar.js"></script>
-<script src="assets/js/app.js"></script>
-<script src="assets/js/script.js"></script>
+    <script src="assets/js/jquery.min.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script> -->
+    <script src="assets/plugin/bootstrap/bootstrap.min.js"></script>
+    <script src="assets/plugin/bootstrap/bootstrap-datepicker.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAf6My1Jfdi1Fmj-DUmX_CcNOZ6FLkQ4Os"></script>
+    <script src="assets/plugin/form-field/jquery.formstyler.min.js"></script>
+    <script src="assets/plugin/revolution-plugin/jquery.themepunch.plugins.min.js"></script>
+    <script src="assets/plugin/revolution-plugin/jquery.themepunch.revolution.min.js"></script>
+    <script src="assets/plugin/owl-carousel/owl.carousel.min.js"></script>
+    <script src="assets/plugin/slick-slider/slick.min.js"></script>
+    <script src="assets/plugin/isotop/isotop.js"></script>
+    <script src="assets/plugin/isotop/packery-mode.pkgd.min.js"></script>
+    <script src="assets/plugin/magnific/jquery.magnific-popup.min.js"></script>
+    <script src="assets/plugin/scroll-bar/jquery.mCustomScrollbar.concat.min.js"></script>
+    <script src="assets/plugin/animation/wow.min.js"></script>
+    <script src="assets/plugin/parallax/jquery.stellar.js"></script>
+    <script src="assets/js/app.js"></script>
+    <script src="assets/js/script.js"></script>
   </body>
 </html>

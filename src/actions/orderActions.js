@@ -18,8 +18,6 @@ import {
 } from "../constants/orderConstants";
 
 export const createOrder = (order) => async (dispatch, getState) => {
-  console.log(order);
-
   try {
     dispatch({
       type: ORDER_CREATE_REQUEST,
@@ -35,8 +33,6 @@ export const createOrder = (order) => async (dispatch, getState) => {
         "x-access-token": `${userInfo.accessToken}`,
       },
     };
-
-    console.log(order);
 
     const { data } = await axios.post(
       "http://api.adipoli.primespot.tech/user/order",

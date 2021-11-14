@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Form, Button, Container } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { FormContainer } from "../components/FormContainer";
-import { saveShippingAddress } from "../actions/cartActions";
+import { saveShippingAddress, createAddress } from "../actions/cartActions";
 import { CheckoutSteps } from "../components/CheckoutSteps";
+import { getUserAddresses } from "../actions/userActions";
 
 const CheckoutAddress = ({ history }) => {
   const cart = useSelector((state) => state.cart);
@@ -12,7 +13,8 @@ const CheckoutAddress = ({ history }) => {
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
-  console.log(userInfo);
+  const userAddresses = useSelector((state) => state.userAddresses);
+  const { loading, error, data } = userAddresses;
 
   const [name, setname] = useState(userInfo.userName);
   const [phoneNumber, setPhoneNumber] = useState(userInfo.phoneNumber);
@@ -24,12 +26,28 @@ const CheckoutAddress = ({ history }) => {
   const [addressoption, setAddressoption] = useState(
     shippingAddress.addressoption
   );
-
   const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getUserAddresses());
+  }, [dispatch]);
+
   const submitHandler = (e) => {
     e.preventDefault();
     dispatch(
       saveShippingAddress({
+        name,
+        phoneNumber,
+        address,
+        area,
+        pincode,
+        landmark,
+        shortNote,
+        addressoption,
+      })
+    );
+
+    dispatch(
+      createAddress({
         name,
         phoneNumber,
         address,
@@ -83,7 +101,7 @@ const CheckoutAddress = ({ history }) => {
                   </ul>
                 </div>
                 <div className="row">
-                  <div className="col-md-4 col-sm-4 col-xs-12">
+                  {/* <div className="col-md-4 col-sm-4 col-xs-12">
                     <div
                       className="shop-checkout-left"
                       data-wow-duration="1000ms"
@@ -149,9 +167,9 @@ const CheckoutAddress = ({ history }) => {
                         </div>
                       </div>
                     </div>
-                  </div>
+                  </div> */}
                   <div
-                    className="col-md-8 col-sm-8 col-xs-12 wow fadeInDown"
+                    className="col-md-12 col-sm-12 col-xs-12 wow fadeInDown"
                     data-wow-duration="1000ms"
                     data-wow-delay="300ms"
                   >

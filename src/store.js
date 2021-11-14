@@ -12,6 +12,7 @@ import {
 
 import { cartReducer } from "./reducers/cartReducers";
 import {
+  userAddressesReducer,
   userDeleteReducer,
   userDetailsReducer,
   userListReducer,
@@ -28,6 +29,7 @@ import {
   orderPayReducer,
   orderListReducer,
 } from "./reducers/orderReducers";
+import { saveShippingAddress } from "./actions/cartActions";
 
 //combine reducer to get all reducers
 const reducer = combineReducers({
@@ -41,8 +43,10 @@ const reducer = combineReducers({
   userLogin: userLoginReducer,
   userRegister: userRegisterReducer,
   userDetails: userDetailsReducer,
+  userAddresses: userAddressesReducer,
   userUpdateProfile: userUpdateProfileReducer,
   orderCreate: orderCreateReducer,
+  saveaddress: saveShippingAddress,
   orderDetails: orderDetailsReducer,
   orderPay: orderPayReducer,
   orderListMy: orderListMyReducer,

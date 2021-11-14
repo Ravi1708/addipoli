@@ -6,7 +6,7 @@ import { createOrder } from "../actions/orderActions";
 const CheckoutPayment = ({ history }) => {
   const cart = useSelector((state) => state.cart);
   const { shippingAddress } = cart;
-  const [paymentMethod, setPaymentMethod] = useState("Pay online");
+  const [paymentMethod, setPaymentMethod] = useState(" ");
 
   // calculate price
   const addDecimals = (num) => {
@@ -28,7 +28,7 @@ const CheckoutPayment = ({ history }) => {
   ).toFixed(2);
 
   if (!shippingAddress) {
-    history.push("/shipping");
+    history.push("/checkoutaddress");
   }
 
   const dispatch = useDispatch();
@@ -166,6 +166,12 @@ const CheckoutPayment = ({ history }) => {
                               Cash on Delivery
                             </label>
                           </div>
+                          <button
+                            className="btn-black pull-right"
+                            onClick={() => history.push("/checkoutaddress")}
+                          >
+                            Back
+                          </button>
                         </div>
                       </div>
                       {/* </div> */}
@@ -201,7 +207,17 @@ const CheckoutPayment = ({ history }) => {
                           TOTAL <span> &#8377; {cart.totalPrice}</span>
                         </h5>
                       </div>
-                      {paymentMethod == "Cash on delivery" ? (
+                      {paymentMethod == " " ? (
+                        <div className="proceed-check">
+                          <button
+                            onClick={placeOrderHandler}
+                            className=" btn-medium"
+                            disabled
+                          >
+                            choose payment method
+                          </button>
+                        </div>
+                      ) : paymentMethod == "Cash on delivery" ? (
                         <div className="proceed-check">
                           <button
                             onClick={placeOrderHandler}
