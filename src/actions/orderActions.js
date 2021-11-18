@@ -17,6 +17,8 @@ import {
   ORDER_LIST_REQUEST,
 } from "../constants/orderConstants";
 
+const URL = "http://api.addipoli-puttus.com";
+
 export const createOrder = (order) => async (dispatch, getState) => {
   try {
     dispatch({
@@ -34,11 +36,8 @@ export const createOrder = (order) => async (dispatch, getState) => {
       },
     };
 
-    const { data } = await axios.post(
-      "http://api.adipoli.primespot.tech/user/order",
-      order,
-      config
-    );
+    const { data } = await axios.post(`${URL}/user/order`, order, config);
+    console.log(data);
 
     dispatch({
       type: ORDER_CREATE_SUCCESS,
@@ -71,10 +70,7 @@ export const getOrderDetails = (id) => async (dispatch, getState) => {
       },
     };
 
-    const { data } = await axios.get(
-      `http://api.addipoli.primespot.tech/api/orders/${id}`,
-      config
-    );
+    const { data } = await axios.get(`${URL}/api/orders/${id}`, config);
 
     dispatch({
       type: ORDER_DETAILS_SUCCESS,
@@ -110,7 +106,7 @@ export const payOrder =
       };
 
       const { data } = await axios.put(
-        `http://api.addipoli.primespot.tech/api/orders/${orderId}/pay`,
+        `${URL}/api/orders/${orderId}/pay`,
         paymentResult,
         config
       );
@@ -147,10 +143,7 @@ export const listMyOrders = () => async (dispatch, getState) => {
       },
     };
 
-    const { data } = await axios.get(
-      `http://api.addipoli.primespot.tech/api/orders/myorders`,
-      config
-    );
+    const { data } = await axios.get(`${URL}/api/orders/myorders`, config);
 
     dispatch({
       type: ORDER_LIST_MY_SUCCESS,
@@ -184,10 +177,7 @@ export const listOrders = () => async (dispatch, getState) => {
       },
     };
 
-    const { data } = await axios.get(
-      `http://api.addipoli.primespot.tech/api/orders`,
-      config
-    );
+    const { data } = await axios.get(`${URL}/api/orders`, config);
 
     dispatch({
       type: ORDER_LIST_SUCCESS,

@@ -18,12 +18,12 @@ import {
   PRODUCT_SLIDER_FAIL,
 } from "../constants/productConstants";
 
+const URL = "http://api.addipoli-puttus.com";
+
 export const listSliders = () => async (dispatch) => {
   try {
     dispatch({ type: PRODUCT_SLIDER_REQUEST });
-    const { data } = await axios.get(
-      `http://api.addipoli.primespot.tech/api/sliders`
-    );
+    const { data } = await axios.get(`${URL}/api/sliders`);
 
     dispatch({
       type: PRODUCT_SLIDER_SUCCESS,
@@ -45,9 +45,7 @@ export const listProducts =
   async (dispatch) => {
     try {
       dispatch({ type: PRODUCT_LIST_REQUEST });
-      const { data } = await axios.get(
-        `http://api.adipoli.primespot.tech/common/products`
-      );
+      const { data } = await axios.get(`${URL}/common/products`);
 
       dispatch({
         type: PRODUCT_LIST_SUCCESS,
@@ -64,36 +62,10 @@ export const listProducts =
     }
   };
 
-export const listProductsByCombo =
-  (keyword = " ", pageNumber = " ") =>
-  async (dispatch) => {
-    try {
-      dispatch({ type: PRODUCT_LIST_BY_COMBO_REQUEST });
-      const { data } = await axios.get(
-        `http://api.adipoli.primespot.tech/common/combos`
-      );
-
-      dispatch({
-        type: PRODUCT_LIST_BY_COMBO_SUCCESS,
-        payload: data,
-      });
-    } catch (error) {
-      dispatch({
-        type: PRODUCT_LIST_BY_COMBO_FAIL,
-        payload:
-          error.response && error.response.data.message
-            ? error.response.data.message
-            : error.message,
-      });
-    }
-  };
-
 export const listProductDetails = (id) => async (dispatch) => {
   try {
     dispatch({ type: PRODUCT_DETAILS_REQUEST });
-    const { data } = await axios.get(
-      `http://api.adipoli.primespot.tech/common/products/${id}`
-    );
+    const { data } = await axios.get(`${URL}/common/products/${id}`);
 
     dispatch({
       type: PRODUCT_DETAILS_SUCCESS,

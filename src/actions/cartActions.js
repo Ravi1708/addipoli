@@ -9,18 +9,19 @@ import {
   SAVE_SHIPPING_ADDRESS_SUCCESS,
 } from "../constants/cartConstants";
 
-export const addToCart = (id, qty) => async (dispatch, getState) => {
-  const { data } = await axios.get(
-    `http://api.adipoli.primespot.tech/common/products/${id}`
-  );
+const URL = "http://api.addipoli-puttus.com";
 
+export const addToCart = (id, qty) => async (dispatch, getState) => {
+  const { data } = await axios.get(`${URL}/common/products/${id}`);
+
+  console.log(data);
   dispatch({
     type: CART_ADD_ITEM,
     payload: {
-      product: data.productId,
-      name: data.productName,
-      image: data.productImage,
-      price: data.productPrice,
+      product: data._id,
+      name: data.name,
+      image: data.image,
+      price: data.price,
       qty,
     },
   });
@@ -68,11 +69,7 @@ export const createAddress = (address) => async (dispatch, getState) => {
       },
     };
 
-    const { data } = await axios.post(
-      "http://api.adipoli.primespot.tech/user/address",
-      address,
-      config
-    );
+    const { data } = await axios.post(`${URL}/user/address`, address, config);
 
     dispatch({
       type: SAVE_SHIPPING_ADDRESS_SUCCESS,

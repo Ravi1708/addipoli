@@ -74,8 +74,8 @@ const Banner = () => {
               data-easing="Back.easeInOut"
               data-endspeed="300"
             >
-              <a href="/" className="button-white">
-                Explore NOW
+              <a href="/contact" className="button-white">
+                Explore Now
               </a>
             </Caption>
           </Slide>
@@ -137,12 +137,12 @@ const Banner = () => {
               data-easing="Back.easeInOut"
               data-endspeed="300"
             >
-              <a href="/" className="button-white">
-                Explore NOW
+              <a href="/contact" className="button-white">
+                Explore Now
               </a>
             </Caption>
           </Slide>
-          <Slide
+          {/* <Slide
             src="assets/images/dummy.png"
             alt="slidebg1"
             data-lazyload="assets/images/slider3.jpg"
@@ -200,11 +200,11 @@ const Banner = () => {
               data-easing="Back.easeInOut"
               data-endspeed="300"
             >
-              <a href="/" className="button-white">
-                Explore NOW
+              <a href="/contact" className="button-white">
+                Explore Now
               </a>
             </Caption>
-          </Slide>
+          </Slide> */}
         </RevSlider>
       </div>
     </div>

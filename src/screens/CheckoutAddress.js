@@ -14,7 +14,7 @@ const CheckoutAddress = ({ history }) => {
   const { userInfo } = userLogin;
 
   const userAddresses = useSelector((state) => state.userAddresses);
-  const { loading, error, data } = userAddresses;
+  const { loading, error, addresses } = userAddresses;
 
   const [name, setname] = useState(userInfo.userName);
   const [phoneNumber, setPhoneNumber] = useState(userInfo.phoneNumber);
@@ -61,6 +61,24 @@ const CheckoutAddress = ({ history }) => {
     history.push("/payment");
   };
 
+  // const proceedWithAddress = ({e, address) => {
+  //   e.preventDefault();
+
+  //   dispatch(
+  //     saveShippingAddress({
+  //       name: address.name,
+  //       phoneNumber: address.phoneNumber,
+  //       address: address.address,
+  //       area: address.area,
+  //       pincode: address.pincode,
+  //       landmark: address.landmark,
+  //       shortNote,
+  //       addressoption,
+  //     })
+  //   );
+  //   history.push("/payment");
+  // };
+
   return (
     <div>
       <div className="wrapper">
@@ -101,75 +119,81 @@ const CheckoutAddress = ({ history }) => {
                   </ul>
                 </div>
                 <div className="row">
-                  {/* <div className="col-md-4 col-sm-4 col-xs-12">
+                  <div className="col-md-4 col-sm-4 col-xs-12">
                     <div
                       className="shop-checkout-left"
                       data-wow-duration="1000ms"
                       data-wow-delay="300ms"
                     >
                       <h5>Manage Address</h5>
-                      <div className="row">
-                        <div className="col-md-2">
-                          <input
-                            className="form-check-input"
-                            type="radio"
-                            name="delivery"
-                          />
-                        </div>
-                        <div className="col-md-10">
-                          <label className="form-check-label" for="delivery">
-                            <strong>SivasHome</strong>
-                            <br />
-                            21a Subiramaniya samy Kovil Street <br />
-                            Coimabatore 641030
-                            <br />
-                            Near Landmark
-                          </label>
-                        </div>
-                        <div className="col-md-6">
-                          <a class="address-cart-btn" href="#">
-                            Edit
-                          </a>
-                        </div>
-                        <div className="col-md-6">
-                          <a class="address-cart-btn-end" href="#">
-                            Delete
-                          </a>
-                        </div>
-                      </div>
-                      <div className="row">
-                        <div className="col-md-2">
-                          <input
-                            className="form-check-input"
-                            type="radio"
-                            name="delivery"
-                          />
-                        </div>
-                        <div className="col-md-10">
-                          <label className="form-check-label" for="delivery">
-                            <strong>SivasHome</strong>
-                            <br />
-                            21a Subiramaniya samy Kovil Street <br />
-                            Coimabatore 641030
-                            <br />
-                            Near Landmark
-                          </label>
-                        </div>
-                        <div className="col-md-6">
-                          <a class="address-cart-btn" href="#">
-                            Edit
-                          </a>
-                        </div>
-                        <div className="col-md-6">
-                          <a class="address-cart-btn-end" href="#">
-                            Delete
-                          </a>
-                        </div>
-                      </div>
+                      {addresses &&
+                        addresses.map((address, index) => {
+                          return (
+                            <>
+                              <div className="row">
+                                <div
+                                  className="col-md-2"
+                                  style={{ margin: "10px" }}
+                                >
+                                  {/* <input
+                                    className="form-check-input"
+                                    type="radio"
+                                    name="delivery"
+                                  /> */}
+                                </div>
+                                <div className="col-md-10">
+                                  <label
+                                    className="form-check-label"
+                                    for="delivery"
+                                  >
+                                    <strong>{address.name}</strong>
+                                    <br />
+                                    {address.address}
+                                    <br />
+                                    {address.area} {address.pincode}
+                                    <br />
+                                    {address.landmark}
+                                    <br />
+                                    Mobile Number -{address.phoneNumber}
+                                  </label>
+                                </div>
+                                <div className="col-md-6">
+                                  <a class="address-cart-btn" href="#">
+                                    Edit
+                                  </a>
+                                </div>
+                                <div className="col-md-6">
+                                  <a
+                                    class="address-cart-btn-end"
+                                    href="#"
+                                    onClick={(e) => {
+                                      e.preventDefault();
+                                      dispatch(
+                                        saveShippingAddress({
+                                          name: address.name,
+                                          phoneNumber: address.phoneNumber,
+                                          address: address.address,
+                                          area: address.area,
+                                          pincode: address.pincode,
+                                          landmark: address.landmark,
+                                          shortNote,
+                                          addressoption,
+                                        })
+                                      );
+                                      history.push("/payment");
+                                    }}
+                                  >
+                                    Proceed
+                                  </a>
+                                </div>
+                              </div>
+                            </>
+                          );
+                        })}
                     </div>
-                  </div> */}
+                  </div>
                   <div
-                    className="col-md-12 col-sm-12 col-xs-12 wow fadeInDown"
+                    className="col-md-8 col-sm-12 col-xs-12 wow fadeInDown"
                     data-wow-duration="1000ms"
                     data-wow-delay="300ms"
                   >
@@ -308,7 +332,7 @@ const CheckoutAddress = ({ history }) => {
                           </div>
                           <div className="col-md-12 col-sm-12 col-xs-12">
                             <button
-                              className="btn-black pull-right"
+                              className="btn-primary-gold-address btn-medium"
                               type="submit"
                             >
                               submit

@@ -28,8 +28,9 @@ import {
   USER_ADDRESS_DETAILS_SUCCESS,
   USER_ADDRESS_DETAILS_REQUEST,
 } from "../constants/userConstants";
-
 import { ORDER_LIST_MY_RESET } from "../constants/orderConstants";
+
+const URL = "http://api.addipoli-puttus.com";
 
 export const login = (email, password) => async (dispatch) => {
   try {
@@ -44,7 +45,7 @@ export const login = (email, password) => async (dispatch) => {
     };
 
     const { data } = await axios.post(
-      "http://api.adipoli.primespot.tech/user/login",
+      "${URL}/user/login",
       { email, password },
       config
     );
@@ -80,7 +81,7 @@ export const register =
       };
 
       const { data } = await axios.post(
-        "http://api.adipoli.primespot.tech/user/register",
+        `${URL}/user/register`,
         { username, phoneNumber, email, password },
         config
       );
@@ -124,10 +125,7 @@ export const getUserDetails = (id) => async (dispatch, getState) => {
       },
     };
 
-    const { data } = await axios.get(
-      `http://api.addipoli.primespot.tech/api/users/${id}`,
-      config
-    );
+    const { data } = await axios.get(`${URL}/api/users/${id}`, config);
 
     dispatch({
       type: USER_DETAILS_SUCCESS,
@@ -158,14 +156,11 @@ export const getUserAddresses = () => async (dispatch, getState) => {
     const config = {
       headers: {
         "content-Type": "application/json",
-        "x-access-token": `${userInfo.accessTokens}`,
+        "x-access-token": `${userInfo.accessToken}`,
       },
     };
 
-    const { data } = await axios.get(
-      `http://api.adipoli.primespot.tech/user/addresses/`,
-      config
-    );
+    const { data } = await axios.get(`${URL}/user/addresses/`, config);
 
     dispatch({
       type: USER_ADDRESS_DETAILS_SUCCESS,
@@ -201,11 +196,7 @@ export const updateUserProfile = (user) => async (dispatch, getState) => {
       },
     };
 
-    const { data } = await axios.put(
-      `http://api.addipoli.primespot.tech/api/users/${user}`,
-      user,
-      config
-    );
+    const { data } = await axios.put(`${URL}/api/users/${user}`, user, config);
 
     dispatch({
       type: USER_UPDATE_PROFILE_SUCCESS,
@@ -246,10 +237,7 @@ export const listUsers = () => async (dispatch, getState) => {
       },
     };
 
-    const { data } = await axios.get(
-      `http://api.addipoli.primespot.tech/api/users`,
-      config
-    );
+    const { data } = await axios.get(`${URL}/api/users`, config);
 
     dispatch({
       type: USER_LIST_SUCCESS,
@@ -282,10 +270,7 @@ export const deleteUser = (id) => async (dispatch, getState) => {
       },
     };
 
-    await axios.delete(
-      `http://api.addipoli.primespot.tech/api/users/${id}`,
-      config
-    );
+    await axios.delete(`${URL}/api/users/${id}`, config);
 
     dispatch({ type: USER_DELETE_SUCCESS });
   } catch (error) {
@@ -317,7 +302,7 @@ export const updateUser = (user) => async (dispatch, getState) => {
     };
 
     const { data } = await axios.put(
-      `http://api.addipoli.primespot.tech/api/users/${user._id}`,
+      `${URL}/api/users/${user._id}`,
       user,
       config
     );

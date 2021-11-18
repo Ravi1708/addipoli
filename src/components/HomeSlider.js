@@ -66,7 +66,7 @@ const HomeSlider = () => {
         <div className="item">
           <a href="#" className="magnific-popup">
             <img
-              src="assets/images/gallery/gallery1.jpg"
+              src="assets/images/gallery/gallery1.jpeg"
               alt="image"
               className="animated"
             />
@@ -75,7 +75,7 @@ const HomeSlider = () => {
         <div className="item">
           <a href="#" className="magnific-popup">
             <img
-              src="assets/images/gallery/gallery2.jpg"
+              src="assets/images/gallery/gallery2.jpeg"
               alt="image"
               className="animated"
             />
@@ -84,16 +84,7 @@ const HomeSlider = () => {
         <div className="item">
           <a href="#" className="magnific-popup">
             <img
-              src="assets/images/gallery/gallery3.jpg"
-              alt="image"
-              className="animated"
-            />
-          </a>
-        </div>
-        {/* <div className="item">
-          <a href="#" className="magnific-popup">
-            <img
-              src="assets/images/gallery/gallery4.jpg"
+              src="assets/images/gallery/gallery3.jpeg"
               alt="image"
               className="animated"
             />
@@ -102,12 +93,21 @@ const HomeSlider = () => {
         <div className="item">
           <a href="#" className="magnific-popup">
             <img
-              src="assets/images/gallery/gallery5.jpg"
+              src="assets/images/gallery/gallery4.jpeg"
               alt="image"
               className="animated"
             />
           </a>
-        </div> */}
+        </div>
+        <div className="item">
+          <a href="#" className="magnific-popup">
+            <img
+              src="assets/images/gallery/gallery5.jpeg"
+              alt="image"
+              className="animated"
+            />
+          </a>
+        </div>
       </OwlCarousel>
     </div>
   );

@@ -2,11 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { Link, Route, useParams, useRouteMatch } from "react-router-dom";
-import {
-  listSliders,
-  listProducts,
-  listProductsByCombo,
-} from "../actions/productActions";
+import { listProducts } from "../actions/productActions";
 import ProductCard from "../components/ProductCard";
 import { login, logout, register } from "../actions/userActions";
 import Message from "../components/Message";
@@ -39,12 +35,12 @@ const HomeScreen = ({ match, history }) => {
   } = userRegister;
 
   //get sliderlist from state
-  const listSlider = useSelector((state) => state.listSlider);
-  const {
-    loading: sliderLoading,
-    error: slderError,
-    products: Sliders,
-  } = listSlider;
+  // const listSlider = useSelector((state) => state.listSlider);
+  // const {
+  //   loading: sliderLoading,
+  //   error: slderError,
+  //   products: Sliders,
+  // } = listSlider;
 
   //get productlist from state
   const productList = useSelector((state) => state.productList);
@@ -58,8 +54,6 @@ const HomeScreen = ({ match, history }) => {
     error: comboError,
     products: comboProducts,
   } = productListByCombo;
-
-  console.log(products);
 
   const cart = useSelector((state) => state.cart);
   const { cartItems } = cart;
@@ -77,9 +71,8 @@ const HomeScreen = ({ match, history }) => {
         setopensignup(false);
       }
     }
-    dispatch(listSliders());
+    // dispatch(listSliders());
     dispatch(listProducts());
-    dispatch(listProductsByCombo());
   }, [dispatch, userInfo]);
 
   const signupHandler = (e) => {
@@ -101,6 +94,13 @@ const HomeScreen = ({ match, history }) => {
   };
 
   const checkoutHandler = () => {
+    // if (userInfo) {
+    //   history.push("/checkout");
+    // }
+    // else {
+    //   setopensignin(true);
+    //   history.push("/checkout");
+    // }
     userInfo ? history.push("/checkout") : setopensignin(true);
   };
 
@@ -149,9 +149,9 @@ const HomeScreen = ({ match, history }) => {
                 <img src="assets/img/icon5.png" alt="" />
               </div>
               <div className="container">
+                <h3 style={{ color: "#04e04c" }}>Special Combo Offer</h3>
                 <div className="row" data-defaultfilter=".breakfast">
                   <div className="col-lg-8 col-md-12 col-sm-12 col-xs-12">
-                    <h3 style={{ color: "#fff" }}>Best Seller</h3>
                     <div className="row">
                       {products
                         .filter(
@@ -186,10 +186,12 @@ const HomeScreen = ({ match, history }) => {
                           OFFER
                         </h6>
                         <p className="offer-text">
-                          50Rs off on orders above &#8377; 199 | Use coupon{" "}
-                          <span className="text-danger font-weight-bold">
-                            ADIPOLIFIRST
-                          </span>
+                          Update Soon
+                          {/* 50Rs off on orders above &#8377; 199 | Use coupon{" "} */}
+                          {/* <span className="text-danger font-weight-bold">
+                            ADDIPOLIFIRST
+                          </span> */}
+                          {/* <small> *New user only</small> */}
                         </p>
                         <div className="icon-overlap">
                           <i className="icofont-sale-discount"></i>
@@ -392,7 +394,6 @@ const HomeScreen = ({ match, history }) => {
                                 filteredproducts.category != "COMBO"
                             )
                             .map((combo) => {
-                              console.log(combo);
                               return (
                                 <div
                                   className={`col-md-3 col-sm-3 col-xs-6 fadeInDown ${combo.category}`}
@@ -476,7 +477,7 @@ const HomeScreen = ({ match, history }) => {
           <div>
             <form onSubmit={signinHandler}>
               <h1>Sign In</h1>
-              <div className="social-container">
+              {/* <div className="social-container">
                 <a href="#" className="social">
                   <i className="fa fa-facebook"></i>
                 </a>
@@ -486,7 +487,7 @@ const HomeScreen = ({ match, history }) => {
                 <a href="#" className="social">
                   <i className="fa fa-linkedin"></i>
                 </a>
-              </div>
+              </div> */}
               <span>or use your account</span>
               <input
                 type="email"
@@ -502,7 +503,7 @@ const HomeScreen = ({ match, history }) => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
-              <a href="#">Forgot Your Password</a>
+              {/* <a href="#">Forgot Your Password</a> */}
 
               {signinError && <Message>{signinError}</Message>}
 

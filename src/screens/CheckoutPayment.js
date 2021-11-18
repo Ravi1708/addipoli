@@ -6,7 +6,7 @@ import { createOrder } from "../actions/orderActions";
 const CheckoutPayment = ({ history }) => {
   const cart = useSelector((state) => state.cart);
   const { shippingAddress } = cart;
-  const [paymentMethod, setPaymentMethod] = useState(" ");
+  const [paymentMethod, setPaymentMethod] = useState("Cash on delivery");
 
   // calculate price
   const addDecimals = (num) => {
@@ -19,7 +19,7 @@ const CheckoutPayment = ({ history }) => {
 
   cart.shippingPrice = addDecimals(20);
 
-  cart.taxPrice = addDecimals(Number((0.07 * cart.itemsPrice).toFixed(2)));
+  cart.taxPrice = addDecimals(Number((0.05 * cart.itemsPrice).toFixed(2)));
 
   cart.totalPrice = (
     Number(cart.itemsPrice) +
@@ -118,7 +118,10 @@ const CheckoutPayment = ({ history }) => {
                       </div>
                       <div class="row">
                         <div class="col-md-12 col-sm-12 col-xs-12">
-                          <label className="form-check-label" for="delivery">
+                          <label
+                            className="form-check-label-pay"
+                            for="delivery"
+                          >
                             {shippingAddress.name}
                             {`(${shippingAddress.addressoption})`} <br />
                             <small>
@@ -146,9 +149,10 @@ const CheckoutPayment = ({ history }) => {
                               type="radio"
                               name="radio"
                               value="Online payment"
+                              disabled
                               onChange={(e) => setPaymentMethod(e.target.value)}
                             />
-                            <label className="form-check-label">
+                            <label className="form-check-label-pay">
                               Pay Online
                             </label>
                           </div>
@@ -161,13 +165,14 @@ const CheckoutPayment = ({ history }) => {
                               onChange={(e) => setPaymentMethod(e.target.value)}
                               type="radio"
                               name="radio"
+                              checked
                             />
-                            <label className="form-check-label">
+                            <label className="form-check-label-pay">
                               Cash on Delivery
                             </label>
                           </div>
                           <button
-                            className="btn-black pull-right"
+                            className="address-cart-btn-end"
                             onClick={() => history.push("/checkoutaddress")}
                           >
                             Back

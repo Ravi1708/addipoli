@@ -32,7 +32,7 @@ const CheckoutScreen = ({ match, history }) => {
 
   cart.shippingPrice = addDecimals(20);
 
-  cart.taxPrice = addDecimals(Number((0.07 * cart.itemsPrice).toFixed(2)));
+  cart.taxPrice = addDecimals(Number((0.05 * cart.itemsPrice).toFixed(2)));
 
   cart.totalPrice = (
     Number(cart.itemsPrice) +

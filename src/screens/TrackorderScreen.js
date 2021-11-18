@@ -17,15 +17,15 @@ const TrackorderScreen = () => {
               <div className="container">
                 <div className="breadcrumb-inner">
                   <h2>TRACK YOUR ORDER</h2>
-                  <a href="/">Home</a>
-                  <span>Shop</span>
+                  <a href="#">Home</a>
+                  <span>Order Tracking</span>
                 </div>
               </div>
             </section>
             {/*<!-- End Breadcrumb Part -->*/}
             <section className="home-icon shop-cart bg-skeen">
               <div className="icon-default icon-skeen">
-                <img src="/assets/images/scroll-arrow.png" alt="icon" />
+                <img src="/assets/images/scroll-arrow.png" alt="image" />
               </div>
               <div className="container">
                 <div
@@ -34,10 +34,10 @@ const TrackorderScreen = () => {
                   data-wow-delay="300ms"
                 >
                   <ul className="checkout-bar">
-                    <li className="done-proceed">Order Placed</li>
-                    <li className="done-proceed">Preparing</li>
-                    <li className="active">Bake</li>
-                    <li>Box</li>
+                    <li className="active">Order Confirmation</li>
+                    <li>Food Preparing</li>
+                    <li>Food Ready</li>
+                    <li>Shipping</li>
                     <li>Delivery</li>
                   </ul>
                 </div>
@@ -48,12 +48,13 @@ const TrackorderScreen = () => {
                 >
                   <div className="track-oder-inner">
                     <div className="clock-track-icon">
-                      <img src="/assets/images/clock-icon.png" alt="icon" />
+                      <img src="/assets/images/clock-icon.png" alt="image" />
                     </div>
                     <div className="track-status">
+                      <h3>Order ID - 123456789 </h3>
+                      <br />
                       <h3>
-                        <span>Order Status:</span> <br /> We are now baking your
-                        Coffee
+                        <span> We are now preparing your food </span>
                       </h3>
                     </div>
                   </div>

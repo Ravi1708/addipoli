@@ -8,24 +8,28 @@ const ContactScreen = () => {
         <main>
           <div className="main-part">
             <section className="contact-map">
-              <div className="map-outer">
+              {/* <div className="map-outer">
                 <div id="map"></div>
-              </div>
+              </div> */}
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3916.08388850122!2d76.99747561480301!3d11.032332792148214!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ba8598b79de1635%3A0x2fb654ec538b9529!2sRadhe%20Food%20Industries%20-%20Addipoli%20Puttu&#39;s!5e0!3m2!1sen!2sin!4v1637217289336!5m2!1sen!2sin"
+                width="100%"
+                height="450"
+                style={{ border: "0" }}
+                allowfullscreen=""
+                loading="lazy"
+              ></iframe>
             </section>
             {/* <!-- Start Contact Part --> */}
             <section className="default-section contact-part home-icon">
               <div className="icon-default">
-                <a href="#">
-                  <img src="assets/images/scroll-arrow.png" alt="image" />
+                <a>
+                  <img src="assets/images/scroll-arrow.png" />
                 </a>
               </div>
               <div className="container">
                 <div className="title text-center">
                   <h2 className="text-coffee">Contact Us</h2>
-                  <h6 className="heade-xs">
-                    We are a second-generation family business established in
-                    2020
-                  </h6>
                 </div>
                 <div className="row">
                   <div
@@ -35,13 +39,11 @@ const ContactScreen = () => {
                   >
                     <div className="contact-blog-row">
                       <div className="contact-icon">
-                        <img
-                          src="assets/images/location-icon.png"
-                          alt="image"
-                        />
+                        <img src="assets/images/location-icon.png" />
                       </div>
                       <p>
-                        321/171, GIRIAMMAN KOVIL STREET, PEELAMEDU, COIMBATORE.
+                        321/171, Giriamman Kovil Street, Peelamedu, Coimbatore -
+                        641004.
                       </p>
                     </div>
                   </div>
@@ -52,7 +54,7 @@ const ContactScreen = () => {
                   >
                     <div className="contact-blog-row">
                       <div className="contact-icon">
-                        <img src="assets/images/cell-icon.png" alt="image" />
+                        <img src="assets/images/cell-icon.png" />
                       </div>
                       <p>
                         <a href="tel:0422-3585241">
@@ -68,7 +70,7 @@ const ContactScreen = () => {
                   >
                     <div className="contact-blog-row">
                       <div className="contact-icon">
-                        <img src="assets/images/mail-icon.png" alt="image" />
+                        <img src="assets/images/mail-icon.png" />
                       </div>
                       <p>
                         <a href="mailto:radhefoodindustries@gmail.com">
@@ -84,12 +86,8 @@ const ContactScreen = () => {
                     data-wow-duration="1000ms"
                     data-wow-delay="300ms"
                   >
-                    <h5 className="text-coffee">Leave us a Message</h5>
-                    {/* <p>
-                      Aenean massa diam, viverra vitae luctus sed, gravida eget
-                      est. Etiam nec ipsum porttitor, consequat libero eu,
-                      dignissim eros. Nulla auctor lacinia enim id mollis.
-                    </p> */}
+                    <h5 className="text-coffee">Drop your Feedback</h5>
+
                     <form className="form" method="post" name="contact-form">
                       <div className="row">
                         <div className="alert-container"></div>
@@ -117,7 +115,7 @@ const ContactScreen = () => {
                           <input
                             name="submit"
                             value="SEND MESSAGE"
-                            className="btn-black pull-right send_message"
+                            className="btn-primary-gold btn-medium"
                             type="submit"
                           ></input>
                         </div>
@@ -133,31 +131,31 @@ const ContactScreen = () => {
                     <ul className="time-list">
                       <li>
                         <span className="week-name">Monday</span>
-                        <span>8.30 AM - 10.00 PM</span>
+                        <span>8.00 AM - 9.00 PM</span>
                       </li>
                       <li>
                         <span className="week-name">Tuesday</span>
-                        <span>8.30 AM - 10.00 PM</span>
+                        <span>8.00 AM - 9.00 PM</span>
                       </li>
                       <li>
                         <span className="week-name">Wednesday</span>
-                        <span>8.30 AM - 10.00 PM</span>
+                        <span>8.00 AM - 9.00 PM</span>
                       </li>
                       <li>
                         <span className="week-name">Thursday</span>
-                        <span>8.30 AM - 10.00 PM</span>
+                        <span>8.00 AM - 9.00 PM</span>
                       </li>
                       <li>
                         <span className="week-name">Friday</span>
-                        <span>8.30 AM - 10.00 PM</span>
+                        <span>8.00 AM - 9.00 PM</span>
                       </li>
                       <li>
                         <span className="week-name">Saturday</span>
-                        <span>8.30 AM - 10.00 PM</span>
+                        <span>8.00 AM - 9.00 PM</span>
                       </li>
                       <li>
                         <span className="week-name">Sunday</span>
-                        <span>8.30 AM - 9.00 PM</span>
+                        <span>8.00 AM - 9.00 PM</span>
                       </li>
                     </ul>
                   </div>

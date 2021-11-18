@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 const AboutScreen = () => {
   return (
@@ -12,7 +12,7 @@ const AboutScreen = () => {
               className="breadcrumb-part"
               data-stellar-offset-parent="true"
               data-stellar-background-ratio="0.5"
-              style={{ backgroundImage: "url('/assets/images/breadbg1.jpg')" }}
+              style={{ backgroundImage: "url('assets/images/breadbg1.jpg')" }}
             >
               <div className="container">
                 <div className="breadcrumb-inner">
@@ -31,7 +31,7 @@ const AboutScreen = () => {
             >
               <div className="icon-default">
                 <a href="#">
-                  <img src="/assets/images/scroll-arrow.png" />
+                  <img src="assets/images/scroll-arrow.png" />
                 </a>
               </div>
               <div className="container">
@@ -41,7 +41,13 @@ const AboutScreen = () => {
                 </div>
                 <div className="row">
                   <div className="col-md-6 col-sm-6 col-xs-12">
-                    <p style={{ fontSize: "18px" }}>
+                    <p
+                      style={{
+                        fontSize: "20px",
+                        lineHeight: "2.0",
+                        letterSpacing: "1.5px",
+                      }}
+                    >
                       Radhe Food Industries is formed by women who want to
                       achieve. Our goal is to make the world aware of our
                       Traditional, quality and healthy foods and to promote good
@@ -57,7 +63,7 @@ const AboutScreen = () => {
                     </p>
                   </div>
                   <div className="col-md-6 col-sm-6 col-xs-12">
-                    <img src="/assets/images/img2.jpg" />
+                    <img src="assets/images/img2.png" />
                   </div>
                 </div>
               </div>
@@ -69,7 +75,7 @@ const AboutScreen = () => {
               data-wow-delay="300ms"
             >
               <div className="icon-default icon-skeen">
-                <img src="/assets/images/icon35.png" />
+                <img src="assets/images/icon35.png" />
               </div>
               <div className="container">
                 <div className="build-title">
@@ -87,9 +93,12 @@ const AboutScreen = () => {
                         </div>
                         <div
                           className="service-track-overlay banner-bg"
-                          data-background="/assets/images/hover-img1.png"
+                          style={{
+                            backgroundImage:
+                              "url('assets/images/hover-img1.jpg')",
+                          }}
                         >
-                          <img src="/assets/images/img11.png" />
+                          <img src="assets/images/img11.png" />
                           <h3>
                             Addipoli<span>Puttu's</span>
                           </h3>
@@ -106,9 +115,12 @@ const AboutScreen = () => {
                         </div>
                         <div
                           className="service-track-overlay banner-bg"
-                          data-background="/assets/images/hover-img1.png"
+                          style={{
+                            backgroundImage:
+                              "url('assets/images/hover-img2.jpg')",
+                          }}
                         >
-                          <img src="/assets/images/icon14.png" />
+                          <img src="assets/images/icon14.png" />
                           <h3>
                             Addipoli <span>Wrappies</span>
                           </h3>
@@ -125,9 +137,12 @@ const AboutScreen = () => {
                         </div>
                         <div
                           className="service-track-overlay banner-bg"
-                          data-background="/assets/images/hover-img1.png"
+                          style={{
+                            backgroundImage:
+                              "url('assets/images/hover-img3.jpg')",
+                          }}
                         >
-                          <img src="/assets/images/icon12.png" />
+                          <img src="assets/images/icon12.png" />
                           <h3>
                             Addipoli <span>Dishes</span>
                           </h3>
@@ -144,9 +159,12 @@ const AboutScreen = () => {
                         </div>
                         <div
                           className="service-track-overlay banner-bg"
-                          data-background="/assets/images/hover-img1.png"
+                          style={{
+                            backgroundImage:
+                              "url('assets/images/hover-img4.jpg')",
+                          }}
                         >
-                          <img src="/assets/images/icon19.png" />
+                          <img src="assets/images/icon19.png" />
                           <h3>
                             Addipoli <span>Combo</span>
                           </h3>
@@ -160,11 +178,11 @@ const AboutScreen = () => {
             </section>
             <section
               className="food-hours banner-bg invert home-icon wow fadeInDown"
-              data-background="assets/images/banner2.jpg"
+              style={{ backgroundImage: "url('assets/images/banner2.jpg')" }}
               data-wow-duration="1000ms"
               data-wow-delay="300ms"
             >
-              <div className="icon-default icon-gold">
+              <div className="icon-default icon-black">
                 <img src="assets/images/icon19.png" />
               </div>
               <div className="container">
@@ -230,7 +248,7 @@ const AboutScreen = () => {
               </div>
               <div className="container">
                 <div className="build-title">
-                  <h2>Addipoli Service</h2>
+                  <h2>Ingenious Food Celebration In Coimbatore</h2>
                   {/* <h6>This is what we do and we do it perfectly</h6> */}
                 </div>
                 <div className="service-port-outer">
@@ -242,16 +260,20 @@ const AboutScreen = () => {
                     <div className="row">
                       <div className="col-md-6 col-sm-6 col-xs-12 service-port-left">
                         <div className="service-port-prev">
-                          <img src="assets/images/img37.jpg" />
+                          <img src="assets/images/img38.png" />
                         </div>
                       </div>
                       <div className="col-md-6 col-sm-6 col-xs-12 service-port-right">
                         <div className="service-port-next">
-                          <h5>INGREDIENT SUPPLY</h5>
+                          <h5>HEALTHY FOOD WITH HEAVENLY TASTE</h5>
                           <p>
-                            Lorem ipsum dolor sit amet, consectetur adipisicing
-                            elit, sed do eiusmod tempor incididunt ut labore et
-                            dolore magna.
+                            Partners of Radhe Food Industries introducing the
+                            Brand new Addipoli Puttu's at the launch event.
+                          </p>
+                          <p>
+                            Channel Partner of Radhe food Industries,
+                            Mr.Balamurugan from Chennai receiving the Addipoli
+                            Puttu's.
                           </p>
                         </div>
                       </div>
@@ -265,17 +287,17 @@ const AboutScreen = () => {
                     <div className="row">
                       <div className="col-md-6 col-sm-6 col-xs-12 service-port-left">
                         <div className="service-port-next">
-                          <h5>INGREDIENT SUPPLY</h5>
+                          <h5>PERFECTLY LIGHT IN EVERY BITE</h5>
                           <p>
-                            Lorem ipsum dolor sit amet, consectetur adipisicing
-                            elit, sed do eiusmod tempor incididunt ut labore et
-                            dolore magna.
+                            Our heartfelt thanks to Mr.Rajappan & Mrs.Sandhya
+                            and Mr.Nandakumar & Mrs.Sangeetha, who received and
+                            congratulated us at the launch event.
                           </p>
                         </div>
                       </div>
                       <div className="col-md-6 col-sm-6 col-xs-12 service-port-right">
                         <div className="service-port-prev">
-                          <img src="assets/images/img38.jpg" />
+                          <img src="assets/images/img37.png" />
                         </div>
                       </div>
                     </div>
@@ -287,60 +309,34 @@ const AboutScreen = () => {
             {/* <!-- Start Food Hours --> */}
 
             {/* <!-- Start Client Say --> */}
-            <section
-              className="client banner-bg invert invert-black home-icon wow fadeInDown"
-              data-background="assets/images/banner3.jpg"
-              data-wow-duration="1000ms"
-              data-wow-delay="300ms"
-            >
-              <div className="container">
-                <div className="build-title">
-                  <h2>What Clients Say</h2>
-                  <h6>150+ Satisfied Clients</h6>
-                </div>
-                <div className="client-say">
-                  <div
-                    className="owl-carousel owl-theme"
-                    data-items="1"
-                    data-laptop="1"
-                    data-tablet="1"
-                    data-mobile="1"
-                    data-nav="false"
-                    data-dots="true"
-                    data-autoplay="true"
-                    data-speed="1800"
-                    data-autotime="5000"
-                  >
-                    <div className="item">
-                      <p>
-                        <img src="assets/img/avatar.jpg" />
-                      </p>
-                      <h5>Amith </h5>
-                      {/* <p>Kitchen Manager</p> */}
-                      <p>
-                        Success isn’t really that difficult. There is a
-                        significant portion of the population here in Tamilnadu,
-                        that actually want and need success really no magic to
-                        be hard.
-                      </p>
+            {/* <section className="client banner-bg invert invert-black home-icon wow fadeInDown" style={{backgroundImage: "url('assets/images/banner3.jpg')"}} data-wow-duration="1000ms" data-wow-delay="300ms">
+                <div className="container">
+                    <div className="build-title">
+                        <h2>What Clients Say</h2>
+                        <h6>150+ Satisfied Clients</h6>
                     </div>
-                    <div className="item">
-                      <p>
-                        <img src="assets/img/avatar.jpg" />
-                      </p>
-                      <h5>Sivamurugan</h5>
-                      <p>Kitchen Manager</p>
-                      <p>
-                        Success isn’t really that difficult. There is a
-                        significant portion of the population here in Tamilnadu,
-                        that actually want and need success really no magic to
-                        be hard.
-                      </p>
+                    <div className="client-say">
+                        <div className="owl-carousel owl-theme" data-items="1" data-laptop="1" data-tablet="1" data-mobile="1" data-nav="false" data-dots="true" data-autoplay="true" data-speed="1800" data-autotime="5000">
+                            <div className="item">
+                                <p><img src="assets/img/avatar.jpg"/></p>
+                                <h5>Amith </h5>
+                                <p>Kitchen Manager</p>
+                                <p>Success isn’t really that difficult. There is a significant portion of the
+                                      population here in Tamilnadu, that actually want and need
+                                    success really no magic to be hard.</p>
+                            </div>
+                            <div className="item">
+                                <p><img src="assets/img/avatar.jpg" /></p>
+                                <h5>Sivamurugan</h5>
+                                <p>Kitchen Manager</p>
+                                <p>Success isn’t really that difficult. There is a significant portion of the
+                                      population here in Tamilnadu, that actually want and need
+                                    success really no magic to be hard.</p>
+                            </div>
+                          </div>
                     </div>
-                  </div>
                 </div>
-              </div>
-            </section>
+            </section> */}
             {/* <!-- Start Feature list --> */}
             <section
               className="bg-skeen feature-list text-center invert home-icon wow fadeInDown"
@@ -352,12 +348,8 @@ const AboutScreen = () => {
               </div>
               <div className="container">
                 <div className="build-title">
-                  <h2>Our Some Feature</h2>
-                  <h6>
-                    The role of a good cook ware in the preparation of a
-                    sumptuous meal cannot be over emphasized then one consider
-                    white bread
-                  </h6>
+                  <h2>Delicious and Nutritious</h2>
+                  {/* <h6>The role of a good cook ware in the preparation of a sumptuous meal cannot be over emphasized then one consider white bread</h6> */}
                 </div>
                 <div className="row">
                   <div className="col-md-3 col-sm-6 col-xs-12">
@@ -367,10 +359,7 @@ const AboutScreen = () => {
                       </div>
                     </div>
                     <h5>Fresh Dishes</h5>
-                    <p>
-                      Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-                      sed do eius-
-                    </p>
+                    <p>Eat Healthy, Live Better</p>
                   </div>
                   <div className="col-md-3 col-sm-6 col-xs-12">
                     <div className="feature-list-icon">
@@ -379,22 +368,16 @@ const AboutScreen = () => {
                       </div>
                     </div>
                     <h5>Various Menu</h5>
-                    <p>
-                      Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-                      sed do eius-
-                    </p>
+                    <p>Move your Feet, Get a Treat</p>
                   </div>
                   <div className="col-md-3 col-sm-6 col-xs-12">
                     <div className="feature-list-icon">
                       <div className="feature-icon-table">
-                        <img src="assets/images/img11.png" />
+                        <img src="assets/images/img13.png" />
                       </div>
                     </div>
                     <h5>Well Service</h5>
-                    <p>
-                      Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-                      sed do eius-
-                    </p>
+                    <p>The only thing we love more than Food is You!</p>
                   </div>
                   <div className="col-md-3 col-sm-6 col-xs-12">
                     <div className="feature-list-icon">
@@ -403,10 +386,7 @@ const AboutScreen = () => {
                       </div>
                     </div>
                     <h5>Fast Delivery</h5>
-                    <p>
-                      Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-                      sed do eius-
-                    </p>
+                    <p>Giving your Hunger a new Option</p>
                   </div>
                 </div>
               </div>

@@ -6,8 +6,6 @@ function ProductCard(props) {
   const [cartbutton, setcartbutton] = useState("button");
   const [qty, setqty] = useState(0);
 
-  console.log(props.product.image);
-
   return (
     <div>
       <div className="shop-main-list">
@@ -81,7 +79,7 @@ function ProductCard(props) {
           ) : (
             <div className="col-lg-7 col-md-7 col-sm-7 col-xs-7 shop-dish">
               <a type="button" className="shop-cart-btn-soon">
-                Comming Soon
+                Coming Soon
               </a>
             </div>
           )}

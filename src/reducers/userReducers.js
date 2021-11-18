@@ -77,7 +77,7 @@ export const userAddressesReducer = (state = { user: {} }, action) => {
     case USER_ADDRESS_DETAILS_REQUEST:
       return { ...state, loading: true };
     case USER_ADDRESS_DETAILS_SUCCESS:
-      return { loading: false, user: action.payload };
+      return { loading: false, addresses: action.payload };
     case USER_ADDRESS_DETAILS_FAIL:
       return { loading: false, error: action.payload };
     default:
