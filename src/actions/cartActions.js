@@ -9,7 +9,7 @@ import {
   SAVE_SHIPPING_ADDRESS_SUCCESS,
 } from "../constants/cartConstants";
 
-const URL = "http://api.addipoli-puttus.com";
+const URL = "https://api.addipoli-puttus.com";
 
 export const addToCart = (id, qty) => async (dispatch, getState) => {
   const { data } = await axios.get(`${URL}/common/products/${id}`);

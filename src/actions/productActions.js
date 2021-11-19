@@ -18,7 +18,7 @@ import {
   PRODUCT_SLIDER_FAIL,
 } from "../constants/productConstants";
 
-const URL = "http://api.addipoli-puttus.com";
+const URL = "https://api.addipoli-puttus.com";
 
 export const listSliders = () => async (dispatch) => {
   try {

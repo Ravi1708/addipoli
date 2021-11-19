@@ -30,7 +30,7 @@ import {
 } from "../constants/userConstants";
 import { ORDER_LIST_MY_RESET } from "../constants/orderConstants";
 
-const URL = "http://api.addipoli-puttus.com";
+const URL = "https://api.addipoli-puttus.com";
 
 export const login = (email, password) => async (dispatch) => {
   try {
@@ -45,7 +45,7 @@ export const login = (email, password) => async (dispatch) => {
     };
 
     const { data } = await axios.post(
-      "${URL}/user/login",
+      `${URL}/user/login`,
       { email, password },
       config
     );

@@ -17,7 +17,7 @@ import {
   ORDER_LIST_REQUEST,
 } from "../constants/orderConstants";
 
-const URL = "http://api.addipoli-puttus.com";
+const URL = "https://api.addipoli-puttus.com";
 
 export const createOrder = (order) => async (dispatch, getState) => {
   try {
