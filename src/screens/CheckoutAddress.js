@@ -272,7 +272,6 @@ const CheckoutAddress = ({ history }) => {
                               name="message"
                               value={shortNote}
                               onChange={(e) => setShortNote(e.target.value)}
-                              required
                             />
                           </div>
                           <div className="col-md-12 col-sm-12 col-xs-12">

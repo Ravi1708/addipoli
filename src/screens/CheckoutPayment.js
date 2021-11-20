@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { savePaymentMethod } from "../actions/cartActions";
@@ -7,6 +8,61 @@ const CheckoutPayment = ({ history }) => {
   const cart = useSelector((state) => state.cart);
   const { shippingAddress } = cart;
   const [paymentMethod, setPaymentMethod] = useState("Cash on delivery");
+
+  const [paymentID, setpaymentID] = useState("");
+  const [orderID, setorderID] = useState("");
+  const [signature, setsignature] = useState("");
+
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
+
+  const handlePay = async () => {
+    const config = {
+      headers: {
+        "content-Type": "application/json",
+        "x-access-token": `${userInfo.accessToken}`,
+      },
+    };
+
+    // const res = await axios.post(
+    //   "https:/api.addipoli-puttus.com/common/paynow",
+    //   cart.totalPrice,
+    //   config
+    // );
+
+    // if (res.status !== 200) {
+    //   return;
+    // }
+
+    var options = {
+      key: "rzp_test_XFs5xG4NoberIv",
+      amount: cart.totalPrice * 100,
+      // currency: res.currency,
+      currency: "INR",
+      name: "Addipoli Puttus",
+      image: "assets/img/Logo.png",
+      // order_id: res.id,
+      callback_url: "https://eneqd3r9zrjok.x.pipedream.net/",
+      handler: function (response) {
+        setpaymentID(response.razorpay_payment_id);
+        setorderID(response.razorpay_order_id);
+        setsignature(response.razorpay_signature);
+        console.log(paymentID);
+        console.log(orderID);
+        console.log(signature);
+      },
+      prefill: {
+        name: "Name",
+        email: "Name@example.com",
+        contact: "9999999999",
+      },
+      theme: {
+        color: "#3399cc",
+      },
+    };
+    var rzp1 = new window.Razorpay(options);
+    rzp1.open();
+  };
 
   // calculate price
   const addDecimals = (num) => {
@@ -49,9 +105,15 @@ const CheckoutPayment = ({ history }) => {
     }
   }, [history, success]);
   const placeOrderHandler = () => {
+    const orderItems = cart.cartItems.map((val) => {
+      return {
+        productId: val.product,
+        quantity: val.qty,
+      };
+    });
     dispatch(
       createOrder({
-        orderItems: cart.cartItems,
+        orderItems: orderItems,
         shippingAddress: cart.shippingAddress,
         paymentMethod: paymentMethod,
         itemsPrice: cart.itemsPrice,
@@ -149,7 +211,6 @@ const CheckoutPayment = ({ history }) => {
                               type="radio"
                               name="radio"
                               value="Online payment"
-                              disabled
                               onChange={(e) => setPaymentMethod(e.target.value)}
                             />
                             <label className="form-check-label-pay">
@@ -234,7 +295,7 @@ const CheckoutPayment = ({ history }) => {
                       ) : (
                         <div className="proceed-check">
                           <a
-                            href="/placeorder"
+                            onClick={handlePay}
                             className="btn-primary-gold btn-medium"
                           >
                             Proceed to Pay
