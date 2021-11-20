@@ -27,7 +27,7 @@ const CheckoutPayment = ({ history }) => {
     axios
       .post(
         "https:/api.addipoli-puttus.com/user/online-payment",
-        { totalPrice: 200 * 100 },
+        { totalPrice: parseFloat(cart.totalPrice) },
         config
       )
       .then((res) => {

@@ -103,14 +103,12 @@ const CheckoutScreen = ({ match, history }) => {
                         </thead>
                         <tbody>
                           {cartItems.map((item) => {
+                            console.log(item);
                             return (
                               <tr>
                                 <td>
                                   <div className="product-cart">
-                                    <img
-                                      src="assets/images/img70.png"
-                                      alt="image"
-                                    />
+                                    <img src={item.image} alt="image" />
                                   </div>
                                   <div className="product-cart-title">
                                     <span>{item.name}</span>
