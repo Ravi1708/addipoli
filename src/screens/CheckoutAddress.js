@@ -23,9 +23,7 @@ const CheckoutAddress = ({ history }) => {
   const [pincode, setPincode] = useState(shippingAddress.pincode);
   const [landmark, setLandmark] = useState(shippingAddress.landmark);
   const [shortNote, setShortNote] = useState(shippingAddress.shortNote);
-  const [addressOptions, setaddressOptions] = useState(
-    shippingAddress.addressOptions
-  );
+  const [addressOptions, setaddressOptions] = useState("others");
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getUserAddresses());

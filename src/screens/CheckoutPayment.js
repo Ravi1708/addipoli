@@ -262,7 +262,6 @@ const CheckoutPayment = ({ history }) => {
                               onChange={(e) => setPaymentMethod(e.target.value)}
                               type="radio"
                               name="radio"
-                              checked
                             />
                             <label className="form-check-label-pay">
                               Cash on Delivery
