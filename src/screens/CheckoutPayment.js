@@ -33,7 +33,7 @@ const CheckoutPayment = ({ history }) => {
       .then((res) => {
         const receiptId = res.data.receiptId;
         var options = {
-          key: "rzp_test_XFs5xG4NoberIv",
+          key: "rzp_live_k1Jb6HWsUrIGni",
           amount: parseFloat(cart.totalPrice) * 100,
           currency: "INR",
           name: "Addipoli Puttus",
@@ -85,11 +85,11 @@ const CheckoutPayment = ({ history }) => {
               })
               .catch((err) => console.log(err));
           },
-          prefill: {
-            name: "Name",
-            email: "Name@example.com",
-            contact: "9999999999",
-          },
+          // prefill: {
+          //   name: "Name",
+          //   email: "Name@example.com",
+          //   contact: "9999999999",
+          // },
           theme: {
             color: "#3399cc",
           },
@@ -109,7 +109,7 @@ const CheckoutPayment = ({ history }) => {
     cart.cartItems.reduce((acc, item) => acc + item.price * item.qty, 0)
   );
 
-  cart.shippingPrice = addDecimals(20);
+  cart.shippingPrice = addDecimals(0);
 
   cart.taxPrice = addDecimals(Number((0.05 * cart.itemsPrice).toFixed(2)));
 
