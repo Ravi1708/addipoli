@@ -7,7 +7,7 @@ import { createOrder } from "../actions/orderActions";
 const CheckoutPayment = ({ history }) => {
   const cart = useSelector((state) => state.cart);
   const { shippingAddress } = cart;
-  const [paymentMethod, setPaymentMethod] = useState("Cash on delivery");
+  const [paymentMethod, setPaymentMethod] = useState(" ");
 
   const [paymentID, setpaymentID] = useState("");
   const [orderID, setorderID] = useState("");
@@ -24,44 +24,80 @@ const CheckoutPayment = ({ history }) => {
       },
     };
 
-    // const res = await axios.post(
-    //   "https:/api.addipoli-puttus.com/common/paynow",
-    //   cart.totalPrice,
-    //   config
-    // );
+    axios
+      .post(
+        "https:/api.addipoli-puttus.com/user/online-payment",
+        { totalPrice: 200 * 100 },
+        config
+      )
+      .then((res) => {
+        const receiptId = res.data.receiptId;
+        var options = {
+          key: "rzp_test_XFs5xG4NoberIv",
+          amount: parseFloat(cart.totalPrice) * 100,
+          currency: "INR",
+          name: "Addipoli Puttus",
+          image: "assets/img/Logo.png",
+          order_id: res.data.razorpayOrderId,
+          // callback_url: "https://eneqd3r9zrjok.x.pipedream.net/",
+          handler: function (response) {
+            console.log(response);
+            // setpaymentID(response.razorpay_payment_id);
+            // setorderID(response.razorpay_order_id);
+            // setsignature(response.razorpay_signature);
+            console.log(paymentID);
+            console.log(orderID);
+            console.log(signature);
 
-    // if (res.status !== 200) {
-    //   return;
-    // }
-
-    var options = {
-      key: "rzp_test_XFs5xG4NoberIv",
-      amount: cart.totalPrice * 100,
-      // currency: res.currency,
-      currency: "INR",
-      name: "Addipoli Puttus",
-      image: "assets/img/Logo.png",
-      // order_id: res.id,
-      callback_url: "https://eneqd3r9zrjok.x.pipedream.net/",
-      handler: function (response) {
-        setpaymentID(response.razorpay_payment_id);
-        setorderID(response.razorpay_order_id);
-        setsignature(response.razorpay_signature);
-        console.log(paymentID);
-        console.log(orderID);
-        console.log(signature);
-      },
-      prefill: {
-        name: "Name",
-        email: "Name@example.com",
-        contact: "9999999999",
-      },
-      theme: {
-        color: "#3399cc",
-      },
-    };
-    var rzp1 = new window.Razorpay(options);
-    rzp1.open();
+            axios
+              .post(
+                "https:/api.addipoli-puttus.com/user/verify-payment",
+                {
+                  paymentId: response.razorpay_payment_id,
+                  orderId: response.razorpay_order_id,
+                  signature: response.razorpay_signature,
+                },
+                config
+              )
+              .then(() => {
+                const orderItems = cart.cartItems.map((val) => {
+                  return {
+                    productId: val.product,
+                    quantity: val.qty,
+                  };
+                });
+                dispatch(
+                  createOrder({
+                    orderItems,
+                    shippingAddress: cart.shippingAddress,
+                    paymentMethod: paymentMethod,
+                    itemsPrice: cart.itemsPrice,
+                    shippingPrice: cart.shippingPrice,
+                    taxPrice: cart.taxPrice,
+                    totalPrice: parseFloat(cart.totalPrice),
+                    payprice: cart.payprice,
+                    paymentResult: "Paid",
+                    deliveryStatus: "Order Placed",
+                    orderStatus: "Ongoing",
+                    receiptId,
+                  })
+                );
+              })
+              .catch((err) => console.log(err));
+          },
+          prefill: {
+            name: "Name",
+            email: "Name@example.com",
+            contact: "9999999999",
+          },
+          theme: {
+            color: "#3399cc",
+          },
+        };
+        var rzp1 = new window.Razorpay(options);
+        rzp1.open();
+      })
+      .catch((err) => console.log(err));
   };
 
   // calculate price
@@ -119,7 +155,7 @@ const CheckoutPayment = ({ history }) => {
         itemsPrice: cart.itemsPrice,
         shippingPrice: cart.shippingPrice,
         taxPrice: cart.taxPrice,
-        totalPrice: cart.totalPrice,
+        totalPrice: parseFloat(cart.totalPrice),
         payprice: cart.payprice,
         paymentResult: "Unpaid",
         deliveryStatus: "Order Placed",
@@ -185,7 +221,7 @@ const CheckoutPayment = ({ history }) => {
                             for="delivery"
                           >
                             {shippingAddress.name}
-                            {`(${shippingAddress.addressoption})`} <br />
+                            {`(${shippingAddress.addressOptions})`} <br />
                             <small>
                               {shippingAddress.address}
                               <br />

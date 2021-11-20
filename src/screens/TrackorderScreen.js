@@ -1,6 +1,7 @@
 import React from "react";
 
-const TrackorderScreen = () => {
+const TrackorderScreen = ({ match }) => {
+  const orderId = match.params.id;
   return (
     <div>
       <div className="wrapper">
@@ -51,7 +52,7 @@ const TrackorderScreen = () => {
                       <img src="/assets/images/clock-icon.png" alt="image" />
                     </div>
                     <div className="track-status">
-                      <h3>Order ID - 123456789 </h3>
+                      <h3>Order ID - {orderId} </h3>
                       <br />
                       <h3>
                         <span> We are now preparing your food </span>

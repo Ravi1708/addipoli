@@ -23,8 +23,8 @@ const CheckoutAddress = ({ history }) => {
   const [pincode, setPincode] = useState(shippingAddress.pincode);
   const [landmark, setLandmark] = useState(shippingAddress.landmark);
   const [shortNote, setShortNote] = useState(shippingAddress.shortNote);
-  const [addressoption, setAddressoption] = useState(
-    shippingAddress.addressoption
+  const [addressOptions, setaddressOptions] = useState(
+    shippingAddress.addressOptions
   );
   const dispatch = useDispatch();
   useEffect(() => {
@@ -42,7 +42,7 @@ const CheckoutAddress = ({ history }) => {
         pincode,
         landmark,
         shortNote,
-        addressoption,
+        addressOptions,
       })
     );
 
@@ -55,7 +55,7 @@ const CheckoutAddress = ({ history }) => {
         pincode,
         landmark,
         shortNote,
-        addressoption,
+        addressOptions,
       })
     );
     history.push("/payment");
@@ -73,7 +73,7 @@ const CheckoutAddress = ({ history }) => {
   //       pincode: address.pincode,
   //       landmark: address.landmark,
   //       shortNote,
-  //       addressoption,
+  //       addressOptions,
   //     })
   //   );
   //   history.push("/payment");
@@ -177,7 +177,7 @@ const CheckoutAddress = ({ history }) => {
                                           pincode: address.pincode,
                                           landmark: address.landmark,
                                           shortNote,
-                                          addressoption,
+                                          addressOptions,
                                         })
                                       );
                                       history.push("/payment");
@@ -281,9 +281,9 @@ const CheckoutAddress = ({ history }) => {
                                   className="form-check-input"
                                   type="radio"
                                   name="delivery"
-                                  value="Home"
+                                  value="home"
                                   onChange={(e) =>
-                                    setAddressoption(e.target.value)
+                                    setaddressOptions(e.target.value)
                                   }
                                 />
                                 <label
@@ -300,7 +300,7 @@ const CheckoutAddress = ({ history }) => {
                                   name="delivery"
                                   value="work"
                                   onChange={(e) =>
-                                    setAddressoption(e.target.value)
+                                    setaddressOptions(e.target.value)
                                   }
                                 />
                                 <label
@@ -315,9 +315,9 @@ const CheckoutAddress = ({ history }) => {
                                   className="form-check-input"
                                   type="radio"
                                   name="delivery"
-                                  value="other"
+                                  value="others"
                                   onChange={(e) =>
-                                    setAddressoption(e.target.value)
+                                    setaddressOptions(e.target.value)
                                   }
                                 />
                                 <label
