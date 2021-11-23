@@ -74,9 +74,9 @@ const Banner = () => {
               data-easing="Back.easeInOut"
               data-endspeed="300"
             >
-              <a href="/contact" className="button-white">
+              {/* <a href="/contact" className="button-white">
                 Explore Now
-              </a>
+              </a> */}
             </Caption>
           </Slide>
           <Slide
@@ -137,9 +137,9 @@ const Banner = () => {
               data-easing="Back.easeInOut"
               data-endspeed="300"
             >
-              <a href="/contact" className="button-white">
+              {/* <a href="/contact" className="button-white">
                 Explore Now
-              </a>
+              </a> */}
             </Caption>
           </Slide>
           {/* <Slide

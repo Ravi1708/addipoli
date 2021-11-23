@@ -1383,6 +1383,7 @@ input[type="number"] {
   background: #04e04c;
   color: #ffffff;
   border-color: #04e04c;
+  cursor: pointer;
 }
 
 .btn-large {
@@ -2616,16 +2617,21 @@ textarea {
   vertical-align: middle;
   padding-right: 20px;
 }
+.cart-item-right span {
+  font-size: 18px !important;
+  color: #000;
+  font-weight: 800;
+}
 
 .cart-blog h6 {
   margin-bottom: 5px;
-  font-size: 16px;
+  font-size: 13px;
   font-family: "GraviolaSoft-Medium";
   font-weight: normal;
 }
 
 .cart-blog span {
-  color: #9e9eab;
+  color: #383848;
   font-size: 14px;
   font-family: "Graviola-Regular";
 }
@@ -2647,11 +2653,13 @@ textarea {
 
 .subtotal h6 {
   margin-bottom: 0px;
+  font-size: 20px;
 }
 
 .subtotal span {
   text-align: right;
   float: right;
+  font-size: 20px;
 }
 
 .cart-btn {
@@ -6587,8 +6595,7 @@ table.shop-cart-table .shop-cart-close {
   position: absolute;
   right: 0px;
   cursor: pointer;
-  margin-right: 10px;
-  margin-top: 35px;
+  margin-top: 20px;
 }
 
 .product-cart-detail {
@@ -6632,7 +6639,7 @@ table.shop-cart-table .shop-cart-close {
 .cart-total-title {
   display: inline-block;
   width: 100%;
-  margin-bottom: 55px;
+  margin-bottom: 25px;
   text-align: center;
 }
 

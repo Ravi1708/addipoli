@@ -12,12 +12,15 @@ import {
 
 import { cartReducer } from "./reducers/cartReducers";
 import {
+  userAddressesByIdReducer,
   userAddressesReducer,
   userDeleteReducer,
   userDetailsReducer,
   userListReducer,
   userLoginReducer,
+  // userLoginWithGoogleReducer,
   userRegisterReducer,
+  // userRegisterWithGoogleReducer,
   userUpdateProfileReducer,
   userUpdateReducer,
 } from "./reducers/userReducers";
@@ -41,9 +44,12 @@ const reducer = combineReducers({
   productReviewCreate: productReviewCreateReducer,
   cart: cartReducer,
   userLogin: userLoginReducer,
+  // userLoginWithGoogle: userLoginWithGoogleReducer,
   userRegister: userRegisterReducer,
+  // userRegisterWithGoogle: userRegisterWithGoogleReducer,
   userDetails: userDetailsReducer,
   userAddresses: userAddressesReducer,
+  userAddressesById: userAddressesByIdReducer,
   userUpdateProfile: userUpdateProfileReducer,
   orderCreate: orderCreateReducer,
   saveaddress: saveShippingAddress,

@@ -30,14 +30,14 @@ input[type="email"],
 input[type="number"] {
   height: 50px;
   width: 100%;
-  border: 2px solid #e5e5ee;
+  border: 1px solid #e5e5ee;
   -webkit-border-radius: 80px;
   -moz-border-radius: 80px;
   -ms-border-radius: 80px;
   -o-border-radius: 80px;
   border-radius: 80px;
   padding: 0 30px;
-  margin-bottom: 29px;
+  margin-bottom: 0px;
   outline: none;
 }
 .media {

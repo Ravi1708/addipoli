@@ -27,6 +27,17 @@ import {
   USER_ADDRESS_DETAILS_FAIL,
   USER_ADDRESS_DETAILS_SUCCESS,
   USER_ADDRESS_DETAILS_REQUEST,
+  USER_ADDRESS_DETAILS_BY_ID_REQUEST,
+  USER_ADDRESS_DETAILS_BY_ID_SUCCESS,
+  USER_ADDRESS_DETAILS_BY_ID_FAIL,
+  USER_REGISTER_WITH_GOOGLE_REQUEST,
+  USER_REGISTER_WITH_GOOGLE_SUCCESS,
+  USER_REGISTER_WITH_GOOGLE_FAIL,
+  USER_LOGIN_WITH_GOOGLE_REQUEST,
+  USER_LOGIN_WITH_SUCCESS,
+  USER_LOGIN_WITH_FAIL,
+  USER_LOGIN_WITH_GOOGLE_SUCCESS,
+  USER_LOGIN_WITH_GOOGLE_FAIL,
 } from "../constants/userConstants";
 import { ORDER_LIST_MY_RESET } from "../constants/orderConstants";
 
@@ -67,6 +78,41 @@ export const login = (email, password) => async (dispatch) => {
   }
 };
 
+export const loginwithgoogle = (tokenId) => async (dispatch) => {
+  try {
+    dispatch({
+      type: USER_LOGIN_REQUEST,
+    });
+
+    const config = {
+      headers: {
+        "content-Type": "application/json",
+      },
+    };
+
+    const { data } = await axios.post(
+      `${URL}/user/google-login`,
+      { tokenId },
+      config
+    );
+
+    dispatch({
+      type: USER_LOGIN_SUCCESS,
+      payload: data,
+    });
+
+    localStorage.setItem("userInfo", JSON.stringify(data));
+  } catch (error) {
+    dispatch({
+      type: USER_LOGIN_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
 export const register =
   (username, phoneNumber, email, password) => async (dispatch) => {
     try {
@@ -83,6 +129,48 @@ export const register =
       const { data } = await axios.post(
         `${URL}/user/register`,
         { username, phoneNumber, email, password },
+        config
+      );
+
+      dispatch({
+        type: USER_REGISTER_SUCCESS,
+        payload: data,
+      });
+
+      dispatch({
+        type: USER_LOGIN_SUCCESS,
+        payload: data,
+      });
+
+      localStorage.setItem("userInfo", JSON.stringify(data));
+    } catch (error) {
+      dispatch({
+        type: USER_REGISTER_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  };
+
+export const registerWithGoogle =
+  (tokenId, phoneNumber) => async (dispatch) => {
+    console.log(tokenId);
+    try {
+      dispatch({
+        type: USER_REGISTER_REQUEST,
+      });
+
+      const config = {
+        headers: {
+          "content-Type": "application/json",
+        },
+      };
+
+      const { data } = await axios.post(
+        `${URL}/user/google-register`,
+        { tokenId, phoneNumber },
         config
       );
 
@@ -170,6 +258,44 @@ export const getUserAddresses = () => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: USER_ADDRESS_DETAILS_FAIL,
+      loading: false,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const getUserAddressesById = (id) => async (dispatch, getState) => {
+  console.log("triggered");
+  try {
+    dispatch({
+      type: USER_ADDRESS_DETAILS_BY_ID_REQUEST,
+      loading: true,
+    });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        "content-Type": "application/json",
+        "x-access-token": `${userInfo.accessToken}`,
+      },
+    };
+
+    const { data } = await axios.get(`${URL}/user/address/${id}`, config);
+
+    dispatch({
+      type: USER_ADDRESS_DETAILS_BY_ID_SUCCESS,
+      loading: false,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: USER_ADDRESS_DETAILS_BY_ID_FAIL,
       loading: false,
       payload:
         error.response && error.response.data.message

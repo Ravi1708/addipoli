@@ -2,57 +2,111 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Route, useHistory } from "react-router-dom";
 import { LinkContainer } from "react-router-bootstrap";
-import { login, logout, register } from "../actions/userActions";
+import {
+  login,
+  loginwithgoogle,
+  logout,
+  register,
+  registerWithGoogle,
+} from "../actions/userActions";
 import { addToCart, removeFromCart } from "../actions/cartActions";
 import Message from "../components/Message";
+import GoogleLogin from "react-google-login";
 import "./Header.css";
 import { NavLink } from "react-router-dom";
+import { userLoginWithGoogleReducer } from "../reducers/userReducers";
 
 const Header = ({ location }) => {
   let history = useHistory();
   const [opencart, setopencart] = useState(false);
+  const [googlesignup, setGooglesignup] = useState(false);
   const [opensignin, setopensignin] = useState(false);
   const [opensignup, setopensignup] = useState(false);
   const [email, setEmail] = useState("");
   const [phoneNumber, setphoneNumber] = useState();
   const [password, setPassword] = useState("");
   const [username, setusername] = useState("");
+  const [tokenId, settokenId] = useState("");
 
   const dispatch = useDispatch();
   const userLogin = useSelector((state) => state.userLogin);
   const { loading, error: signinError, userInfo } = userLogin;
+
+  // const userLoginWithGoogle = useSelector((state) => state.userLogin);
+  // const {
+  //   loading: GoogleSigninLoading,
+  //   error: signinErrorGoogle,
+  //   userInfo: userInfoGoogle,
+  // } = userLoginWithGoogleReducer;
 
   const cart = useSelector((state) => state.cart);
   const { cartItems } = cart;
 
   const userRegister = useSelector((state) => state.userRegister);
   const { loading: signuploading, error: signupError } = userRegister;
+  // const userRegisterWithGoogle = useSelector(
+  //   (state) => state.userRegisterWithGoogle
+  // );
+  // const { loading: signupWithGoogleloading, error: signupWithGoogleError } =
+  //   userRegisterWithGoogle;
 
   //   const redirect = location.search ? location.search.split("=")[1] : "/";
-
-  useEffect(() => {
-    if (opensignin == true) {
-      if (userInfo) {
-        setopensignin(false);
-      }
-    }
-    if (opensignup == true) {
-      if (userInfo) {
-        setopensignup(false);
-      }
-    }
-  }, [history, userInfo, dispatch]);
-
-  const signupHandler = (e) => {
-    e.preventDefault();
-    dispatch(register(username, phoneNumber, email, password));
-  };
 
   console.log(userInfo);
 
   const signinHandler = (e) => {
     e.preventDefault();
     dispatch(login(email, password));
+  };
+
+  const handleLogin = (googleData) => {
+    setGooglesignup(true);
+    settokenId(googleData.tokenId);
+    console.log(googleData);
+    dispatch(loginwithgoogle(googleData.tokenId));
+
+    // const res = await fetch("/login", {
+    //   method: "POST",
+    //   body: JSON.stringify({
+    //     token: googleData.tokenId,
+    //   }),
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    // });
+    // const data = await res.json();
+    // store returned user somehow
+  };
+
+  // const signinWithGoogleHandler = (e) => {
+  //   e.preventDefault();
+
+  // };
+
+  const handleSignup = (googleData) => {
+    setGooglesignup(true);
+    settokenId(googleData.tokenId);
+    // const res = await fetch("/login", {
+    //   method: "POST",
+    //   body: JSON.stringify({
+    //     token: googleData.tokenId,
+    //   }),
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    // });
+    // const data = await res.json();
+    // store returned user somehow
+  };
+
+  const signupHandler = (e) => {
+    e.preventDefault();
+    dispatch(register(username, phoneNumber, email, password));
+  };
+
+  const signupwithgoogleHandler = (e) => {
+    e.preventDefault();
+    dispatch(registerWithGoogle(tokenId, phoneNumber));
   };
 
   const logoutHandler = (e) => {
@@ -68,6 +122,19 @@ const Header = ({ location }) => {
     setopencart(false);
     userInfo ? history.push("/checkout") : setopensignin(true);
   };
+
+  useEffect(() => {
+    if (opensignin == true) {
+      if (userInfo) {
+        setopensignin(false);
+      }
+    }
+    if (opensignup == true) {
+      if (userInfo) {
+        setopensignup(false);
+      }
+    }
+  }, [dispatch, history, userInfo]);
 
   return (
     <div>
@@ -124,8 +191,8 @@ const Header = ({ location }) => {
                           </svg>
                         </a>
                       </li>
-                      {/* <li>
-                        <a href="#">
+                      <li>
+                        <a href="https://twitter.com/APuttus">
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="19"
@@ -137,7 +204,7 @@ const Header = ({ location }) => {
                             <path d="M5.026 15c6.038 0 9.341-5.003 9.341-9.334 0-.14 0-.282-.006-.422A6.685 6.685 0 0 0 16 3.542a6.658 6.658 0 0 1-1.889.518 3.301 3.301 0 0 0 1.447-1.817 6.533 6.533 0 0 1-2.087.793A3.286 3.286 0 0 0 7.875 6.03a9.325 9.325 0 0 1-6.767-3.429 3.289 3.289 0 0 0 1.018 4.382A3.323 3.323 0 0 1 .64 6.575v.045a3.288 3.288 0 0 0 2.632 3.218 3.203 3.203 0 0 1-.865.115 3.23 3.23 0 0 1-.614-.057 3.283 3.283 0 0 0 3.067 2.277A6.588 6.588 0 0 1 .78 13.58a6.32 6.32 0 0 1-.78-.045A9.344 9.344 0 0 0 5.026 15z" />
                           </svg>
                         </a>
-                      </li> */}
+                      </li>
 
                       {/* <li><a href="#"><i className="fa fa-dribbble" aria-hidden="true"></i></a></li> */}
                     </ul>
@@ -163,7 +230,7 @@ const Header = ({ location }) => {
                           </a>
                         </li>
                         <li>
-                          <a to="/address">
+                          <a href="/address">
                             <i
                               className="fa fa-angle-right"
                               aria-hidden="true"
@@ -172,7 +239,7 @@ const Header = ({ location }) => {
                           </a>
                         </li>
                         <li>
-                          <a to="/history">
+                          <a href="/history">
                             <i
                               className="fa fa-angle-right"
                               aria-hidden="true"
@@ -332,49 +399,58 @@ const Header = ({ location }) => {
             >
               <h3 className="close1">X</h3>
             </div>
-            {cartItems.map((item) => {
-              if (item.qty === 0) {
-                removeFromCartHandler(item.product);
-              }
+            {cartItems.reduce((acc, item) => acc + item.qty, 0) === 0 ? (
+              <img src="assets/images/empty-cart.png" />
+            ) : (
+              cartItems.map((item) => {
+                if (item.qty === 0) {
+                  removeFromCartHandler(item.product);
+                }
 
-              return (
-                <div className="cart-item">
-                  <div className="cart-item-left">
-                    <img src={`${item.image}`} alt="" />
-                  </div>
-                  <div className="cart-item-right">
-                    <h6>{item.name}</h6>
-                    <span>&#8377; {item.price}</span>
-                  </div>
-                  <span
-                    className="delete-icon"
-                    onClick={() => removeFromCartHandler(item.product)}
-                  ></span>
-                </div>
-              );
-            })}
-            <div className="subtotal">
-              <div className="col-md-6 col-sm-6 col-xs-6">
-                <h6>Subtotal :</h6>
-              </div>
-              <div className="col-md-6 col-sm-6 col-xs-6">
-                <span>
-                  &#8377;
-                  {cartItems
-                    .reduce((acc, item) => acc + item.qty * item.price, 0)
-                    .toFixed(2)}
-                </span>
-              </div>
-            </div>
-            <div className="cart-btn">
-              <a
-                href=""
-                onClick={checkoutHandler}
-                className="btn-main checkout"
-              >
-                CHECK OUT
-              </a>
-            </div>
+                return (
+                  <>
+                    <div className="cart-item">
+                      <div className="cart-item-left">
+                        <img src={`${item.image}`} alt="" />
+                      </div>
+                      <div className="cart-item-right">
+                        <h6>{item.name}</h6>
+                        <span>&#8377; {item.price}</span>
+                      </div>
+                      <span
+                        className="delete-icon"
+                        onClick={() => removeFromCartHandler(item.product)}
+                      ></span>
+                    </div>
+                    <div className="subtotal">
+                      <div className="col-md-6 col-sm-6 col-xs-6">
+                        <h6>Subtotal :</h6>
+                      </div>
+                      <div className="col-md-6 col-sm-6 col-xs-6">
+                        <span>
+                          &#8377;
+                          {cartItems
+                            .reduce(
+                              (acc, item) => acc + item.qty * item.price,
+                              0
+                            )
+                            .toFixed(2)}
+                        </span>
+                      </div>
+                    </div>
+                    <div className="cart-btn">
+                      <a
+                        href=""
+                        onClick={checkoutHandler}
+                        className="btn-main checkout"
+                      >
+                        CHECK OUT
+                      </a>
+                    </div>
+                  </>
+                );
+              })
+            )}
           </div>
         </div>
       </div>
@@ -410,6 +486,14 @@ const Header = ({ location }) => {
                   <i className="fa fa-linkedin"></i>
                 </a>
               </div> */}
+              <GoogleLogin
+                // clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
+                clientId="859216769475-103gs96n5kpq7hfh8dbsfp9horvb4bii.apps.googleusercontent.com"
+                buttonText="Log in with Google"
+                onSuccess={handleLogin}
+                onFailure={handleLogin}
+                cookiePolicy={"single_host_origin"}
+              />
               <span>or use your account</span>
               <input
                 type="email"
@@ -426,6 +510,8 @@ const Header = ({ location }) => {
                 onChange={(e) => setPassword(e.target.value)}
               />
               {/* <a href="#">Forgot Your Password</a> */}
+
+              {/* {signinErrorGoogle && <Message>{signinErrorGoogle}</Message>} */}
 
               {signinError && <Message>{signinError}</Message>}
 
@@ -466,7 +552,9 @@ const Header = ({ location }) => {
             </h3>
           </div>
           <div>
-            <form onSubmit={signupHandler}>
+            <form
+              onSubmit={googlesignup ? signupwithgoogleHandler : signupHandler}
+            >
               <h1>Create Account</h1>
 
               {/* <div className="social-container">
@@ -479,14 +567,39 @@ const Header = ({ location }) => {
                 <a href="#" className="social">
                   <i className="fa fa-linkedin"></i>
                 </a>
+              </div> */}
+              <div
+                style={{
+                  display: googlesignup ? "none" : "unset",
+                }}
+              >
+                <GoogleLogin
+                  // clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
+                  clientId="859216769475-103gs96n5kpq7hfh8dbsfp9horvb4bii.apps.googleusercontent.com"
+                  buttonText="Signup with Google"
+                  onSuccess={handleSignup}
+                  onFailure={handleSignup}
+                  cookiePolicy={"single_host_origin"}
+                />
               </div>
-              <span>or use your email for registration</span> */}
+              <span style={{ display: googlesignup ? "none" : "unset" }}>
+                or use your email for registration
+              </span>
+              <h5
+                style={{
+                  display: googlesignup ? "unset" : "none",
+                  padding: "30px 0px",
+                }}
+              >
+                Enter Your Mobile Number
+              </h5>
               <input
                 type="text"
                 name="name"
                 placeholder="Name"
                 value={username}
                 onChange={(e) => setusername(e.target.value)}
+                style={{ display: googlesignup ? "none" : "unset" }}
               />
               <input
                 type="email"
@@ -494,6 +607,7 @@ const Header = ({ location }) => {
                 placeholder="Email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                style={{ display: googlesignup ? "none" : "unset" }}
               />
               <input
                 type="text"
@@ -508,6 +622,7 @@ const Header = ({ location }) => {
                 placeholder="Password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                style={{ display: googlesignup ? "none" : "unset" }}
               />
               {signupError && <Message>{signupError}</Message>}
               <button type="submit">SignUp</button>

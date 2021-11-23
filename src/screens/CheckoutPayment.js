@@ -6,7 +6,7 @@ import { createOrder } from "../actions/orderActions";
 
 const CheckoutPayment = ({ history }) => {
   const cart = useSelector((state) => state.cart);
-  const { shippingAddress } = cart;
+  const { shippingAddress, cartItems } = cart;
   const [paymentMethod, setPaymentMethod] = useState(" ");
 
   const [paymentID, setpaymentID] = useState("");
@@ -199,23 +199,41 @@ const CheckoutPayment = ({ history }) => {
                   <ul className="checkout-bar">
                     <li className="done-proceed">Login</li>
                     <li className="done-proceed">Address</li>
+                    <li className="done-proceed">Shop Cart</li>
                     <li className="active">Payment Method</li>
                     <li>Order Complete</li>
                   </ul>
                 </div>
-                <div class="row">
-                  <div className="col-lg-7">
-                    <div
-                      className="shop-cart-list wow fadeInDown"
-                      data-wow-duration="1000ms"
-                      data-wow-delay="300ms"
-                    >
-                      {/* <div class="shop-checkout-box"> */}
-                      <div className="cart-total-title">
-                        <h5>ADDRESS DETAILS</h5>
+                <div className="row">
+                  <div
+                    class="col-md-7 col-sm-5 col-xs-12 wow fadeInDown"
+                    data-wow-duration="1000ms"
+                    data-wow-delay="300ms"
+                  >
+                    <div class="shop-checkout-right">
+                      <div class="shop-checkout-box">
+                        <h5>YOUR ORDER</h5>
+                        <div class="shop-checkout-title">
+                          <h6>
+                            PRODUCT <span>TOTAL</span>
+                          </h6>
+                        </div>
+
+                        <div class="shop-checkout-row">
+                          {cartItems.map((item) => {
+                            return (
+                              <p>
+                                <span>{item.name} &nbsp; </span>{" "}
+                                <strong>x</strong> {item.qty}
+                                <small> &#8377; {item.price * item.qty}</small>
+                              </p>
+                            );
+                          })}
+                        </div>
                       </div>
-                      <div class="row">
-                        <div class="col-md-12 col-sm-12 col-xs-12">
+                      <h5>ADDRESS DETAILS</h5>
+                      <div className="row">
+                        <div className="col-md-12 col-sm-12 col-xs-12">
                           <label
                             className="form-check-label-pay"
                             for="delivery"
@@ -236,46 +254,6 @@ const CheckoutPayment = ({ history }) => {
                           </label>
                         </div>
                       </div>
-                      <div className="cart-total-title">
-                        <h5>PAYMENT METHODS</h5>
-                      </div>
-                      <div class="row">
-                        <div className="col-md-12">
-                          <div className="form-check form-check-inline">
-                            <input
-                              className="form-check-input"
-                              type="radio"
-                              name="radio"
-                              value="Online payment"
-                              onChange={(e) => setPaymentMethod(e.target.value)}
-                            />
-                            <label className="form-check-label-pay">
-                              Pay Online
-                            </label>
-                          </div>
-                        </div>
-                        <div className="col-md-12">
-                          <div className="form-check form-check-inline">
-                            <input
-                              className="form-check-input"
-                              value="Cash on delivery"
-                              onChange={(e) => setPaymentMethod(e.target.value)}
-                              type="radio"
-                              name="radio"
-                            />
-                            <label className="form-check-label-pay">
-                              Cash on Delivery
-                            </label>
-                          </div>
-                          <button
-                            className="address-cart-btn-end"
-                            onClick={() => history.push("/checkoutaddress")}
-                          >
-                            Back
-                          </button>
-                        </div>
-                      </div>
-                      {/* </div> */}
                     </div>
                   </div>
                   <div className="col-lg-5">
@@ -288,7 +266,7 @@ const CheckoutPayment = ({ history }) => {
                         <h5>CART TOTALS</h5>
                       </div>
                       <div className="product-cart-total">
-                        <small>Total products</small>
+                        <small>Total Amount</small>
                         <span> &#8377; {cart.itemsPrice}</span>
                       </div>
                       <div className="product-cart-total">
@@ -307,6 +285,51 @@ const CheckoutPayment = ({ history }) => {
                         <h5>
                           TOTAL <span> &#8377; {cart.totalPrice}</span>
                         </h5>
+                      </div>
+                      <div className="cart-total-title">
+                        <h5>PAYMENT METHODS</h5>
+                      </div>
+                      <div class="row">
+                        <div className="col-md-12">
+                          <div className="form-check form-check-inline">
+                            <input
+                              className="form-check-input"
+                              type="radio"
+                              name="radio"
+                              value="Online payment"
+                              checked={paymentMethod === "Online payment"}
+                              onChange={(e) => setPaymentMethod(e.target.value)}
+                            />
+                            <label
+                              className="form-check-label-pay"
+                              onClick={(e) =>
+                                setPaymentMethod("Online payment")
+                              }
+                            >
+                              Pay Online
+                            </label>
+                          </div>
+                        </div>
+                        <div className="col-md-12">
+                          <div className="form-check form-check-inline">
+                            <input
+                              className="form-check-input"
+                              value="Cash on delivery"
+                              onChange={(e) => setPaymentMethod(e.target.value)}
+                              checked={paymentMethod === "Cash on delivery"}
+                              type="radio"
+                              name="radio"
+                            />
+                            <label
+                              className="form-check-label-pay"
+                              onClick={(e) =>
+                                setPaymentMethod("Cash on delivery")
+                              }
+                            >
+                              Cash on Delivery
+                            </label>
+                          </div>
+                        </div>
                       </div>
                       {paymentMethod == " " ? (
                         <div className="proceed-check">
@@ -339,6 +362,32 @@ const CheckoutPayment = ({ history }) => {
                       )}
                     </div>
                   </div>
+
+                  {/* <div class="shop-checkout-box"> */}
+                  {/* <div className="cart-total-title">
+                    <h5>ADDRESS DETAILS</h5>
+                  </div> */}
+                  {/* <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                      <label className="form-check-label-pay" for="delivery">
+                        {shippingAddress.name}
+                        {`(${shippingAddress.addressOptions})`} <br />
+                        <small>
+                          {shippingAddress.address}
+                          <br />
+                          {shippingAddress.area}
+                          <br />
+                          {shippingAddress.pincode}
+                          <br />
+                          {shippingAddress.landmark}
+                          <br />
+                          Mobile Number - {shippingAddress.phoneNumber}
+                        </small>
+                      </label>
+                    </div>
+                  </div> */}
+
+                  {/* </div> */}
                 </div>
               </div>
             </section>

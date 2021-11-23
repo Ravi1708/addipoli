@@ -50,6 +50,7 @@ const OrderCompleted = ({ match }) => {
                   <ul className="checkout-bar">
                     <li className="done-proceed">Login</li>
                     <li className="done-proceed">Address</li>
+                    <li className="done-proceed">Shop Cart</li>
                     <li className="done-proceed">Payment Method</li>
                     <li className="active done-proceed">Order Complete</li>
                   </ul>
@@ -61,51 +62,9 @@ const OrderCompleted = ({ match }) => {
                       Order ID - <span>{orderId}</span>
                     </h5>
                   </div>
+                  <img src="/assets/images/complete-sign.png" />
                   {/* <div class="row">
-                    <div class="col-md-8">
-                      <div className="title text-center">
-                        <h5 className="text-coffee">ORDER DETAILS</h5>
-                      </div>
-                      <div class="menu-wrapper">
-                        <div class="portfolioContainer row">
-                          <div class="col-md-12 col-sm-12 col-xs-12 isotope-item breakfast">
-                            <div class="menu-list-order">
-                              <span class="menu-list-product-order">
-                                <img src="/assets/images/img3.png" />
-                              </span>
-                              <h5>
-                                Addipoli Puttu <span>$ 15.00</span>
-                              </h5>
-                            </div>
-                          </div>
-                          <div class="col-md-12 col-sm-12 col-xs-12 isotope-item lunch">
-                            <div class="menu-list-order">
-                              <span class="menu-list-product-order">
-                                <img src="/assets/images/img4.png" />
-                              </span>
-                              <h5>
-                                parotta with curry<span>$ 25.00</span>
-                              </h5>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-md-4">
-                      <div className="title text-center">
-                        <h5 className="text-coffee">SHIPPING ADDRESS</h5>
-                      </div>
-                      <h6 className="heade-order">
-                        <p>
-                          Siva (Home) <br />
-                          21a Subiramaniya samy Kovil Street <br />
-                          Coimabatore 641030
-                          <br />
-                          Near Landmark
-                          <br />
-                          Mobile Number - 123456789
-                        </p>
-                      </h6>
+                    <div class="col-md-8">                      
                     </div>
                   </div> */}
                   <p>

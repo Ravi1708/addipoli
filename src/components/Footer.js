@@ -82,11 +82,11 @@ const Footer = () => {
                         <i className="fa fa-instagram" aria-hidden="true"></i>
                       </a>
                     </li>
-                    {/* <li>
-                        <a href="#">
-                          <i className="fa fa-twitter" aria-hidden="true"></i>
-                        </a>
-                      </li> */}
+                    <li>
+                      <a href="https://twitter.com/APuttus">
+                        <i className="fa fa-twitter" aria-hidden="true"></i>
+                      </a>
+                    </li>
                   </ul>
                 </div>
                 <br />
@@ -120,6 +120,17 @@ const Footer = () => {
                   </span>
                 </div>
               </div>
+            </div>
+          </div>
+          <div class="location-footer-map">
+            <div class="icon-find-location">
+              <a href="#">
+                <img src="assets/images/location.png" />
+                <span>Find us on Map</span>
+              </a>
+            </div>
+            <div class="footer-map-outer">
+              <div id="footer-map"></div>
             </div>
           </div>
         </div>

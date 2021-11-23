@@ -64,7 +64,7 @@ const HomeSlider = () => {
                     )
                   })} */}
         <div className="item">
-          <a href="#" className="magnific-popup">
+          <a className="magnific-popup">
             <img
               src="assets/images/gallery/gallery1.jpeg"
               alt="image"
@@ -73,7 +73,7 @@ const HomeSlider = () => {
           </a>
         </div>
         <div className="item">
-          <a href="#" className="magnific-popup">
+          <a className="magnific-popup">
             <img
               src="assets/images/gallery/gallery2.jpeg"
               alt="image"
@@ -82,7 +82,7 @@ const HomeSlider = () => {
           </a>
         </div>
         <div className="item">
-          <a href="#" className="magnific-popup">
+          <a className="magnific-popup">
             <img
               src="assets/images/gallery/gallery3.jpeg"
               alt="image"
@@ -91,7 +91,7 @@ const HomeSlider = () => {
           </a>
         </div>
         <div className="item">
-          <a href="#" className="magnific-popup">
+          <a className="magnific-popup">
             <img
               src="assets/images/gallery/gallery4.jpeg"
               alt="image"
@@ -100,7 +100,7 @@ const HomeSlider = () => {
           </a>
         </div>
         <div className="item">
-          <a href="#" className="magnific-popup">
+          <a className="magnific-popup">
             <img
               src="assets/images/gallery/gallery5.jpeg"
               alt="image"

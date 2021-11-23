@@ -6,6 +6,8 @@ import { listProducts } from "../actions/productActions";
 import ProductCard from "../components/ProductCard";
 import { login, logout, register } from "../actions/userActions";
 import Message from "../components/Message";
+import Footer from "../components/Footer";
+import Header from "../components/Header";
 
 import { addToCart, removeFromCart } from "../actions/cartActions";
 
@@ -101,7 +103,7 @@ const HomeScreen = ({ match, history }) => {
     //   setopensignin(true);
     //   history.push("/checkout");
     // }
-    userInfo ? history.push("/checkout") : setopensignin(true);
+    userInfo ? history.push("/checkoutaddress") : setopensignin(true);
   };
 
   return (
@@ -206,79 +208,88 @@ const HomeScreen = ({ match, history }) => {
                       </p>
                       <div className="side-add-cart bg-white rounded shadow-sm mb-2">
                         <div className="gold-members p-2">
-                          {cartItems.map((item) => {
-                            {
-                              if (item.qty === 0) {
-                                removeFromCartHandler(item.product);
+                          {cartItems.reduce(
+                            (acc, item) => acc + item.qty,
+                            0
+                          ) === 0 ? (
+                            <img src="assets/images/empty-cart.png" />
+                          ) : (
+                            cartItems.map((item) => {
+                              {
+                                if (item.qty === 0) {
+                                  removeFromCartHandler(item.product);
+                                }
                               }
-                            }
-                            return (
-                              <div
-                                className="cart-item"
-                                style={{ display: "flex" }}
-                              >
-                                <div className="cart-item-left">
-                                  <img src={`${item.image}`} alt="" />
-                                </div>
+                              return (
                                 <div
-                                  className="cart-item-right"
-                                  style={{
-                                    display: "flex",
-                                    flexDirection: "column",
-                                    width: "75%",
-                                  }}
+                                  className="cart-item"
+                                  style={{ display: "flex" }}
                                 >
-                                  <h6>{item.name}</h6>
-                                  <div className="count-number float-right">
-                                    <span style={{ marginRight: "8px" }}>
-                                      &#8377; {item.price * item.qty}
-                                    </span>
-                                    <button
-                                      id="sub"
-                                      className="cart-count"
-                                      onClick={(e) =>
-                                        dispatch(
-                                          addToCart(
-                                            item.product,
-                                            Number(item.qty - 1)
-                                          )
-                                        )
-                                      }
-                                    >
-                                      -
-                                    </button>
-                                    <input
-                                      className="count-nom"
-                                      type="text"
-                                      id="qtyBox"
-                                      readonly=""
-                                      value={item.qty}
-                                    />
-                                    <button
-                                      id="add"
-                                      className="cart-count"
-                                      onClick={(e) =>
-                                        dispatch(
-                                          addToCart(
-                                            item.product,
-                                            Number(item.qty + 1)
-                                          )
-                                        )
-                                      }
-                                    >
-                                      +
-                                    </button>
+                                  <div className="cart-item-left">
+                                    <img src={`${item.image}`} alt="" />
                                   </div>
+                                  <div
+                                    className="cart-item-right"
+                                    style={{
+                                      display: "flex",
+                                      flexDirection: "column",
+                                      width: "75%",
+                                    }}
+                                  >
+                                    <h6 style={{ fontSize: "12px" }}>
+                                      {item.name}
+                                    </h6>
+                                    <div className="count-number float-right">
+                                      <span style={{ marginRight: "10px" }}>
+                                        &#8377; {item.price * item.qty}
+                                      </span>
+                                      <button
+                                        id="sub"
+                                        className="cart-count"
+                                        onClick={(e) =>
+                                          dispatch(
+                                            addToCart(
+                                              item.product,
+                                              Number(item.qty - 1)
+                                            )
+                                          )
+                                        }
+                                      >
+                                        -
+                                      </button>
+                                      <input
+                                        className="count-nom"
+                                        type="text"
+                                        id="qtyBox"
+                                        readonly=""
+                                        value={item.qty}
+                                      />
+                                      <button
+                                        id="add"
+                                        className="cart-count"
+                                        onClick={(e) =>
+                                          dispatch(
+                                            addToCart(
+                                              item.product,
+                                              Number(item.qty + 1)
+                                            )
+                                          )
+                                        }
+                                      >
+                                        +
+                                      </button>
+                                    </div>
+                                  </div>
+                                  <span
+                                    className="delete-icon"
+                                    onClick={() =>
+                                      removeFromCartHandler(item.product)
+                                    }
+                                  ></span>
                                 </div>
-                                <span
-                                  className="delete-icon"
-                                  onClick={() =>
-                                    removeFromCartHandler(item.product)
-                                  }
-                                ></span>
-                              </div>
-                            );
-                          })}
+                              );
+                            })
+                          )}
                         </div>
                       </div>
                       <div className="mb-2 bg-white rounded p-2 clearfix">
@@ -309,7 +320,10 @@ const HomeScreen = ({ match, history }) => {
                         </p> */}
                       </div>
                       <div
-                        onClick={checkoutHandler}
+                        onClick={
+                          cartItems.reduce((acc, item) => acc + item.qty, 0) !=
+                            0 && checkoutHandler
+                        }
                         className="btn checkout-btn btn-block btn-lg"
                       >
                         Checkout
@@ -593,6 +607,7 @@ const HomeScreen = ({ match, history }) => {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };

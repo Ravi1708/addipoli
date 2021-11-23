@@ -49,12 +49,11 @@ const App = () => {
           <Route path="/profile" component={Profile}></Route>
           <Route path="/address" component={Address}></Route>
           <Route path="/addaddress" component={AddAddress}></Route>
-          <Route path="/editaddress" component={EditAddress}></Route>
+          <Route path="/editaddress/:id" component={EditAddress}></Route>
           <Route path="/termsconditions" component={TermsConditions}></Route>
           <Route path="/policy" component={Policy}></Route>
           <Route path="/" exact component={HomeScreen}></Route>
         </Switch>
-        <Footer />
       </Router>
     </div>
   );

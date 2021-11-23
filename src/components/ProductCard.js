@@ -15,7 +15,7 @@ function ProductCard(props) {
             backgroundImage: `url(${props.product.image})`,
           }}
         ></div>
-        <a href="#">
+        <a>
           <h5>{props.product.name}</h5>
         </a>
         <div className="row">

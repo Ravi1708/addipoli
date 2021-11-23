@@ -27,6 +27,15 @@ import {
   USER_ADDRESS_DETAILS_SUCCESS,
   USER_ADDRESS_DETAILS_REQUEST,
   USER_ADDRESS_DETAILS_FAIL,
+  USER_ADDRESS_DETAILS_BY_ID_REQUEST,
+  USER_ADDRESS_DETAILS_BY_ID_SUCCESS,
+  USER_ADDRESS_DETAILS_BY_ID_FAIL,
+  USER_REGISTER_WITH_GOOGLE_REQUEST,
+  USER_REGISTER_WITH_GOOGLE_SUCCESS,
+  USER_REGISTER_WITH_GOOGLE_FAIL,
+  USER_LOGIN_WITH_GOOGLE_REQUEST,
+  USER_LOGIN_WITH_GOOGLE_SUCCESS,
+  USER_LOGIN_WITH_GOOGLE_FAIL,
 } from "../constants/userConstants";
 
 export const userLoginReducer = (state = { products: [] }, action) => {
@@ -44,6 +53,24 @@ export const userLoginReducer = (state = { products: [] }, action) => {
   }
 };
 
+// export const userLoginWithGoogleReducer = (
+//   state = { products: [] },
+//   action
+// ) => {
+//   switch (action.type) {
+//     case USER_LOGIN_WITH_GOOGLE_REQUEST:
+//       return { loading: true };
+//     case USER_LOGIN_WITH_GOOGLE_SUCCESS:
+//       return { loading: false, userInfo: action.payload };
+//     case USER_LOGIN_WITH_GOOGLE_FAIL:
+//       return { loading: false, error: action.payload };
+//     case USER_LOGOUT:
+//       return {};
+//     default:
+//       return state;
+//   }
+// };
+
 export const userRegisterReducer = (state = {}, action) => {
   switch (action.type) {
     case USER_REGISTER_REQUEST:
@@ -56,6 +83,19 @@ export const userRegisterReducer = (state = {}, action) => {
       return state;
   }
 };
+
+// export const userRegisterWithGoogleReducer = (state = {}, action) => {
+//   switch (action.type) {
+//     case USER_REGISTER_WITH_GOOGLE_REQUEST:
+//       return { loading: true };
+//     case USER_REGISTER_WITH_GOOGLE_SUCCESS:
+//       return { loading: false, userInfo: action.payload };
+//     case USER_REGISTER_WITH_GOOGLE_FAIL:
+//       return { loading: false, error: action.payload };
+//     default:
+//       return state;
+//   }
+// };
 
 export const userDetailsReducer = (state = { user: {} }, action) => {
   switch (action.type) {
@@ -79,6 +119,19 @@ export const userAddressesReducer = (state = { user: {} }, action) => {
     case USER_ADDRESS_DETAILS_SUCCESS:
       return { loading: false, addresses: action.payload };
     case USER_ADDRESS_DETAILS_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const userAddressesByIdReducer = (state = { user: {} }, action) => {
+  switch (action.type) {
+    case USER_ADDRESS_DETAILS_BY_ID_REQUEST:
+      return { ...state, loading: true };
+    case USER_ADDRESS_DETAILS_BY_ID_SUCCESS:
+      return { loading: false, addressbyid: action.payload };
+    case USER_ADDRESS_DETAILS_BY_ID_FAIL:
       return { loading: false, error: action.payload };
     default:
       return state;

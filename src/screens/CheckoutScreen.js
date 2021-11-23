@@ -8,6 +8,8 @@ import { LinkContainer } from "react-router-bootstrap";
 const CheckoutScreen = ({ match, history }) => {
   const [keyword, setKeyword] = useState(match.params.keyword);
   const [coupencode, setcoupencode] = useState("");
+  const cart = useSelector((state) => state.cart);
+  const { shippingAddress, cartItems } = cart;
 
   const [activeIndex, setactiveIndex] = useState(0);
 
@@ -17,9 +19,6 @@ const CheckoutScreen = ({ match, history }) => {
 
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
-
-  const cart = useSelector((state) => state.cart);
-  const { cartItems } = cart;
 
   // calculate price
   const addDecimals = (num) => {
@@ -85,8 +84,21 @@ const CheckoutScreen = ({ match, history }) => {
                 <img src="assets/images/scroll-arrow.png" alt="image" />
               </div>
               <div className="container">
+                <div
+                  className="checkout-wrap checkout-wrap-more wow fadeInDown"
+                  data-wow-duration="1000ms"
+                  data-wow-delay="300ms"
+                >
+                  <ul className="checkout-bar">
+                    <li className="done-proceed">Login</li>
+                    <li className="done-proceed">Address</li>
+                    <li className="active">Shop Cart</li>
+                    <li>Payment Method</li>
+                    <li>Order Complete</li>
+                  </ul>
+                </div>
                 <div className="row">
-                  <div className="col-lg-8">
+                  <div className="col-lg-12">
                     <div
                       className="shop-cart-list wow fadeInDown"
                       data-wow-duration="1000ms"
@@ -94,7 +106,7 @@ const CheckoutScreen = ({ match, history }) => {
                     >
                       <table className="shop-cart-table">
                         <thead>
-                          <tr>
+                          <tr style={{ textAlign: "center" }}>
                             <th>PRODUCT</th>
                             <th>PRICE</th>
                             <th>QUANTITY</th>
@@ -103,20 +115,32 @@ const CheckoutScreen = ({ match, history }) => {
                         </thead>
                         <tbody>
                           {cartItems.map((item) => {
-                            console.log(item);
                             return (
-                              <tr>
+                              <tr style={{ textAlign: "center" }}>
                                 <td>
                                   <div className="product-cart">
-                                    <img src={item.image} alt="image" />
+                                    <img
+                                      src={item.image}
+                                      style={{
+                                        width: "80px",
+                                        borderRadius: "20px",
+                                      }}
+                                      alt="image"
+                                    />
                                   </div>
-                                  <div className="product-cart-title">
+                                  <div
+                                    className="product-cart-title"
+                                    style={{ fontSize: "15px" }}
+                                  >
                                     <span>{item.name}</span>
                                   </div>
                                 </td>
 
                                 <td>
-                                  <strong> &#8377; {item.price}</strong>
+                                  <strong style={{ color: "#04e04c" }}>
+                                    {" "}
+                                    &#8377; {item.price}
+                                  </strong>
                                 </td>
                                 <th>QUANTITY</th>
                                 <td>
@@ -156,14 +180,6 @@ const CheckoutScreen = ({ match, history }) => {
                                 </td>
                                 <th>TOTAL</th>
                                 <td> &#8377; {item.price * item.qty}</td>
-                                <td
-                                  className="shop-cart-close"
-                                  onClick={() =>
-                                    removeFromCartHandler(item.product)
-                                  }
-                                >
-                                  <i className="icon-cancel-5"></i>
-                                </td>
                               </tr>
                             );
                           })}
@@ -249,12 +265,41 @@ const CheckoutScreen = ({ match, history }) => {
                           </tr> */}
                         </tbody>
                       </table>
-                      <div className="product-cart-detail">
+                    </div>
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-lg-8">
+                    <div
+                      className="shop-cart-list wow fadeInDown"
+                      data-wow-duration="1000ms"
+                      data-wow-delay="300ms"
+                    >
+                      {/* <div class="shop-checkout-box"> */}
+                      <div className="cart-total-title">
+                        <h5>ADDRESS DETAILS</h5>
+                      </div>
+                      <label className="form-check-label-pay" for="delivery">
+                        {shippingAddress.name}
+                        {`(${shippingAddress.addressOptions})`} <br />
+                        <small>
+                          {shippingAddress.address}
+                          <br />
+                          {shippingAddress.area}
+                          <br />
+                          {shippingAddress.pincode}
+                          <br />
+                          {shippingAddress.landmark}
+                          <br />
+                          Mobile Number - {shippingAddress.phoneNumber}
+                        </small>
+                      </label>
+                      {/* <div className="product-cart-detail">
                         <div className="cupon-part">
                           <input
                             type="text"
                             name="txt"
-                            placeholder="Cupon Code"
+                            placeholder="Coupon Code"
                             value={coupencode}
                             onChange={(e) => setcoupencode(e.target.value)}
                           ></input>
@@ -265,7 +310,7 @@ const CheckoutScreen = ({ match, history }) => {
                         >
                           Apply Coupon
                         </a>
-                      </div>
+                      </div> */}
                     </div>
                   </div>
                   <div className="col-lg-4">
@@ -299,7 +344,7 @@ const CheckoutScreen = ({ match, history }) => {
                         </h5>
                       </div>
                       <div className="proceed-check">
-                        <LinkContainer to="/checkoutaddress">
+                        <LinkContainer to="/payment">
                           <div className="btn-primary-gold btn-medium">
                             Confirm Order
                           </div>

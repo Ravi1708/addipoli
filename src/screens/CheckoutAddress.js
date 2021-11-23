@@ -5,6 +5,8 @@ import { FormContainer } from "../components/FormContainer";
 import { saveShippingAddress, createAddress } from "../actions/cartActions";
 import { CheckoutSteps } from "../components/CheckoutSteps";
 import { getUserAddresses } from "../actions/userActions";
+import Footer from "../components/Footer";
+import Header from "../components/Header";
 
 const CheckoutAddress = ({ history }) => {
   const cart = useSelector((state) => state.cart);
@@ -56,7 +58,7 @@ const CheckoutAddress = ({ history }) => {
         addressOptions,
       })
     );
-    history.push("/payment");
+    history.push("/checkout");
   };
 
   // const proceedWithAddress = ({e, address) => {
@@ -112,6 +114,7 @@ const CheckoutAddress = ({ history }) => {
                   <ul className="checkout-bar">
                     <li className="done-proceed">Login</li>
                     <li className="active">Address</li>
+                    <li>Shop Cart</li>
                     <li>Payment Method</li>
                     <li>Order Complete</li>
                   </ul>
@@ -129,17 +132,7 @@ const CheckoutAddress = ({ history }) => {
                           return (
                             <>
                               <div className="row">
-                                <div
-                                  className="col-md-2"
-                                  style={{ margin: "10px" }}
-                                >
-                                  {/* <input
-                                    className="form-check-input"
-                                    type="radio"
-                                    name="delivery"
-                                  /> */}
-                                </div>
-                                <div className="col-md-10">
+                                <div className="col-12">
                                   <label
                                     className="form-check-label"
                                     for="delivery"
@@ -155,12 +148,12 @@ const CheckoutAddress = ({ history }) => {
                                     Mobile Number -{address.phoneNumber}
                                   </label>
                                 </div>
-                                <div className="col-md-6">
+                                <div className="col-6">
                                   <a class="address-cart-btn" href="#">
                                     Edit
                                   </a>
                                 </div>
-                                <div className="col-md-6">
+                                <div className="col-6">
                                   <a
                                     class="address-cart-btn-end"
                                     href="#"
@@ -178,7 +171,7 @@ const CheckoutAddress = ({ history }) => {
                                           addressOptions,
                                         })
                                       );
-                                      history.push("/payment");
+                                      history.push("/checkout");
                                     }}
                                   >
                                     Proceed
@@ -351,6 +344,7 @@ const CheckoutAddress = ({ history }) => {
         </main>
         {/*<!-- End Main -->*/}
       </div>
+      <Footer />
     </div>
   );
 };

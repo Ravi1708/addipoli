@@ -139,11 +139,11 @@ export const listMyOrders = () => async (dispatch, getState) => {
     const config = {
       headers: {
         "content-Type": "application/json",
-        "x-access-token": `${userInfo.accessTokens}`,
+        "x-access-token": `${userInfo.accessToken}`,
       },
     };
 
-    const { data } = await axios.get(`${URL}/api/orders/myorders`, config);
+    const { data } = await axios.get(`${URL}/user/orders`, config);
 
     dispatch({
       type: ORDER_LIST_MY_SUCCESS,
