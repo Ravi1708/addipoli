@@ -344,7 +344,6 @@ const CheckoutAddress = ({ history }) => {
         </main>
         {/*<!-- End Main -->*/}
       </div>
-      <Footer />
     </div>
   );
 };

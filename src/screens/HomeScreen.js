@@ -607,7 +607,6 @@ const HomeScreen = ({ match, history }) => {
           </div>
         </div>
       </div>
-      <Footer />
     </div>
   );
 };

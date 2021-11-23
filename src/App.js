@@ -54,6 +54,7 @@ const App = () => {
           <Route path="/policy" component={Policy}></Route>
           <Route path="/" exact component={HomeScreen}></Route>
         </Switch>
+        <Footer />
       </Router>
     </div>
   );
