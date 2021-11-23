@@ -62,7 +62,6 @@ const Header = ({ location }) => {
   const handleLogin = (googleData) => {
     setGooglesignup(true);
     settokenId(googleData.tokenId);
-    console.log(googleData);
     dispatch(loginwithgoogle(googleData.tokenId));
 
     // const res = await fetch("/login", {
