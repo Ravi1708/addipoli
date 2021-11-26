@@ -4,10 +4,18 @@ import { NavLink } from "react-router-dom";
 import { Link, Route, useParams, useRouteMatch } from "react-router-dom";
 import { listProducts } from "../actions/productActions";
 import ProductCard from "../components/ProductCard";
-import { login, logout, register } from "../actions/userActions";
+import {
+  login,
+  loginwithgoogle,
+  logout,
+  register,
+  registerWithGoogle,
+} from "../actions/userActions";
 import Message from "../components/Message";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
+import { userLoginWithGoogleReducer } from "../reducers/userReducers";
+import GoogleLogin from "react-google-login";
 
 import { addToCart, removeFromCart } from "../actions/cartActions";
 
@@ -17,12 +25,15 @@ import HomeSlider from "../components/HomeSlider";
 import { LinkContainer } from "react-router-bootstrap";
 
 const HomeScreen = ({ match, history }) => {
+  const [opencart, setopencart] = useState(false);
+  const [googlesignup, setGooglesignup] = useState(false);
   const [opensignin, setopensignin] = useState(false);
   const [opensignup, setopensignup] = useState(false);
   const [email, setEmail] = useState("");
   const [phoneNumber, setphoneNumber] = useState();
   const [password, setPassword] = useState("");
   const [username, setusername] = useState("");
+  const [tokenId, settokenId] = useState("");
 
   const dispatch = useDispatch();
 
@@ -77,33 +88,76 @@ const HomeScreen = ({ match, history }) => {
     dispatch(listProducts());
   }, [dispatch, userInfo]);
 
-  const signupHandler = (e) => {
-    e.preventDefault();
-    dispatch(register(username, phoneNumber, email, password));
-  };
-
   const signinHandler = (e) => {
     e.preventDefault();
     dispatch(login(email, password));
   };
 
-  const handleCart = (id, qty) => {
-    dispatch(addToCart(id, qty));
+  const handleLogin = (googleData) => {
+    setGooglesignup(true);
+    settokenId(googleData.tokenId);
+    dispatch(loginwithgoogle(googleData.tokenId));
+
+    // const res = await fetch("/login", {
+    //   method: "POST",
+    //   body: JSON.stringify({
+    //     token: googleData.tokenId,
+    //   }),
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    // });
+    // const data = await res.json();
+    // store returned user somehow
+  };
+
+  // const signinWithGoogleHandler = (e) => {
+  //   e.preventDefault();
+
+  // };
+
+  const handleSignup = (googleData) => {
+    setGooglesignup(true);
+    settokenId(googleData.tokenId);
+    // const res = await fetch("/login", {
+    //   method: "POST",
+    //   body: JSON.stringify({
+    //     token: googleData.tokenId,
+    //   }),
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    // });
+    // const data = await res.json();
+    // store returned user somehow
+  };
+
+  const signupHandler = (e) => {
+    e.preventDefault();
+    dispatch(register(username, phoneNumber, email, password));
+  };
+
+  const signupwithgoogleHandler = (e) => {
+    e.preventDefault();
+    dispatch(registerWithGoogle(tokenId, phoneNumber));
+  };
+
+  const logoutHandler = (e) => {
+    dispatch(logout);
   };
 
   const removeFromCartHandler = (id) => {
     dispatch(removeFromCart(id));
   };
 
-  const checkoutHandler = () => {
-    // if (userInfo) {
-    //   history.push("/checkout");
-    // }
-    // else {
-    //   setopensignin(true);
-    //   history.push("/checkout");
-    // }
-    userInfo ? history.push("/checkoutaddress") : setopensignin(true);
+  const checkoutHandler = (e) => {
+    e.preventDefault();
+    setopencart(false);
+    userInfo ? history.push("/checkout") : setopensignin(true);
+  };
+
+  const handleCart = (id, qty) => {
+    dispatch(addToCart(id, qty));
   };
 
   return (
@@ -502,6 +556,14 @@ const HomeScreen = ({ match, history }) => {
                   <i className="fa fa-linkedin"></i>
                 </a>
               </div> */}
+              <GoogleLogin
+                // clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
+                clientId="859216769475-tqnheotaog2h84dbpq3g11u2h88nhpnn.apps.googleusercontent.com"
+                buttonText="Log in with Google"
+                onSuccess={handleLogin}
+                onFailure={handleLogin}
+                cookiePolicy={"single_host_origin"}
+              />
               <span>or use your account</span>
               <input
                 type="email"
@@ -518,6 +580,8 @@ const HomeScreen = ({ match, history }) => {
                 onChange={(e) => setPassword(e.target.value)}
               />
               {/* <a href="#">Forgot Your Password</a> */}
+
+              {/* {signinErrorGoogle && <Message>{signinErrorGoogle}</Message>} */}
 
               {signinError && <Message>{signinError}</Message>}
 
@@ -558,7 +622,9 @@ const HomeScreen = ({ match, history }) => {
             </h3>
           </div>
           <div>
-            <form onSubmit={signupHandler}>
+            <form
+              onSubmit={googlesignup ? signupwithgoogleHandler : signupHandler}
+            >
               <h1>Create Account</h1>
 
               {/* <div className="social-container">
@@ -571,14 +637,39 @@ const HomeScreen = ({ match, history }) => {
                 <a href="#" className="social">
                   <i className="fa fa-linkedin"></i>
                 </a>
+              </div> */}
+              <div
+                style={{
+                  display: googlesignup ? "none" : "unset",
+                }}
+              >
+                <GoogleLogin
+                  // clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
+                  clientId="859216769475-tqnheotaog2h84dbpq3g11u2h88nhpnn.apps.googleusercontent.com"
+                  buttonText="Signup with Google"
+                  onSuccess={handleSignup}
+                  onFailure={handleSignup}
+                  cookiePolicy={"single_host_origin"}
+                />
               </div>
-              <span>or use your email for registration</span> */}
+              <span style={{ display: googlesignup ? "none" : "unset" }}>
+                or use your email for registration
+              </span>
+              <h5
+                style={{
+                  display: googlesignup ? "unset" : "none",
+                  padding: "30px 0px",
+                }}
+              >
+                Enter Your Mobile Number
+              </h5>
               <input
                 type="text"
                 name="name"
                 placeholder="Name"
                 value={username}
                 onChange={(e) => setusername(e.target.value)}
+                style={{ display: googlesignup ? "none" : "unset" }}
               />
               <input
                 type="email"
@@ -586,6 +677,7 @@ const HomeScreen = ({ match, history }) => {
                 placeholder="Email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                style={{ display: googlesignup ? "none" : "unset" }}
               />
               <input
                 type="text"
@@ -600,6 +692,7 @@ const HomeScreen = ({ match, history }) => {
                 placeholder="Password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                style={{ display: googlesignup ? "none" : "unset" }}
               />
               {signupError && <Message>{signupError}</Message>}
               <button type="submit">SignUp</button>
