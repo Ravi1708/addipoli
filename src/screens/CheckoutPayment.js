@@ -82,6 +82,7 @@ const CheckoutPayment = ({ history }) => {
                     receiptId,
                   })
                 );
+                localStorage.removeItem("cartItems");
               })
               .catch((err) => console.log(err));
           },
@@ -162,6 +163,7 @@ const CheckoutPayment = ({ history }) => {
         orderStatus: "Ongoing",
       })
     );
+    localStorage.removeItem("cartItems");
   };
 
   return (

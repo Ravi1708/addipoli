@@ -28,6 +28,7 @@ const CheckoutAddress = ({ history }) => {
   const [addressOptions, setaddressOptions] = useState("others");
   const dispatch = useDispatch();
   useEffect(() => {
+    window.scrollTo(0, 0);
     dispatch(getUserAddresses());
   }, [dispatch]);
 

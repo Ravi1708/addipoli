@@ -27,6 +27,7 @@ const Header = ({ location }) => {
   const [password, setPassword] = useState("");
   const [username, setusername] = useState("");
   const [tokenId, settokenId] = useState("");
+  const [redirect, setredirect] = useState(false);
 
   const dispatch = useDispatch();
   const userLogin = useSelector((state) => state.userLogin);
@@ -51,8 +52,6 @@ const Header = ({ location }) => {
   //   userRegisterWithGoogle;
 
   //   const redirect = location.search ? location.search.split("=")[1] : "/";
-
-  console.log(userInfo);
 
   const signinHandler = (e) => {
     e.preventDefault();
@@ -119,7 +118,12 @@ const Header = ({ location }) => {
   const checkoutHandler = (e) => {
     e.preventDefault();
     setopencart(false);
-    userInfo ? history.push("/checkout") : setopensignin(true);
+    if (userInfo) {
+      history.push("/checkoutaddress");
+    } else {
+      setredirect(true);
+      setopensignin(true);
+    }
   };
 
   useEffect(() => {
@@ -131,6 +135,11 @@ const Header = ({ location }) => {
     if (opensignup == true) {
       if (userInfo) {
         setopensignup(false);
+      }
+    }
+    if (redirect == true) {
+      if (userInfo) {
+        history.push("/checkoutaddress");
       }
     }
   }, [dispatch, history, userInfo]);
@@ -401,54 +410,53 @@ const Header = ({ location }) => {
             {cartItems.reduce((acc, item) => acc + item.qty, 0) === 0 ? (
               <img src="assets/images/empty-cart.png" />
             ) : (
-              cartItems.map((item) => {
-                if (item.qty === 0) {
-                  removeFromCartHandler(item.product);
-                }
+              <>
+                {cartItems.map((item) => {
+                  if (item.qty === 0) {
+                    removeFromCartHandler(item.product);
+                  }
 
-                return (
-                  <>
-                    <div className="cart-item">
-                      <div className="cart-item-left">
-                        <img src={`${item.image}`} alt="" />
+                  return (
+                    <>
+                      <div className="cart-item">
+                        <div className="cart-item-left">
+                          <img src={`${item.image}`} alt="" />
+                        </div>
+                        <div className="cart-item-right">
+                          <h6>{item.name}</h6>
+                          <span>&#8377; {item.price}</span>
+                        </div>
+                        <span
+                          className="delete-icon"
+                          onClick={() => removeFromCartHandler(item.product)}
+                        ></span>
                       </div>
-                      <div className="cart-item-right">
-                        <h6>{item.name}</h6>
-                        <span>&#8377; {item.price}</span>
-                      </div>
-                      <span
-                        className="delete-icon"
-                        onClick={() => removeFromCartHandler(item.product)}
-                      ></span>
-                    </div>
-                    <div className="subtotal">
-                      <div className="col-md-6 col-sm-6 col-xs-6">
-                        <h6>Subtotal :</h6>
-                      </div>
-                      <div className="col-md-6 col-sm-6 col-xs-6">
-                        <span>
-                          &#8377;
-                          {cartItems
-                            .reduce(
-                              (acc, item) => acc + item.qty * item.price,
-                              0
-                            )
-                            .toFixed(2)}
-                        </span>
-                      </div>
-                    </div>
-                    <div className="cart-btn">
-                      <a
-                        href=""
-                        onClick={checkoutHandler}
-                        className="btn-main checkout"
-                      >
-                        CHECK OUT
-                      </a>
-                    </div>
-                  </>
-                );
-              })
+                    </>
+                  );
+                })}
+                <div className="subtotal">
+                  <div className="col-md-6 col-sm-6 col-xs-6">
+                    <h6>Subtotal :</h6>
+                  </div>
+                  <div className="col-md-6 col-sm-6 col-xs-6">
+                    <span>
+                      &#8377;
+                      {cartItems
+                        .reduce((acc, item) => acc + item.qty * item.price, 0)
+                        .toFixed(2)}
+                    </span>
+                  </div>
+                </div>
+                <div className="cart-btn">
+                  <a
+                    href=""
+                    onClick={checkoutHandler}
+                    className="btn-main checkout"
+                  >
+                    CHECK OUT
+                  </a>
+                </div>
+              </>
             )}
           </div>
         </div>

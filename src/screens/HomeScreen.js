@@ -34,6 +34,7 @@ const HomeScreen = ({ match, history }) => {
   const [password, setPassword] = useState("");
   const [username, setusername] = useState("");
   const [tokenId, settokenId] = useState("");
+  const [redirect, setredirect] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -82,6 +83,11 @@ const HomeScreen = ({ match, history }) => {
     if (opensignup == true) {
       if (userInfos) {
         setopensignup(false);
+      }
+    }
+    if (redirect == true) {
+      if (userInfo) {
+        history.push("/checkoutaddress");
       }
     }
     // dispatch(listSliders());
@@ -153,9 +159,13 @@ const HomeScreen = ({ match, history }) => {
   const checkoutHandler = (e) => {
     e.preventDefault();
     setopencart(false);
-    userInfo ? history.push("/checkout") : setopensignin(true);
+    if (userInfo) {
+      history.push("/checkoutaddress");
+    } else {
+      setredirect(true);
+      setopensignin(true);
+    }
   };
-
   const handleCart = (id, qty) => {
     dispatch(addToCart(id, qty));
   };
