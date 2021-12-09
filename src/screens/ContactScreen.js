@@ -12,10 +12,10 @@ const ContactScreen = () => {
                 <div id="map"></div>
               </div> */}
               <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3916.08388850122!2d76.99747561480301!3d11.032332792148214!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ba8598b79de1635%3A0x2fb654ec538b9529!2sRadhe%20Food%20Industries%20-%20Addipoli%20Puttu&#39;s!5e0!3m2!1sen!2sin!4v1637217289336!5m2!1sen!2sin"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3916.083941803793!2d76.99746991480305!3d11.032328792148196!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ba859206f2d3d2d%3A0xfa29aa04e6ba751a!2sAddipoli%20puttus!5e0!3m2!1sen!2sin!4v1638460670094!5m2!1sen!2sin"
                 width="100%"
                 height="450"
-                style={{ border: "0" }}
+                style={{ border: 0 }}
                 allowfullscreen=""
                 loading="lazy"
               ></iframe>

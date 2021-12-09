@@ -36,15 +36,33 @@ import {
   USER_LOGIN_WITH_GOOGLE_REQUEST,
   USER_LOGIN_WITH_GOOGLE_SUCCESS,
   USER_LOGIN_WITH_GOOGLE_FAIL,
+  SENT_OTP_REQUEST,
+  SENT_OTP_SUCCESS,
+  SENT_OTP_FAIL,
 } from "../constants/userConstants";
 
-export const userLoginReducer = (state = { products: [] }, action) => {
+export const userLoginReducer = (state = { userInfo: [] }, action) => {
   switch (action.type) {
     case USER_LOGIN_REQUEST:
       return { loading: true };
     case USER_LOGIN_SUCCESS:
       return { loading: false, userInfo: action.payload };
     case USER_LOGIN_FAIL:
+      return { loading: false, error: action.payload };
+    case USER_LOGOUT:
+      return {};
+    default:
+      return state;
+  }
+};
+
+export const userOtpReducer = (state = { otp: [] }, action) => {
+  switch (action.type) {
+    case SENT_OTP_REQUEST:
+      return { loading: true };
+    case SENT_OTP_SUCCESS:
+      return { loading: false, otp: action.payload };
+    case SENT_OTP_FAIL:
       return { loading: false, error: action.payload };
     case USER_LOGOUT:
       return {};

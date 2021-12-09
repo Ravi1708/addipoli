@@ -8,6 +8,7 @@ import {
   logout,
   register,
   registerWithGoogle,
+  sendotp,
 } from "../actions/userActions";
 import { addToCart, removeFromCart } from "../actions/cartActions";
 import Message from "../components/Message";
@@ -24,87 +25,53 @@ const Header = ({ location }) => {
   const [opensignup, setopensignup] = useState(false);
   const [email, setEmail] = useState("");
   const [phoneNumber, setphoneNumber] = useState();
-  const [password, setPassword] = useState("");
   const [username, setusername] = useState("");
   const [tokenId, settokenId] = useState("");
   const [redirect, setredirect] = useState(false);
+  const [hashValue, sethashValue] = useState();
+  const [OTP, setotpvalue] = useState(0);
+  const [ErrorSignin, setErrorSignin] = useState();
+  const [ErrorSignup, setErrorSignup] = useState();
 
   const dispatch = useDispatch();
   const userLogin = useSelector((state) => state.userLogin);
   const { loading, error: signinError, userInfo } = userLogin;
 
-  // const userLoginWithGoogle = useSelector((state) => state.userLogin);
-  // const {
-  //   loading: GoogleSigninLoading,
-  //   error: signinErrorGoogle,
-  //   userInfo: userInfoGoogle,
-  // } = userLoginWithGoogleReducer;
+  const userOtp = useSelector((state) => state.userOtp);
+  const { loading: otpLoading, error: otpError, otp } = userOtp;
 
   const cart = useSelector((state) => state.cart);
   const { cartItems } = cart;
 
   const userRegister = useSelector((state) => state.userRegister);
   const { loading: signuploading, error: signupError } = userRegister;
-  // const userRegisterWithGoogle = useSelector(
-  //   (state) => state.userRegisterWithGoogle
-  // );
-  // const { loading: signupWithGoogleloading, error: signupWithGoogleError } =
-  //   userRegisterWithGoogle;
-
-  //   const redirect = location.search ? location.search.split("=")[1] : "/";
 
   const signinHandler = (e) => {
     e.preventDefault();
-    dispatch(login(email, password));
+    dispatch(login(phoneNumber, OTP, hashValue));
   };
 
   const handleLogin = (googleData) => {
     setGooglesignup(true);
     settokenId(googleData.tokenId);
     dispatch(loginwithgoogle(googleData.tokenId));
-
-    // const res = await fetch("/login", {
-    //   method: "POST",
-    //   body: JSON.stringify({
-    //     token: googleData.tokenId,
-    //   }),
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    // });
-    // const data = await res.json();
-    // store returned user somehow
   };
-
-  // const signinWithGoogleHandler = (e) => {
-  //   e.preventDefault();
-
-  // };
 
   const handleSignup = (googleData) => {
     setGooglesignup(true);
     settokenId(googleData.tokenId);
-    // const res = await fetch("/login", {
-    //   method: "POST",
-    //   body: JSON.stringify({
-    //     token: googleData.tokenId,
-    //   }),
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    // });
-    // const data = await res.json();
-    // store returned user somehow
   };
 
   const signupHandler = (e) => {
     e.preventDefault();
-    dispatch(register(username, phoneNumber, email, password));
+    dispatch(register(username, phoneNumber, email, hashValue, OTP));
   };
 
   const signupwithgoogleHandler = (e) => {
     e.preventDefault();
-    dispatch(registerWithGoogle(tokenId, phoneNumber));
+    console.log(hashValue);
+    console.log(OTP);
+    dispatch(registerWithGoogle(tokenId, phoneNumber, hashValue, OTP));
   };
 
   const logoutHandler = (e) => {
@@ -126,7 +93,18 @@ const Header = ({ location }) => {
     }
   };
 
+  const getotpHandler = (e) => {
+    dispatch(sendotp(phoneNumber));
+  };
+
   useEffect(() => {
+    if (opensignin == true) {
+      if (signinError) {
+        setopensignin(false);
+        setopensignup(true);
+      }
+    }
+
     if (opensignin == true) {
       if (userInfo) {
         setopensignin(false);
@@ -137,12 +115,21 @@ const Header = ({ location }) => {
         setopensignup(false);
       }
     }
+    if (signupError) {
+      setErrorSignup(signupError);
+    }
+    if (signinError) {
+      setErrorSignin(signinError);
+    }
     if (redirect == true) {
       if (userInfo) {
         history.push("/checkoutaddress");
       }
     }
-  }, [dispatch, history, userInfo]);
+    if (otp) {
+      sethashValue(otp.hashValue);
+    }
+  }, [dispatch, history, userInfo, signinError, otp]);
 
   return (
     <div>
@@ -474,6 +461,12 @@ const Header = ({ location }) => {
               className="close2"
               onClick={() => {
                 setopensignin(false);
+                // sethashValue();
+                // settokenId();
+                // setphoneNumber();
+                // setotpvalue(0);
+                // setErrorSignin();
+                // setErrorSignup();
               }}
             >
               X
@@ -495,14 +488,15 @@ const Header = ({ location }) => {
               </div> */}
               <GoogleLogin
                 // clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
-                clientId="859216769475-tqnheotaog2h84dbpq3g11u2h88nhpnn.apps.googleusercontent.com"
+                // clientId="859216769475-tqnheotaog2h84dbpq3g11u2h88nhpnn.apps.googleusercontent.com"
+                clientId="859216769475-103gs96n5kpq7hfh8dbsfp9horvb4bii.apps.googleusercontent.com"
                 buttonText="Log in with Google"
                 onSuccess={handleLogin}
                 onFailure={handleLogin}
                 cookiePolicy={"single_host_origin"}
               />
               <span>or use your account</span>
-              <input
+              {/* <input
                 type="email"
                 name="email"
                 placeholder="Email"
@@ -515,14 +509,46 @@ const Header = ({ location }) => {
                 placeholder="Password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-              />
-              {/* <a href="#">Forgot Your Password</a> */}
+              /> */}
 
-              {/* {signinErrorGoogle && <Message>{signinErrorGoogle}</Message>} */}
+              <div style={{ display: "flex", justifyContent: "space-between" }}>
+                <input
+                  type="text"
+                  name="phone"
+                  placeholder="Phone Number"
+                  value={phoneNumber}
+                  onChange={(e) => setphoneNumber(e.target.value)}
+                  style={{ width: "65%" }}
+                />
+                <button
+                  // style={{ display: hashValue ? "none" : "unset" }}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    getotpHandler();
+                  }}
+                >
+                  {hashValue ? "Resend" : "Next"}
+                </button>
+              </div>
+              {otpError && <Message>{otpError}</Message>}
+              {otp && (
+                <input
+                  style={{ display: hashValue ? "unset" : "none" }}
+                  type="text"
+                  vale={OTP}
+                  onChange={(e) => setotpvalue(Number(e.target.value))}
+                  placeholder="Enter OTP"
+                />
+              )}
 
-              {signinError && <Message>{signinError}</Message>}
+              {ErrorSignin && <Message>{ErrorSignin}</Message>}
 
-              <button type="submit">Sign In</button>
+              <button
+                type="submit"
+                style={{ display: hashValue ? "unset" : "none" }}
+              >
+                Sign In
+              </button>
               <p>
                 Don't have an account?
                 <a
@@ -553,6 +579,12 @@ const Header = ({ location }) => {
               className="close3"
               onClick={() => {
                 setopensignup(false);
+                // sethashValue();
+                // settokenId();
+                // setphoneNumber();
+                // setotpvalue(0);
+                // setErrorSignin();
+                // setErrorSignup();
               }}
             >
               X
@@ -582,7 +614,8 @@ const Header = ({ location }) => {
               >
                 <GoogleLogin
                   // clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
-                  clientId="859216769475-tqnheotaog2h84dbpq3g11u2h88nhpnn.apps.googleusercontent.com"
+                  // clientId="859216769475-tqnheotaog2h84dbpq3g11u2h88nhpnn.apps.googleusercontent.com"
+                  clientId="859216769475-103gs96n5kpq7hfh8dbsfp9horvb4bii.apps.googleusercontent.com"
                   buttonText="Signup with Google"
                   onSuccess={handleSignup}
                   onFailure={handleSignup}
@@ -616,22 +649,38 @@ const Header = ({ location }) => {
                 onChange={(e) => setEmail(e.target.value)}
                 style={{ display: googlesignup ? "none" : "unset" }}
               />
-              <input
-                type="text"
-                name="phone"
-                placeholder="Phone Number"
-                value={phoneNumber}
-                onChange={(e) => setphoneNumber(e.target.value)}
-              />
-              <input
-                type="password"
-                name="password"
-                placeholder="Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                style={{ display: googlesignup ? "none" : "unset" }}
-              />
-              {signupError && <Message>{signupError}</Message>}
+              <div style={{ display: "flex", justifyContent: "space-between" }}>
+                <input
+                  type="text"
+                  name="phone"
+                  placeholder="Phone Number"
+                  value={phoneNumber}
+                  onChange={(e) => setphoneNumber(e.target.value)}
+                  style={{ width: "65%" }}
+                  style={{ display: hashValue ? "none" : "unset" }}
+                />
+                <button
+                  style={{ display: hashValue ? "none" : "unset" }}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    getotpHandler();
+                  }}
+                >
+                  verify
+                </button>
+              </div>
+              {otpError && <Message>{otpError}</Message>}
+              {otp && (
+                <input
+                  type="text"
+                  vale={OTP}
+                  placeholder={OTP ? OTP : "Enter OTP"}
+                  onChange={(e) => setotpvalue(Number(e.target.value))}
+                  style={{ display: hashValue ? "unset" : "none" }}
+                />
+              )}
+
+              {ErrorSignup && <Message>{signupError}</Message>}
               <button type="submit">SignUp</button>
             </form>
           </div>

@@ -38,12 +38,15 @@ import {
   USER_LOGIN_WITH_FAIL,
   USER_LOGIN_WITH_GOOGLE_SUCCESS,
   USER_LOGIN_WITH_GOOGLE_FAIL,
+  SENT_OTP_REQUEST,
+  SENT_OTP_SUCCESS,
+  SENT_OTP_FAIL,
 } from "../constants/userConstants";
 import { ORDER_LIST_MY_RESET } from "../constants/orderConstants";
 
 const URL = "https://api.addipoli-puttus.com";
 
-export const login = (email, password) => async (dispatch) => {
+export const login = (phoneNumber, OTP, hashValue) => async (dispatch) => {
   try {
     dispatch({
       type: USER_LOGIN_REQUEST,
@@ -57,7 +60,7 @@ export const login = (email, password) => async (dispatch) => {
 
     const { data } = await axios.post(
       `${URL}/user/login`,
-      { email, password },
+      { phoneNumber, OTP, hashValue },
       config
     );
 
@@ -113,8 +116,39 @@ export const loginwithgoogle = (tokenId) => async (dispatch) => {
   }
 };
 
+export const sendotp = (phoneNumber) => async (dispatch) => {
+  try {
+    dispatch({
+      type: SENT_OTP_REQUEST,
+    });
+
+    const config = {
+      headers: {
+        "content-Type": "application/json",
+      },
+    };
+
+    const { data } = await axios.post(
+      `${URL}/user/send-otp?number=${phoneNumber}`
+    );
+
+    dispatch({
+      type: SENT_OTP_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: SENT_OTP_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
 export const register =
-  (username, phoneNumber, email, password) => async (dispatch) => {
+  (username, phoneNumber, email, hashValue, OTP) => async (dispatch) => {
     try {
       dispatch({
         type: USER_REGISTER_REQUEST,
@@ -128,7 +162,7 @@ export const register =
 
       const { data } = await axios.post(
         `${URL}/user/register`,
-        { username, phoneNumber, email, password },
+        { username, phoneNumber, email, hashValue, OTP },
         config
       );
 
@@ -155,7 +189,7 @@ export const register =
   };
 
 export const registerWithGoogle =
-  (tokenId, phoneNumber) => async (dispatch) => {
+  (tokenId, phoneNumber, hashValue, OTP) => async (dispatch) => {
     console.log(tokenId);
     try {
       dispatch({
@@ -170,7 +204,7 @@ export const registerWithGoogle =
 
       const { data } = await axios.post(
         `${URL}/user/google-register`,
-        { tokenId, phoneNumber },
+        { tokenId, phoneNumber, hashValue, OTP },
         config
       );
 

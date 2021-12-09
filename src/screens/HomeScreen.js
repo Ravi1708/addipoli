@@ -72,7 +72,6 @@ const HomeScreen = ({ match, history }) => {
   const cart = useSelector((state) => state.cart);
   const { cartItems } = cart;
 
-  console.log(userInfo);
   //get product list when dispatch changes
   useEffect(() => {
     if (opensignin == true) {
@@ -568,7 +567,8 @@ const HomeScreen = ({ match, history }) => {
               </div> */}
               <GoogleLogin
                 // clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
-                clientId="859216769475-tqnheotaog2h84dbpq3g11u2h88nhpnn.apps.googleusercontent.com"
+                // clientId="859216769475-tqnheotaog2h84dbpq3g11u2h88nhpnn.apps.googleusercontent.com"
+                clientId="859216769475-103gs96n5kpq7hfh8dbsfp9horvb4bii.apps.googleusercontent.com"
                 buttonText="Log in with Google"
                 onSuccess={handleLogin}
                 onFailure={handleLogin}
@@ -655,7 +655,8 @@ const HomeScreen = ({ match, history }) => {
               >
                 <GoogleLogin
                   // clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
-                  clientId="859216769475-tqnheotaog2h84dbpq3g11u2h88nhpnn.apps.googleusercontent.com"
+                  // clientId="859216769475-tqnheotaog2h84dbpq3g11u2h88nhpnn.apps.googleusercontent.com"
+                  clientId="859216769475-103gs96n5kpq7hfh8dbsfp9horvb4bii.apps.googleusercontent.com"
                   buttonText="Signup with Google"
                   onSuccess={handleSignup}
                   onFailure={handleSignup}
