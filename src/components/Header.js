@@ -22,6 +22,8 @@ const Header = ({ location }) => {
   const [opencart, setopencart] = useState(false);
   const [googlesignup, setGooglesignup] = useState(false);
   const [opensignin, setopensignin] = useState(false);
+  const [opensignupgoogle, setopensignupgoogle] = useState(false);
+  const [opensignupotp, setopensignupotp] = useState(false);
   const [opensignup, setopensignup] = useState(false);
   const [email, setEmail] = useState("");
   const [phoneNumber, setphoneNumber] = useState();
@@ -46,32 +48,40 @@ const Header = ({ location }) => {
   const userRegister = useSelector((state) => state.userRegister);
   const { loading: signuploading, error: signupError } = userRegister;
 
-  const signinHandler = (e) => {
-    e.preventDefault();
-    dispatch(login(phoneNumber, OTP, hashValue));
-  };
+  //sign in with google Handler
 
-  const handleLogin = (googleData) => {
+  const handleLoginWithGoogle = (googleData) => {
     setGooglesignup(true);
     settokenId(googleData.tokenId);
     dispatch(loginwithgoogle(googleData.tokenId));
   };
 
-  const handleSignup = (googleData) => {
-    setGooglesignup(true);
-    settokenId(googleData.tokenId);
-  };
-
-  const signupHandler = (e) => {
-    e.preventDefault();
-    dispatch(register(username, phoneNumber, email, hashValue, OTP));
-  };
+  //sign up with google Handler
 
   const signupwithgoogleHandler = (e) => {
     e.preventDefault();
     console.log(hashValue);
     console.log(OTP);
     dispatch(registerWithGoogle(tokenId, phoneNumber, hashValue, OTP));
+  };
+
+  //sign in with OTP Handler
+
+  const signinHandler = (e) => {
+    e.preventDefault();
+    dispatch(login(phoneNumber, OTP, hashValue));
+  };
+
+  //sign up  with OTP Handler
+
+  const signupHandler = (e) => {
+    e.preventDefault();
+    dispatch(register(username, phoneNumber, email, hashValue, OTP));
+  };
+
+  const handleSignup = (googleData) => {
+    setGooglesignup(true);
+    settokenId(googleData.tokenId);
   };
 
   const logoutHandler = (e) => {
@@ -99,20 +109,33 @@ const Header = ({ location }) => {
 
   useEffect(() => {
     if (opensignin == true) {
-      if (signinError) {
+      if (
+        signinError ==
+        "User does not exist in this method. Please use your original form of registration"
+      ) {
         setopensignin(false);
-        setopensignup(true);
+        setopensignupotp(true);
       }
     }
-
+    if (opensignin == true) {
+      if (signinError == "User does not exist, Please sign in") {
+        setopensignin(false);
+        setopensignupgoogle(true);
+      }
+    }
     if (opensignin == true) {
       if (userInfo) {
         setopensignin(false);
       }
     }
-    if (opensignup == true) {
+    if (opensignupgoogle == true) {
       if (userInfo) {
-        setopensignup(false);
+        setopensignupgoogle(false);
+      }
+    }
+    if (opensignupotp == true) {
+      if (userInfo) {
+        setopensignupotp(false);
       }
     }
     if (signupError) {
@@ -461,12 +484,6 @@ const Header = ({ location }) => {
               className="close2"
               onClick={() => {
                 setopensignin(false);
-                // sethashValue();
-                // settokenId();
-                // setphoneNumber();
-                // setotpvalue(0);
-                // setErrorSignin();
-                // setErrorSignup();
               }}
             >
               X
@@ -475,24 +492,13 @@ const Header = ({ location }) => {
           <div>
             <form onSubmit={signinHandler}>
               <h1>Sign In</h1>
-              {/* <div className="social-container">
-                <a href="#" className="social">
-                  <i className="fa fa-facebook"></i>
-                </a>
-                <a href="#" className="social">
-                  <i className="fa fa-google"></i>
-                </a>
-                <a href="#" className="social">
-                  <i className="fa fa-linkedin"></i>
-                </a>
-              </div> */}
               <GoogleLogin
                 // clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
                 clientId="859216769475-tqnheotaog2h84dbpq3g11u2h88nhpnn.apps.googleusercontent.com"
                 // clientId="859216769475-103gs96n5kpq7hfh8dbsfp9horvb4bii.apps.googleusercontent.com"
                 buttonText="Log in with Google"
-                onSuccess={handleLogin}
-                onFailure={handleLogin}
+                onSuccess={handleLoginWithGoogle}
+                onFailure={handleLoginWithGoogle}
                 cookiePolicy={"single_host_origin"}
               />
               <span>or use your account</span>
@@ -549,7 +555,7 @@ const Header = ({ location }) => {
               >
                 Sign In
               </button>
-              <p>
+              {/* <p>
                 Don't have an account?
                 <a
                   href="#"
@@ -561,30 +567,24 @@ const Header = ({ location }) => {
                 >
                   Sign Up
                 </a>
-              </p>
+              </p> */}
             </form>
           </div>
         </div>
       </div>
 
-      {/* <!-- signup popup --> */}
+      {/* <!-- signup popup with google--> */}
 
       <div
         className="signup-popup"
-        style={{ display: opensignup ? "flex" : "none" }}
+        style={{ display: opensignupgoogle ? "flex" : "none" }}
       >
         <div className="container" id="container">
           <div className="close">
             <h3
               className="close3"
               onClick={() => {
-                setopensignup(false);
-                // sethashValue();
-                // settokenId();
-                // setphoneNumber();
-                // setotpvalue(0);
-                // setErrorSignin();
-                // setErrorSignup();
+                setopensignupgoogle(false);
               }}
             >
               X
@@ -596,32 +596,76 @@ const Header = ({ location }) => {
             >
               <h1>Create Account</h1>
 
-              {/* <div className="social-container">
-                <a href="#" className="social">
-                  <i className="fa fa-facebook"></i>
-                </a>
-                <a href="#" className="social">
-                  <i className="fa fa-google"></i>
-                </a>
-                <a href="#" className="social">
-                  <i className="fa fa-linkedin"></i>
-                </a>
-              </div> */}
-              <div
+              <h5
                 style={{
-                  display: googlesignup ? "none" : "unset",
+                  display: googlesignup ? "unset" : "none",
+                  padding: "30px 0px",
                 }}
               >
-                <GoogleLogin
-                  // clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
-                  clientId="859216769475-tqnheotaog2h84dbpq3g11u2h88nhpnn.apps.googleusercontent.com"
-                  // clientId="859216769475-103gs96n5kpq7hfh8dbsfp9horvb4bii.apps.googleusercontent.com"
-                  buttonText="Signup with Google"
-                  onSuccess={handleSignup}
-                  onFailure={handleSignup}
-                  cookiePolicy={"single_host_origin"}
+                Enter Your Mobile Number
+              </h5>
+
+              <div style={{ display: "flex", justifyContent: "space-between" }}>
+                <input
+                  type="text"
+                  name="phone"
+                  placeholder="Phone Number"
+                  value={phoneNumber}
+                  onChange={(e) => setphoneNumber(e.target.value)}
+                  style={{ width: "65%" }}
+                  style={{ display: hashValue ? "none" : "unset" }}
                 />
+                <button
+                  style={{ display: hashValue ? "none" : "unset" }}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    getotpHandler();
+                  }}
+                >
+                  verify
+                </button>
               </div>
+              {otpError && <Message>{otpError}</Message>}
+              {otp && (
+                <input
+                  type="text"
+                  vale={OTP}
+                  placeholder={OTP ? OTP : "Enter OTP"}
+                  onChange={(e) => setotpvalue(Number(e.target.value))}
+                  style={{ display: hashValue ? "unset" : "none" }}
+                />
+              )}
+
+              {signupError && <Message>{signupError}</Message>}
+              <button type="submit">SignUp</button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      {/* <!-- signup popup with OTP--> */}
+
+      <div
+        className="signup-popup"
+        style={{ display: opensignupotp ? "flex" : "none" }}
+      >
+        <div className="container" id="container">
+          <div className="close">
+            <h3
+              className="close3"
+              onClick={() => {
+                setopensignupotp(false);
+              }}
+            >
+              X
+            </h3>
+          </div>
+          <div>
+            <form
+              onSubmit={googlesignup ? signupwithgoogleHandler : signupHandler}
+            >
+              <h1>Create Account</h1>
+
               <span style={{ display: googlesignup ? "none" : "unset" }}>
                 or use your email for registration
               </span>
@@ -670,17 +714,8 @@ const Header = ({ location }) => {
                 </button>
               </div>
               {otpError && <Message>{otpError}</Message>}
-              {otp && (
-                <input
-                  type="text"
-                  vale={OTP}
-                  placeholder={OTP ? OTP : "Enter OTP"}
-                  onChange={(e) => setotpvalue(Number(e.target.value))}
-                  style={{ display: hashValue ? "unset" : "none" }}
-                />
-              )}
 
-              {ErrorSignup && <Message>{signupError}</Message>}
+              {signupError && <Message>{signupError}</Message>}
               <button type="submit">SignUp</button>
             </form>
           </div>
