@@ -493,8 +493,9 @@ const Header = ({ location }) => {
             <form onSubmit={signinHandler}>
               <h1>Sign In</h1>
               <GoogleLogin
-                // clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
+                // live key
                 clientId="859216769475-tqnheotaog2h84dbpq3g11u2h88nhpnn.apps.googleusercontent.com"
+                //test key
                 // clientId="859216769475-103gs96n5kpq7hfh8dbsfp9horvb4bii.apps.googleusercontent.com"
                 buttonText="Log in with Google"
                 onSuccess={handleLoginWithGoogle}
@@ -666,24 +667,12 @@ const Header = ({ location }) => {
             >
               <h1>Create Account</h1>
 
-              <span style={{ display: googlesignup ? "none" : "unset" }}>
-                or use your email for registration
-              </span>
-              <h5
-                style={{
-                  display: googlesignup ? "unset" : "none",
-                  padding: "30px 0px",
-                }}
-              >
-                Enter Your Mobile Number
-              </h5>
               <input
                 type="text"
                 name="name"
                 placeholder="Name"
                 value={username}
                 onChange={(e) => setusername(e.target.value)}
-                style={{ display: googlesignup ? "none" : "unset" }}
               />
               <input
                 type="email"
@@ -691,29 +680,7 @@ const Header = ({ location }) => {
                 placeholder="Email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                style={{ display: googlesignup ? "none" : "unset" }}
               />
-              <div style={{ display: "flex", justifyContent: "space-between" }}>
-                <input
-                  type="text"
-                  name="phone"
-                  placeholder="Phone Number"
-                  value={phoneNumber}
-                  onChange={(e) => setphoneNumber(e.target.value)}
-                  style={{ width: "65%" }}
-                  style={{ display: hashValue ? "none" : "unset" }}
-                />
-                <button
-                  style={{ display: hashValue ? "none" : "unset" }}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    getotpHandler();
-                  }}
-                >
-                  verify
-                </button>
-              </div>
-              {otpError && <Message>{otpError}</Message>}
 
               {signupError && <Message>{signupError}</Message>}
               <button type="submit">SignUp</button>
