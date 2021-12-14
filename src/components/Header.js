@@ -16,9 +16,16 @@ import GoogleLogin from "react-google-login";
 import "./Header.css";
 import { NavLink } from "react-router-dom";
 import { userLoginWithGoogleReducer } from "../reducers/userReducers";
+import { Button, Form, Modal } from "react-bootstrap";
 
 const Header = ({ location }) => {
   let history = useHistory();
+
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
   const [opencart, setopencart] = useState(false);
   const [googlesignup, setGooglesignup] = useState(false);
   const [opensignin, setopensignin] = useState(false);
@@ -340,6 +347,42 @@ const Header = ({ location }) => {
                       </div>
                     </form>
                   </div> */}
+
+                  <Button variant="primary" onClick={handleShow}>
+                    Launch demo modal
+                  </Button>
+
+                  <Modal show={show} animation={false} onHide={handleClose}>
+                    <Modal.Header closeButton>
+                      <Modal.Title>Modal heading</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                      Woohoo, you're reading this text in a modal!
+                      <Form>
+                        <Form.Check
+                          inline
+                          label="1"
+                          name="group1"
+                          type="radio"
+                        />
+                        <Form.Check
+                          inline
+                          label="2"
+                          name="group1"
+                          type="radio"
+                        />
+                      </Form>
+                    </Modal.Body>
+                    <Modal.Footer>
+                      <Button variant="secondary" onClick={handleClose}>
+                        Close
+                      </Button>
+                      <Button variant="primary" onClick={handleClose}>
+                        Save Changes
+                      </Button>
+                    </Modal.Footer>
+                  </Modal>
+
                   <div
                     className="shop-cart header-collect"
                     onClick={(e) => {
