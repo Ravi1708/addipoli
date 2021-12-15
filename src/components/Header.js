@@ -16,7 +16,7 @@ import GoogleLogin from "react-google-login";
 import "./Header.css";
 import { NavLink } from "react-router-dom";
 import { userLoginWithGoogleReducer } from "../reducers/userReducers";
-import { Button, Form, Modal } from "react-bootstrap";
+import { Button, Form, Modal, Dropdown } from "react-bootstrap";
 
 const Header = ({ location }) => {
   let history = useHistory();
@@ -35,7 +35,7 @@ const Header = ({ location }) => {
   const [email, setEmail] = useState("");
   const [phoneNumber, setphoneNumber] = useState();
   const [username, setusername] = useState("");
-  const [tokenId, settokenId] = useState("");
+  const [tokenId, settokenId] = useState();
   const [redirect, setredirect] = useState(false);
   const [hashValue, sethashValue] = useState();
   const [OTP, setotpvalue] = useState(0);
@@ -372,6 +372,18 @@ const Header = ({ location }) => {
                           type="radio"
                         />
                       </Form>
+                      <label>Select your city</label>
+                      <form>
+                        <select
+                          class="form-select"
+                          aria-label="Default select example"
+                        >
+                          <option selected>Open this select menu</option>
+                          <option value="1">One</option>
+                          <option value="2">Two</option>
+                          <option value="3">Three</option>
+                        </select>
+                      </form>
                     </Modal.Body>
                     <Modal.Footer>
                       <Button variant="secondary" onClick={handleClose}>
@@ -527,6 +539,14 @@ const Header = ({ location }) => {
               className="close2"
               onClick={() => {
                 setopensignin(false);
+                setEmail("");
+                phoneNumber("");
+                setusername("");
+                settokenId();
+                sethashValue();
+                setotpvalue();
+                setErrorSignin();
+                setErrorSignup();
               }}
             >
               X
