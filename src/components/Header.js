@@ -321,7 +321,7 @@ const Header = ({ location }) => {
             <div className="container">
               <div className="header-info">
                 <div className="header-info-inner">
-                  {/* <div className="header-collect book-md">
+                  <div className="header-collect book-md">
                     <form action="#">
                       <div className="delivery-type">
                         <div className="form-check form-check-inline">
@@ -340,57 +340,64 @@ const Header = ({ location }) => {
                             type="radio"
                             name="delivery"
                           />
-                          <label className="form-check-label" for="pickup">
+                          <label
+                            className="form-check-label"
+                            for="pickup"
+                            onClick={handleShow}
+                          >
                             Pick Up
                           </label>
                         </div>
                       </div>
                     </form>
-                  </div> */}
+                  </div>
 
-                  <Button variant="primary" onClick={handleShow}>
+                  {/* <Button variant="primary">
                     Launch demo modal
-                  </Button>
+                  </Button> */}
 
                   <Modal show={show} animation={false} onHide={handleClose}>
-                    <Modal.Header closeButton>
-                      <Modal.Title>Modal heading</Modal.Title>
+                    <Modal.Header>
+                      <Modal.Title>
+                        <h5 style={{ margin: "0px" }}>
+                          Select your Nearest Store
+                        </h5>
+                      </Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                      Woohoo, you're reading this text in a modal!
-                      <Form>
-                        <Form.Check
-                          inline
-                          label="1"
-                          name="group1"
-                          type="radio"
-                        />
-                        <Form.Check
-                          inline
-                          label="2"
-                          name="group1"
-                          type="radio"
-                        />
-                      </Form>
-                      <label>Select your city</label>
-                      <form>
+                      <form className="form">
+                        <label className="form-check-label">
+                          Select your city
+                        </label>
                         <select
-                          class="form-select"
+                          className="form-select"
                           aria-label="Default select example"
                         >
-                          <option selected>Open this select menu</option>
-                          <option value="1">One</option>
-                          <option value="2">Two</option>
-                          <option value="3">Three</option>
+                          <option selected>Select your city</option>
+                          <option value="1">Chennai</option>
+                          <option value="2">Coimbatore</option>
+                        </select>
+                        <label>Select your Nearest Store</label>
+                        <select
+                          className="form-select"
+                          aria-label="Default select example"
+                        >
+                          <option selected>Select your Nearest Shop</option>
+                          <option value="1">Peelamedu</option>
+                          <option value="2">Ganapathy</option>
+                          <option value="3">Saibaba Colony</option>
                         </select>
                       </form>
                     </Modal.Body>
                     <Modal.Footer>
-                      <Button variant="secondary" onClick={handleClose}>
+                      {/* <Button variant="secondary" onClick={handleClose}>
                         Close
-                      </Button>
-                      <Button variant="primary" onClick={handleClose}>
-                        Save Changes
+                      </Button> */}
+                      <Button
+                        variant="btn btn-primary-gold btn-popup"
+                        onClick={handleClose}
+                      >
+                        Sumbit
                       </Button>
                     </Modal.Footer>
                   </Modal>
@@ -409,12 +416,12 @@ const Header = ({ location }) => {
                     </a>
                   </div>
                   {/* <!-- <div className="search-part">
-                                                <a href="#"></a>
-                                                <div className="search-box">
-                                                    <input type="text" name="txt" placeholder="Search">
-                                                    <input type="submit" name="submit" value=" ">
-                                                </div>
-                                            </div> --> */}
+                          <a href="#"></a>
+                          <div className="search-box">
+                              <input type="text" name="txt" placeholder="Search">
+                              <input type="submit" name="submit" value=" ">
+                          </div>
+                      </div> --> */}
                 </div>
               </div>
               <div className="menu-icon">
@@ -539,14 +546,23 @@ const Header = ({ location }) => {
               className="close2"
               onClick={() => {
                 setopensignin(false);
-                setEmail("");
-                phoneNumber("");
-                setusername("");
-                settokenId();
-                sethashValue();
-                setotpvalue();
-                setErrorSignin();
-                setErrorSignup();
+                if (
+                  signinError !=
+                    "User does not exist in this method. Please use your original form of registration" ||
+                  signinError != "User does not exist, Please sign in"
+                ) {
+                  setEmail("");
+                  setphoneNumber("");
+                  setusername("");
+                  settokenId();
+                  sethashValue();
+                  setotpvalue();
+                  setErrorSignin(null);
+                  setErrorSignup(null);
+                  setErrorSignin(null);
+                  settokenId(null);
+                  setGooglesignup(false);
+                }
               }}
             >
               X
@@ -554,18 +570,20 @@ const Header = ({ location }) => {
           </div>
           <div>
             <form onSubmit={signinHandler}>
-              <h1>Sign In</h1>
+              <h1>Welcome To Addipoli Puttus</h1>
               <GoogleLogin
+                style={{ fontSize: "50px" }}
+                theme="dark"
                 // live key
-                clientId="859216769475-tqnheotaog2h84dbpq3g11u2h88nhpnn.apps.googleusercontent.com"
+                // clientId="859216769475-tqnheotaog2h84dbpq3g11u2h88nhpnn.apps.googleusercontent.com"
                 //test key
-                // clientId="859216769475-103gs96n5kpq7hfh8dbsfp9horvb4bii.apps.googleusercontent.com"
+                clientId="859216769475-103gs96n5kpq7hfh8dbsfp9horvb4bii.apps.googleusercontent.com"
                 buttonText="Log in with Google"
                 onSuccess={handleLoginWithGoogle}
                 onFailure={handleLoginWithGoogle}
                 cookiePolicy={"single_host_origin"}
               />
-              <span>or use your account</span>
+              <span>or use your Mobile Number</span>
               {/* <input
                 type="email"
                 name="email"
@@ -581,15 +599,50 @@ const Header = ({ location }) => {
                 onChange={(e) => setPassword(e.target.value)}
               /> */}
 
-              <div style={{ display: "flex", justifyContent: "space-between" }}>
+              {/* <div style={{ display: "flex", justifyContent: "space-between" }}> */}
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  width: "100%",
+                }}
+              >
+                {/* <input
+                  type="text"
+                  placeholder="+91"
+                  value="+91"
+                  disabled
+                  style={{
+                    width: "75px",
+                    textAlign: "center",
+                    marginRight: "20px",
+                  }}
+                /> */}
+                <p style={{ width: "10%", textAlign: "left" }}>+91</p>
                 <input
                   type="text"
                   name="phone"
                   placeholder="Phone Number"
                   value={phoneNumber}
                   onChange={(e) => setphoneNumber(e.target.value)}
-                  style={{ width: "65%" }}
+                  style={{ width: "85%" }}
                 />
+              </div>
+              {otpError && <Message>{otpError}</Message>}
+              <div style={{ display: "flex", justifyContent: "space-between" }}>
+                {otp && (
+                  <input
+                    style={{
+                      display: hashValue ? "unset" : "hidden",
+                      width: "60%",
+                    }}
+                    type="text"
+                    vale={OTP}
+                    onChange={(e) => setotpvalue(Number(e.target.value))}
+                    placeholder="Enter OTP"
+                  />
+                )}
+
                 <button
                   // style={{ display: hashValue ? "none" : "unset" }}
                   onClick={(e) => {
@@ -597,19 +650,11 @@ const Header = ({ location }) => {
                     getotpHandler();
                   }}
                 >
-                  {hashValue ? "Resend" : "Next"}
+                  {hashValue ? "Resend" : "Get OTP"}
                 </button>
               </div>
-              {otpError && <Message>{otpError}</Message>}
-              {otp && (
-                <input
-                  style={{ display: hashValue ? "unset" : "none" }}
-                  type="text"
-                  vale={OTP}
-                  onChange={(e) => setotpvalue(Number(e.target.value))}
-                  placeholder="Enter OTP"
-                />
-              )}
+
+              {/* </div> */}
 
               {ErrorSignin && <Message>{ErrorSignin}</Message>}
 
@@ -649,6 +694,17 @@ const Header = ({ location }) => {
               className="close3"
               onClick={() => {
                 setopensignupgoogle(false);
+                setEmail("");
+                setphoneNumber(null);
+                setusername("");
+                settokenId();
+                sethashValue(null);
+                setotpvalue(null);
+                setErrorSignin(null);
+                setErrorSignup(null);
+                setErrorSignin(null);
+                settokenId(null);
+                setGooglesignup(false);
               }}
             >
               X
@@ -677,6 +733,36 @@ const Header = ({ location }) => {
                   value={phoneNumber}
                   onChange={(e) => setphoneNumber(e.target.value)}
                   style={{ width: "65%" }}
+                />
+                <button
+                  // style={{ display: hashValue ? "none" : "unset" }}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    getotpHandler();
+                  }}
+                >
+                  {hashValue ? "Resend" : "Next"}
+                </button>
+              </div>
+              {otpError && <Message>{otpError}</Message>}
+              {otp && (
+                <input
+                  style={{ display: hashValue ? "unset" : "none" }}
+                  type="text"
+                  vale={OTP}
+                  onChange={(e) => setotpvalue(Number(e.target.value))}
+                  placeholder="Enter OTP"
+                />
+              )}
+
+              {/* <div style={{ display: "flex", justifyContent: "space-between" }}>
+                <input
+                  type="text"
+                  name="phone"
+                  placeholder="Phone Number"
+                  value={phoneNumber}
+                  onChange={(e) => setphoneNumber(e.target.value)}
+                  style={{ width: "65%" }}
                   style={{ display: hashValue ? "none" : "unset" }}
                 />
                 <button
@@ -698,9 +784,9 @@ const Header = ({ location }) => {
                   onChange={(e) => setotpvalue(Number(e.target.value))}
                   style={{ display: hashValue ? "unset" : "none" }}
                 />
-              )}
+              )} */}
 
-              {signupError && <Message>{signupError}</Message>}
+              <Message>{signupError}</Message>
               <button type="submit">SignUp</button>
             </form>
           </div>
@@ -719,6 +805,14 @@ const Header = ({ location }) => {
               className="close3"
               onClick={() => {
                 setopensignupotp(false);
+                setEmail("");
+                setphoneNumber("");
+                setusername("");
+                settokenId();
+                sethashValue();
+                setotpvalue();
+                setErrorSignin(null);
+                setErrorSignup();
               }}
             >
               X
@@ -745,7 +839,7 @@ const Header = ({ location }) => {
                 onChange={(e) => setEmail(e.target.value)}
               />
 
-              {signupError && <Message>{signupError}</Message>}
+              <Message>{signupError}</Message>
               <button type="submit">SignUp</button>
             </form>
           </div>
