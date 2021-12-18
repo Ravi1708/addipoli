@@ -14,7 +14,29 @@ function ProductCard(props) {
           style={{
             backgroundImage: `url(${props.product.image})`,
           }}
-        ></div>
+        >
+          {props.product.vegOrNonVeg == "Vegeterian" ? (
+            <img
+              src="/assets/images/veg.png"
+              style={{
+                width: "20px",
+                float: "left",
+                margin: "6px",
+                borderRadius: "0",
+              }}
+            />
+          ) : (
+            <img
+              src="/assets/images/nonveg.png"
+              style={{
+                width: "20px",
+                float: "left",
+                margin: "6px",
+                borderRadius: "0",
+              }}
+            />
+          )}
+        </div>
         <a>
           <h5>{props.product.name}</h5>
         </a>
@@ -24,7 +46,7 @@ function ProductCard(props) {
               <strong>&#8377; {props.product.price}</strong>
             </h5>
           </div>
-          {props.product.category === "Addipoli Puttus" ? (
+          {props.product.availability === "Available" ? (
             <>
               {cartbutton === "button" && (
                 <div className="col-lg-7 col-md-7 col-sm-7 col-xs-7 shop-dish">

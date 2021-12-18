@@ -221,7 +221,7 @@ const HomeScreen = ({ match, history }) => {
                       {products
                         .filter(
                           (filteredproducts) =>
-                            filteredproducts.category == "COMBO"
+                            filteredproducts.category == "Combo"
                         )
                         .map((combo) => {
                           return (
@@ -468,7 +468,7 @@ const HomeScreen = ({ match, history }) => {
                           {products
                             .filter(
                               (filteredproducts) =>
-                                filteredproducts.category != "COMBO"
+                                filteredproducts.category != "Combo"
                             )
                             .map((combo) => {
                               return (
