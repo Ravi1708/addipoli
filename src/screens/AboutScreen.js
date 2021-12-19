@@ -63,7 +63,7 @@ const AboutScreen = () => {
                     </p>
                   </div>
                   <div className="col-md-6 col-sm-6 col-xs-12">
-                    <img src="assets/images/logo-icon.png" />
+                    <img src="assets/img/logo-icon.png" />
                   </div>
                 </div>
               </div>

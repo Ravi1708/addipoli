@@ -10,7 +10,7 @@ const Footer = () => {
           data-wow-delay="300ms"
         >
           <div className="icon-default icon-dark">
-            <img src="assets/images/footer-logo.png" alt="logo" />
+            <img src="assets/img/Logo.png" alt="logo" />
           </div>
           <div className="container">
             <div className="footer-inner">

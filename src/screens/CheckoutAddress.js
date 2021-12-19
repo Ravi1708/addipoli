@@ -5,8 +5,8 @@ import { FormContainer } from "../components/FormContainer";
 import { saveShippingAddress, createAddress } from "../actions/cartActions";
 import { CheckoutSteps } from "../components/CheckoutSteps";
 import { getUserAddresses } from "../actions/userActions";
-import Footer from "../components/Footer";
-import Header from "../components/Header";
+import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
+import Geocode from "react-geocode";
 
 const CheckoutAddress = ({ history }) => {
   const cart = useSelector((state) => state.cart);
@@ -25,9 +25,20 @@ const CheckoutAddress = ({ history }) => {
   const [pincode, setPincode] = useState(shippingAddress.pincode);
   const [landmark, setLandmark] = useState(shippingAddress.landmark);
   const [shortNote, setShortNote] = useState(shippingAddress.shortNote);
+  const [states, setstates] = useState();
+  const [country, setcountry] = useState();
+
+  const [city, setcity] = useState();
+  const [currentPosition, setCurrentPosition] = useState({});
+  const [latitude, setlatitude] = useState();
+  const [longitude, setlongitude] = useState();
+
   const [addressOptions, setaddressOptions] = useState("others");
+
   const dispatch = useDispatch();
+
   useEffect(() => {
+    navigator.geolocation.getCurrentPosition(success);
     window.scrollTo(0, 0);
     dispatch(getUserAddresses());
   }, [dispatch]);
@@ -60,6 +71,88 @@ const CheckoutAddress = ({ history }) => {
       })
     );
     history.push("/checkout");
+  };
+
+  //geocoding
+  Geocode.setApiKey("AIzaSyCdIB4G6_XT06RkDrqF1IUZpuzRp0vWLr4");
+  Geocode.setLanguage("en");
+  Geocode.setRegion("es");
+  Geocode.setLocationType("ROOFTOP");
+
+  const onMarkerDragEnd = (e) => {
+    const lat = e.latLng.lat();
+    const lng = e.latLng.lng();
+    setCurrentPosition({ lat, lng });
+    setlatitude(lat);
+    setlongitude(lng);
+
+    Geocode.fromLatLng(currentPosition.lat, currentPosition.lng).then(
+      (response) => {
+        const address = response.results[0].formatted_address;
+        setAddress(address);
+        let city, state, country;
+        for (
+          let i = 0;
+          i < response.results[0].address_components.length;
+          i++
+        ) {
+          for (
+            let j = 0;
+            j < response.results[0].address_components[i].types.length;
+            j++
+          ) {
+            switch (response.results[0].address_components[i].types[j]) {
+              case "locality":
+                city = response.results[0].address_components[i].long_name;
+                setcity(city);
+                break;
+              case "administrative_area_level_1":
+                state = response.results[0].address_components[i].long_name;
+                setstates(state);
+                break;
+              case "country":
+                country = response.results[0].address_components[i].long_name;
+                setcountry(country);
+                break;
+            }
+          }
+        }
+      },
+      (error) => {
+        console.error(error);
+      }
+    );
+  };
+
+  // Get latitude & longitude from address.
+
+  const getltlnfromadd = (e) => {
+    e.preventDefault();
+    Geocode.fromAddress(address).then(
+      (response) => {
+        const { lat, lng } = response.results[0].geometry.location;
+        setCurrentPosition({ lat, lng });
+        setlatitude(lat);
+        setlongitude(lng);
+      },
+      (error) => {
+        console.error(error);
+      }
+    );
+  };
+
+  const mapStyles = {
+    height: "50vh",
+    width: "100%",
+  };
+
+  const success = (position) => {
+    const currentPosition = {
+      lat: position.coords.latitude,
+      lng: position.coords.longitude,
+    };
+    setCurrentPosition(currentPosition);
+    console.log(currentPosition);
   };
 
   // const proceedWithAddress = ({e, address) => {
@@ -198,7 +291,36 @@ const CheckoutAddress = ({ history }) => {
                         name="contact-form"
                       >
                         <div className="row">
-                          <div className="col-md-6 col-sm-6 col-xs-12">
+                          <LoadScript googleMapsApiKey="AIzaSyCdIB4G6_XT06RkDrqF1IUZpuzRp0vWLr4">
+                            <GoogleMap
+                              mapContainerStyle={mapStyles}
+                              zoom={13}
+                              center={currentPosition}
+                            >
+                              {currentPosition.lat ? (
+                                <Marker
+                                  position={currentPosition}
+                                  onDragEnd={(e) => onMarkerDragEnd(e)}
+                                  draggable={true}
+                                />
+                              ) : null}
+                            </GoogleMap>
+                            <form>
+                              <input
+                                value={address}
+                                onChange={(e) => setAddress(e.target.value)}
+                                className="form-control form-select"
+                                placeholder="Enter Address"
+                              />
+                              <button
+                                class="btn btn-success"
+                                onClick={getltlnfromadd}
+                              >
+                                search
+                              </button>
+                            </form>
+                          </LoadScript>
+                          {/* <div className="col-md-6 col-sm-6 col-xs-12">
                             <label>Name*</label>
                             <input
                               name=""
@@ -257,7 +379,7 @@ const CheckoutAddress = ({ history }) => {
                               onChange={(e) => setLandmark(e.target.value)}
                               required
                             />
-                          </div>
+                          </div> */}
                           <div className="col-md-12 col-sm-12 col-xs-12">
                             <label>Short Note</label>
                             <textarea
