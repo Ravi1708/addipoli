@@ -246,7 +246,7 @@ const HomeScreen = ({ match, history }) => {
                         .map((combo) => {
                           return (
                             <div
-                              className="col-lg-3 col-md-4 col-sm-6 col-xs-12 fadeInDown"
+                              className="col-md-4 col-sm-4 col-xs-6 fadeInDown"
                               data-wow-duration="1000ms"
                               data-wow-delay="300ms"
                             >
@@ -493,7 +493,7 @@ const HomeScreen = ({ match, history }) => {
                             .map((combo) => {
                               return (
                                 <div
-                                  className={`col-md-3 col-sm-3 col-xs-6 fadeInDown ${combo.category}`}
+                                  className={`col-lg-3 col-md-6 col-sm-12 col-xs-12 fadeInDown ${combo.category}`}
                                   data-wow-duration="1000ms"
                                   data-wow-delay="300ms"
                                 >
