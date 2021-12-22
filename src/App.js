@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Footer from "./components/Footer";
-import Header from "./components/Header";
+// import Header from "./components/Header";
 import HomeScreen from "./screens/HomeScreen";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import GalleryScreen from "./screens/GalleryScreen";
@@ -24,6 +24,7 @@ import AddAddress from "./screens/AddAddress";
 import EditAddress from "./screens/EditAddress";
 import TermsConditions from "./screens/TermsConditions";
 import Policy from "./screens/Policy";
+import Header from "./components/Header";
 
 const App = () => {
   return (

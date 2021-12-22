@@ -1094,7 +1094,16 @@ p {
   color: #fff;
   background: #04e04c;
 }
+.order-btn {
+  font-weight: 600;
+  font-size: 13px;
+  background: #fff;
+}
 
+.order-btn:hover {
+  color: #fff;
+  background: #04e04c;
+}
 .btn-black {
   width: auto;
   display: inline-block;
@@ -1242,7 +1251,67 @@ p {
   transition: all 0.5s ease 0s;
   font-weight: 700;
 }
-
+.btn-popup {
+  height: 30px;
+  font-family: "Quicksand", sans-serif;
+  text-transform: uppercase;
+  display: inline-block;
+  width: 120px;
+  padding: 0px 0px;
+  border: 2px solid #04e04c;
+  -webkit-border-radius: 50px;
+  -moz-border-radius: 50px;
+  -ms-border-radius: 50px;
+  -o-border-radius: 50px;
+  border-radius: 20px;
+  text-align: center;
+  box-shadow: none;
+  background: transparent;
+  color: #04e04c;
+  font-size: 13px;
+  -webkit-transition: all 0.5s ease 0s;
+  -moz-transition: all 0.5s ease 0s;
+  -ms-transition: all 0.5s ease 0s;
+  -o-transition: all 0.5s ease 0s;
+  transition: all 0.5s ease 0s;
+  font-weight: 600;
+}
+.btn-popup:hover {
+  background: #04e04c;
+  color: #ffffff;
+  border-color: #04e04c;
+}
+.btn-medium-close {
+  height: 30px;
+  font-family: "Quicksand", sans-serif;
+  text-transform: uppercase;
+  display: inline-block;
+  width: 120px;
+  padding: 0px 0px;
+  border: 1px solid #383848;
+  -webkit-border-radius: 50px;
+  -moz-border-radius: 50px;
+  -ms-border-radius: 50px;
+  -o-border-radius: 50px;
+  border-radius: 50px;
+  text-align: center;
+  box-shadow: none;
+  background: transparent;
+  color: #fff;
+  font-size: 13px;
+  -webkit-transition: all 0.5s ease 0s;
+  -moz-transition: all 0.5s ease 0s;
+  -ms-transition: all 0.5s ease 0s;
+  -o-transition: all 0.5s ease 0s;
+  transition: all 0.5s ease 0s;
+  font-weight: 600;
+  background-color: #383848;
+}
+.btn-medium-close:hover {
+  background: black;
+  color: #ffffff;
+  border-color: #383848;
+}
 .btn-dark-coffee {
   background: #372727;
   color: #ffffff;
@@ -3625,7 +3694,7 @@ textarea {
 }
 
 .footer-part a:hover {
-  color: #f6f0f2;
+  color: #04e04c;
 }
 
 .footer-info {
@@ -3643,6 +3712,9 @@ textarea {
   letter-spacing: 1.5px;
   font-size: 16px;
 }
+.footer-info span:hover {
+  color: #04e04c;
+}
 .footer-info h3 {
   margin-bottom: 32px;
 }
@@ -3658,7 +3730,7 @@ textarea {
 }
 
 .copy-right a:hover {
-  color: #bdbdd3;
+  color: #f6f0f2;
 }
 
 .social-round {
@@ -3691,9 +3763,9 @@ textarea {
   -o-border-radius: 100%;
   border-radius: 100%;
   border: 2px solid #383848;
-  line-height: 50px;
-  font-size: 16px;
-  color: #04e04c;
+  line-height: 46px;
+  font-size: 18px;
+  color: #f6f0f2;
 }
 
 .copyright-before {
@@ -7487,15 +7559,21 @@ body main .team-page {
 
 .login-popup p {
   font-size: 16px;
-  font-weight: 500;
-  line-height: 20px;
+  font-weight: 600;
+  line-height: 45px;
   letter-spacing: 0.5px;
-  color: black;
-  margin: 20px 0 30px;
+  color: #fff;
+  margin: 10px 5px 30px 0px;
+  text-align: center;
+  background-color: #04e04c;
+  border-radius: 50px;
+  height: 50px;
 }
 
 .login-popup span {
-  font-size: 12px;
+  font-size: 15px;
+  padding: 10px 0;
+  font-weight: 600;
 }
 
 .login-popup a {
@@ -7505,16 +7583,22 @@ body main .team-page {
 }
 
 .login-popup button {
-  border-radius: 10px;
-  border: 1px solid #ff4b2b;
-  background-color: #ff4b2b;
-  margin: 20px 0px;
+  border-radius: 50px;
+  border: 2px solid #04e04c;
+  background-color: #04e04c;
+  margin: 8px 0;
   color: #ffffff;
   font-size: 15px;
   font-weight: bold;
-  padding: 5px 20px;
+  padding: 8px 15px;
   letter-spacing: 1px;
   transition: transform 80ms ease-in;
+  height: 50px;
+}
+.login-popup button:hover {
+  background-color: #ec7d3c;
+  color: #ffffff;
+  border-color: #ec7d3c;
 }
 
 .login-popup button:active {
@@ -7606,16 +7690,17 @@ body main .team-page {
 }
 
 .signup-popup button {
-  border-radius: 10px;
-  border: 1px solid #ff4b2b;
-  background-color: #ff4b2b;
-  margin: 20px 0px;
+  border-radius: 50px;
+  border: 2px solid #04e04c;
+  background-color: #04e04c;
+  margin: 8px 0;
   color: #ffffff;
   font-size: 15px;
   font-weight: bold;
-  padding: 5px 20px;
+  padding: 8px 15px;
   letter-spacing: 1px;
   transition: transform 80ms ease-in;
+  height: 50px;
 }
 
 .signup-popup button:active {
@@ -7674,4 +7759,56 @@ body main .team-page {
   margin: 0 5px;
   height: 40px;
   width: 40px;
+}
+.form-drop-label {
+  padding: 5px 5px 0px 0px;
+  font-size: 18px;
+  font-weight: 800;
+  text-align: center;
+  margin-top: 10px;
+  align-items: center;
+}
+.form-drop-select {
+  padding: 0px 5px 0px 0px;
+  font-size: 18px;
+  font-weight: 400;
+  text-align: center;
+  border: 2px solid #dddddd;
+  border-radius: 50px;
+  width: 100%;
+  height: 50px;
+  margin-bottom: 5px;
+}
+input[type="radio"]:after {
+  width: 15px;
+  height: 15px;
+  border-radius: 15px;
+  top: -2px;
+  left: -1px;
+  position: relative;
+  background-color: #d1d3d1;
+  content: "";
+  display: inline-block;
+  visibility: visible;
+  border: 2px solid white;
+}
+
+input[type="radio"]:checked:after {
+  width: 15px;
+  height: 15px;
+  border-radius: 15px;
+  top: -2px;
+  left: -1px;
+  position: relative;
+  background-color: #ffa500;
+  content: "";
+  display: inline-block;
+  visibility: visible;
+  border: 2px solid white;
+}
+@media (min-width: 576px) {
+  .shop-product {
+    width: 100%;
+    height: 250px;
+  }
 }

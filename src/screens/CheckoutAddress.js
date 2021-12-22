@@ -2,11 +2,16 @@ import React, { useState, useEffect } from "react";
 import { Form, Button, Container } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { FormContainer } from "../components/FormContainer";
-import { saveShippingAddress, createAddress } from "../actions/cartActions";
+import {
+  saveShippingAddress,
+  createAddress,
+  verifyAddress,
+} from "../actions/cartActions";
 import { CheckoutSteps } from "../components/CheckoutSteps";
 import { getUserAddresses } from "../actions/userActions";
-import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
 import Geocode from "react-geocode";
+import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
+import Alert from "@mui/material/Alert";
 
 const CheckoutAddress = ({ history }) => {
   const cart = useSelector((state) => state.cart);
@@ -18,6 +23,15 @@ const CheckoutAddress = ({ history }) => {
   const userAddresses = useSelector((state) => state.userAddresses);
   const { loading, error, addresses } = userAddresses;
 
+  const verifyaddress = useSelector((state) => state.verifyaddress);
+  const {
+    loading: verifyaddLoading,
+    error: verifyaddError,
+    verifiedaddress,
+  } = verifyaddress;
+
+  const [showToast, setShowToast] = useState(false);
+
   const [name, setname] = useState(userInfo.userName);
   const [phoneNumber, setPhoneNumber] = useState(userInfo.phoneNumber);
   const [address, setAddress] = useState(shippingAddress.address);
@@ -28,19 +42,60 @@ const CheckoutAddress = ({ history }) => {
   const [states, setstates] = useState();
   const [country, setcountry] = useState();
 
-  const [city, setcity] = useState();
-  const [currentPosition, setCurrentPosition] = useState({});
-  const [latitude, setlatitude] = useState();
-  const [longitude, setlongitude] = useState();
+  const [city, setcity] = useState(shippingAddress.city);
+  const [currentPosition, setCurrentPosition] = useState({
+    lat: shippingAddress.lat,
+    lng: shippingAddress.lon,
+  });
+  const [lat, setlatitude] = useState(shippingAddress.lat);
+  const [lon, setlongitude] = useState(shippingAddress.lon);
 
   const [addressOptions, setaddressOptions] = useState("others");
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    navigator.geolocation.getCurrentPosition(success);
+    // navigator.geolocation.getCurrentPosition(success);
     window.scrollTo(0, 0);
     dispatch(getUserAddresses());
+    if (
+      verifyaddError ==
+      "No hubs are found near your area, Please try with another address or Order In"
+    ) {
+      setShowToast(true);
+      dispatch(
+        saveShippingAddress({
+          address,
+          area,
+          pincode,
+          city,
+          country,
+          states,
+          lat,
+          lon,
+          nearbyhub: undefined,
+          distance: undefined,
+          hubs: "unavailable",
+        })
+      );
+    }
+    if (verifiedaddress) {
+      dispatch(
+        saveShippingAddress({
+          address,
+          area,
+          pincode,
+          city,
+          country,
+          states,
+          lat,
+          lon,
+          nearbyhub: verifiedaddress.hubId,
+          distance: verifiedaddress.distance,
+          hubs: "available",
+        })
+      );
+    }
   }, [dispatch]);
 
   const submitHandler = (e) => {
@@ -152,7 +207,16 @@ const CheckoutAddress = ({ history }) => {
       lng: position.coords.longitude,
     };
     setCurrentPosition(currentPosition);
-    console.log(currentPosition);
+    setlatitude(position.coords.latitude);
+    setlongitude(position.coords.longitude);
+  };
+
+  // save shipping address
+
+  const verifyAddressHandler = (e) => {
+    e.preventDefault();
+
+    dispatch(verifyAddress(lat, lon));
   };
 
   // const proceedWithAddress = ({e, address) => {
@@ -175,6 +239,22 @@ const CheckoutAddress = ({ history }) => {
 
   return (
     <div>
+      {verifyaddError ==
+        "No hubs are found near your area, Please try with another address or Order In" && (
+        <Alert
+          style={{
+            position: "fixed",
+            bottom: "20px",
+            right: "0px",
+            width: "300px",
+            fontSize: "17px",
+          }}
+          variant="filled"
+          severity="info"
+        >
+          No hubs are found near your area, Try different address
+        </Alert>
+      )}
       <div className="wrapper">
         {/*<!-- Start Main -->*/}
         <main>
@@ -291,7 +371,7 @@ const CheckoutAddress = ({ history }) => {
                         name="contact-form"
                       >
                         <div className="row">
-                          <LoadScript googleMapsApiKey="AIzaSyCdIB4G6_XT06RkDrqF1IUZpuzRp0vWLr4">
+                          <LoadScript googleMapsApiKey="AIzaSyAOujeMycUY71Is3IopYHOzvYDaEBYZ1jI">
                             <GoogleMap
                               mapContainerStyle={mapStyles}
                               zoom={13}
@@ -305,22 +385,8 @@ const CheckoutAddress = ({ history }) => {
                                 />
                               ) : null}
                             </GoogleMap>
-                            <form>
-                              <input
-                                value={address}
-                                onChange={(e) => setAddress(e.target.value)}
-                                className="form-control form-select"
-                                placeholder="Enter Address"
-                              />
-                              <button
-                                class="btn btn-success"
-                                onClick={getltlnfromadd}
-                              >
-                                search
-                              </button>
-                            </form>
                           </LoadScript>
-                          {/* <div className="col-md-6 col-sm-6 col-xs-12">
+                          <div className="col-md-6 col-sm-6 col-xs-12">
                             <label>Name*</label>
                             <input
                               name=""
@@ -379,7 +445,7 @@ const CheckoutAddress = ({ history }) => {
                               onChange={(e) => setLandmark(e.target.value)}
                               required
                             />
-                          </div> */}
+                          </div>
                           <div className="col-md-12 col-sm-12 col-xs-12">
                             <label>Short Note</label>
                             <textarea

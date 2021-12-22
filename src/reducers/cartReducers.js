@@ -6,6 +6,9 @@ import {
   SAVE_SHIPPING_ADDRESS_REQUEST,
   SAVE_SHIPPING_ADDRESS_SUCCESS,
   SAVE_SHIPPING_ADDRESS_FAIL,
+  VERIFY_SHIPPING_ADDRESS_REQUEST,
+  VERIFY_SHIPPING_ADDRESS_SUCCESS,
+  VERIFY_SHIPPING_ADDRESS_FAIL,
 } from "../constants/cartConstants";
 
 export const cartReducer = (
@@ -63,6 +66,28 @@ export const saveShippingAddress = (state = {}, action) => {
         order: action.payload,
       };
     case SAVE_SHIPPING_ADDRESS_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
+    default:
+      return state;
+  }
+};
+
+export const verifyShippingAddress = (state = {}, action) => {
+  switch (action.type) {
+    case VERIFY_SHIPPING_ADDRESS_REQUEST:
+      return {
+        loading: true,
+      };
+    case VERIFY_SHIPPING_ADDRESS_SUCCESS:
+      return {
+        loading: false,
+        success: true,
+        verifiedaddress: action.payload,
+      };
+    case VERIFY_SHIPPING_ADDRESS_FAIL:
       return {
         loading: false,
         error: action.payload,

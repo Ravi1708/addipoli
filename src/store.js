@@ -10,7 +10,7 @@ import {
   productListByComboReducer,
 } from "./reducers/productReducers";
 
-import { cartReducer } from "./reducers/cartReducers";
+import { cartReducer, verifyShippingAddress } from "./reducers/cartReducers";
 import {
   userAddressesByIdReducer,
   userAddressesReducer,
@@ -33,6 +33,7 @@ import {
   orderPayReducer,
   orderListReducer,
 } from "./reducers/orderReducers";
+
 import { saveShippingAddress } from "./actions/cartActions";
 
 //combine reducer to get all reducers
@@ -55,6 +56,7 @@ const reducer = combineReducers({
   userUpdateProfile: userUpdateProfileReducer,
   orderCreate: orderCreateReducer,
   saveaddress: saveShippingAddress,
+  verifyaddress: verifyShippingAddress,
   orderDetails: orderDetailsReducer,
   orderPay: orderPayReducer,
   orderListMy: orderListMyReducer,

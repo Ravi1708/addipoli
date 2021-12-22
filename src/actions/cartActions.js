@@ -7,6 +7,9 @@ import {
   SAVE_SHIPPING_ADDRESS_REQUEST,
   SAVE_SHIPPING_ADDRESS_FAIL,
   SAVE_SHIPPING_ADDRESS_SUCCESS,
+  VERIFY_SHIPPING_ADDRESS_FAIL,
+  VERIFY_SHIPPING_ADDRESS_SUCCESS,
+  VERIFY_SHIPPING_ADDRESS_REQUEST,
 } from "../constants/cartConstants";
 
 const URL = "https://api.addipoli-puttus.com";
@@ -37,6 +40,7 @@ export const removeFromCart = (id) => (dispatch, getState) => {
 };
 
 export const saveShippingAddress = (address) => (dispatch) => {
+  console.log(address);
   dispatch({
     type: CART_SAVE_SHIPPING_ADDRESS,
     payload: address,
@@ -73,11 +77,35 @@ export const createAddress = (address) => async (dispatch, getState) => {
 
     dispatch({
       type: SAVE_SHIPPING_ADDRESS_SUCCESS,
-      payload: "shiiping address added",
+      payload: "shipping address added",
     });
   } catch (error) {
     dispatch({
       type: SAVE_SHIPPING_ADDRESS_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const verifyAddress = (lat, lon) => async (dispatch) => {
+  try {
+    dispatch({
+      type: VERIFY_SHIPPING_ADDRESS_REQUEST,
+    });
+    const { data } = await axios.get(
+      `${URL}/user/verify-address?lat=${lat}&lon=${lon}`
+    );
+
+    dispatch({
+      type: VERIFY_SHIPPING_ADDRESS_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: VERIFY_SHIPPING_ADDRESS_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

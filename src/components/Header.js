@@ -10,23 +10,40 @@ import {
   registerWithGoogle,
   sendotp,
 } from "../actions/userActions";
-import { addToCart, removeFromCart } from "../actions/cartActions";
+import {
+  addToCart,
+  removeFromCart,
+  saveShippingAddress,
+  verifyAddress,
+} from "../actions/cartActions";
 import Message from "../components/Message";
 import GoogleLogin from "react-google-login";
 import "./Header.css";
 import { NavLink } from "react-router-dom";
+import Geocode from "react-geocode";
 import { userLoginWithGoogleReducer } from "../reducers/userReducers";
-import { Button, Form, Modal, Dropdown } from "react-bootstrap";
+import {
+  Button,
+  Form,
+  Modal,
+  Dropdown,
+  Toast,
+  ToastContainer,
+} from "react-bootstrap";
+import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
+import Alert from "@mui/material/Alert";
 
 const Header = ({ location }) => {
   let history = useHistory();
 
-  const [show, setShow] = useState(false);
+  const [showmap, setShowmap] = useState(false);
+  const [showToast, setShowToast] = useState(false);
 
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const handleClosemap = () => setShowmap(false);
+  const handleShowmap = () => setShowmap(true);
 
   const [opencart, setopencart] = useState(false);
+  const [deliveryoption, setdeliveryoption] = useState("delivery");
   const [googlesignup, setGooglesignup] = useState(false);
   const [opensignin, setopensignin] = useState(false);
   const [opensignupgoogle, setopensignupgoogle] = useState(false);
@@ -42,12 +59,30 @@ const Header = ({ location }) => {
   const [ErrorSignin, setErrorSignin] = useState();
   const [ErrorSignup, setErrorSignup] = useState();
 
+  //get location
+  const [lat, setlatitude] = useState();
+  const [lon, setlongitude] = useState();
+  const [area, setArea] = useState();
+  const [city, setcity] = useState();
+  const [states, setstates] = useState();
+  const [pincode, setpincode] = useState();
+  const [country, setcountry] = useState();
+  const [address, setaddress] = useState();
+  const [currentPosition, setCurrentPosition] = useState({});
+
   const dispatch = useDispatch();
   const userLogin = useSelector((state) => state.userLogin);
   const { loading, error: signinError, userInfo } = userLogin;
 
   const userOtp = useSelector((state) => state.userOtp);
   const { loading: otpLoading, error: otpError, otp } = userOtp;
+
+  const verifyaddress = useSelector((state) => state.verifyaddress);
+  const {
+    loading: verifyaddLoading,
+    error: verifyaddError,
+    verifiedaddress,
+  } = verifyaddress;
 
   const cart = useSelector((state) => state.cart);
   const { cartItems } = cart;
@@ -114,12 +149,106 @@ const Header = ({ location }) => {
     dispatch(sendotp(phoneNumber));
   };
 
+  //geocoding
+  Geocode.setApiKey("AIzaSyCdIB4G6_XT06RkDrqF1IUZpuzRp0vWLr4");
+  Geocode.setLanguage("en");
+  Geocode.setRegion("es");
+  Geocode.setLocationType("ROOFTOP");
+
+  const onMarkerDragEnd = (e) => {
+    const lat = e.latLng.lat();
+    const lng = e.latLng.lng();
+    setCurrentPosition({ lat, lng });
+
+    Geocode.fromLatLng(currentPosition.lat, currentPosition.lng).then(
+      (response) => {
+        const address = response.results[0].formatted_address;
+        setaddress(address);
+        console.log(address);
+        let city, state, country, pincode;
+        for (
+          let i = 0;
+          i < response.results[0].address_components.length;
+          i++
+        ) {
+          for (
+            let j = 0;
+            j < response.results[0].address_components[i].types.length;
+            j++
+          ) {
+            switch (response.results[0].address_components[i].types[j]) {
+              case "locality":
+                city = response.results[0].address_components[i].long_name;
+                setcity(city);
+                break;
+              case "administrative_area_level_1":
+                state = response.results[0].address_components[i].long_name;
+                setstates(state);
+                break;
+              case "postal_code":
+                pincode = response.results[0].address_components[i].long_name;
+                setpincode(pincode);
+                break;
+              case "country":
+                country = response.results[0].address_components[i].long_name;
+                setcountry(country);
+                console.log(country);
+                break;
+            }
+          }
+        }
+      },
+      (error) => {
+        console.error(error);
+      }
+    );
+  };
+
+  // Get latitude & longitude from address.
+
+  const getltlnfromadd = () => {
+    Geocode.fromAddress(address).then(
+      (response) => {
+        const { lat, lng } = response.results[0].geometry.location;
+        setCurrentPosition({ lat, lng });
+        setlatitude(lat);
+        setlongitude(lng);
+      },
+      (error) => {
+        console.error(error);
+      }
+    );
+  };
+
+  const mapStyles = {
+    height: "50vh",
+    width: "20vw",
+  };
+
+  const success = (position) => {
+    const currentPosition = {
+      lat: position.coords.latitude,
+      lng: position.coords.longitude,
+    };
+    setCurrentPosition(currentPosition);
+    setlatitude(position.coords.latitude);
+    setlongitude(position.coords.longitude);
+  };
+
+  // save shipping address
+
+  const verifyAddressHandler = (e) => {
+    e.preventDefault();
+
+    dispatch(verifyAddress(lat, lon));
+    setShowmap(false);
+  };
+
   useEffect(() => {
+    navigator.geolocation.getCurrentPosition(success);
+    setShowmap(true);
     if (opensignin == true) {
-      if (
-        signinError ==
-        "User does not exist in this method. Please use your original form of registration"
-      ) {
+      if (signinError == "User does exist in this method.") {
         setopensignin(false);
         setopensignupotp(true);
       }
@@ -159,10 +288,65 @@ const Header = ({ location }) => {
     if (otp) {
       sethashValue(otp.hashValue);
     }
+    if (
+      verifyaddError ==
+      "No hubs are found near your area, Please try with another address or Order In"
+    ) {
+      setShowToast(true);
+      dispatch(
+        saveShippingAddress({
+          address,
+          area,
+          pincode,
+          city,
+          country,
+          states,
+          lat,
+          lon,
+          nearbyhub: undefined,
+          distance: undefined,
+          hubs: "unavailable",
+        })
+      );
+    }
+    if (verifiedaddress) {
+      console.log(verifiedaddress);
+      dispatch(
+        saveShippingAddress({
+          address,
+          area,
+          pincode,
+          city,
+          country,
+          states,
+          lat,
+          lon,
+          nearbyhub: verifiedaddress.hubId,
+          distance: verifiedaddress.distance,
+          hubs: "available",
+        })
+      );
+    }
   }, [dispatch, history, userInfo, signinError, otp]);
 
   return (
     <div>
+      {verifyaddError ==
+        "No hubs are found near your area, Please try with another address or Order In" && (
+        <Alert
+          style={{
+            position: "fixed",
+            bottom: "20px",
+            right: "0px",
+            width: "300px",
+            fontSize: "17px",
+          }}
+          variant="filled"
+          severity="info"
+        >
+          No hubs are found near your area,
+        </Alert>
+      )}
       {/* <!-- Start Header --> */}
       <header>
         <div className="header-part header-reduce sticky">
@@ -329,8 +513,15 @@ const Header = ({ location }) => {
                             className="form-check-input"
                             type="radio"
                             name="delivery"
+                            onClick={handleShowmap}
+                            value="delivery"
+                            onChange={(e) => setdeliveryoption(e.target.value)}
                           />
-                          <label className="form-check-label" for="delivery">
+                          <label
+                            className="form-check-label"
+                            for="delivery"
+                            onClick={handleShowmap}
+                          >
                             Delivery
                           </label>
                         </div>
@@ -338,12 +529,19 @@ const Header = ({ location }) => {
                           <input
                             className="form-check-input"
                             type="radio"
-                            name="delivery"
+                            name="pickup"
+                            onClick={handleShowmap}
+                            value="home"
+                            onChange={(e) => setdeliveryoption(e.target.value)}
                           />
                           <label
                             className="form-check-label"
                             for="pickup"
-                            onClick={handleShow}
+                            onClick={
+                              (handleShowmap,
+                              (e) => setdeliveryoption("pickup"))
+                            }
+                            value="home"
                           >
                             Pick Up
                           </label>
@@ -356,7 +554,7 @@ const Header = ({ location }) => {
                     Launch demo modal
                   </Button> */}
 
-                  <Modal show={show} animation={false} onHide={handleClose}>
+                  {/* <Modal show={show} animation={false} onHide={handleClose}>
                     <Modal.Header>
                       <Modal.Title>
                         <h5 style={{ margin: "0px" }}>
@@ -390,9 +588,6 @@ const Header = ({ location }) => {
                       </form>
                     </Modal.Body>
                     <Modal.Footer>
-                      {/* <Button variant="secondary" onClick={handleClose}>
-                        Close
-                      </Button> */}
                       <Button
                         variant="btn btn-primary-gold btn-popup"
                         onClick={handleClose}
@@ -400,7 +595,7 @@ const Header = ({ location }) => {
                         Sumbit
                       </Button>
                     </Modal.Footer>
-                  </Modal>
+                  </Modal> */}
 
                   <div
                     className="shop-cart header-collect"
@@ -437,19 +632,29 @@ const Header = ({ location }) => {
               <div className="menu-main">
                 <ul>
                   <li className="has-child">
-                    <a href="/">Home</a>
+                    <LinkContainer to="/">
+                      <a>Home</a>
+                    </LinkContainer>
                   </li>
                   <li className="has-child">
-                    <a href="/about">About Us</a>
+                    <LinkContainer to="/about">
+                      <a>About Us</a>
+                    </LinkContainer>
                   </li>
                   <li className="has-child">
-                    <a href="/gallery">Gallery</a>
+                    <LinkContainer to="/gallery">
+                      <a>Gallery</a>
+                    </LinkContainer>
                   </li>
                   <li className="has-child">
-                    <a href="/blog">Blog</a>
+                    <LinkContainer to="/blog">
+                      <a>Blog</a>
+                    </LinkContainer>
                   </li>
                   <li className="has-child">
-                    <a href="/contact">Contact Us</a>
+                    <LinkContainer to="/contact">
+                      <a>Contact Us</a>
+                    </LinkContainer>
                   </li>
                 </ul>
               </div>
@@ -462,7 +667,6 @@ const Header = ({ location }) => {
           </div>
         </div>
       </header>
-
       {/* <!-- cart popup --> */}
       <div
         className="cart-popup"
@@ -533,9 +737,7 @@ const Header = ({ location }) => {
           </div>
         </div>
       </div>
-
       {/* <!-- login popup --> */}
-
       <div
         className="login-popup"
         style={{ display: opensignin ? "flex" : "none" }}
@@ -570,9 +772,27 @@ const Header = ({ location }) => {
           </div>
           <div>
             <form onSubmit={signinHandler}>
-              <h1>Welcome To Addipoli Puttus</h1>
+              <h4
+                style={{
+                  color: "#671918",
+                  fontSize: "22px",
+                  marginTop: "30px",
+                }}
+              >
+                Welcome To{" "}
+                <span style={{ color: "#04e04c", fontSize: "22px" }}>
+                  Addipoli
+                </span>{" "}
+                <span style={{ color: "#d8391a", fontSize: "22px" }}>
+                  Puttu's
+                </span>
+              </h4>
               <GoogleLogin
-                style={{ fontSize: "50px" }}
+                style={{
+                  fontSize: "50px",
+                  padding: "0px !important",
+                  margin: "0px !important",
+                }}
                 theme="dark"
                 // live key
                 // clientId="859216769475-tqnheotaog2h84dbpq3g11u2h88nhpnn.apps.googleusercontent.com"
@@ -607,18 +827,17 @@ const Header = ({ location }) => {
                   width: "100%",
                 }}
               >
-                {/* <input
-                  type="text"
-                  placeholder="+91"
-                  value="+91"
-                  disabled
+                <p
                   style={{
-                    width: "75px",
+                    width: "50px",
                     textAlign: "center",
-                    marginRight: "20px",
+                    backgroundColor: "#04e04c",
+                    borderRadius: "50px",
+                    height: "50px",
                   }}
-                /> */}
-                <p style={{ width: "10%", textAlign: "left" }}>+91</p>
+                >
+                  +91
+                </p>
                 <input
                   type="text"
                   name="phone"
@@ -634,7 +853,7 @@ const Header = ({ location }) => {
                   <input
                     style={{
                       display: hashValue ? "unset" : "hidden",
-                      width: "60%",
+                      width: "65%",
                     }}
                     type="text"
                     vale={OTP}
@@ -681,9 +900,7 @@ const Header = ({ location }) => {
           </div>
         </div>
       </div>
-
       {/* <!-- signup popup with google--> */}
-
       <div
         className="signup-popup"
         style={{ display: opensignupgoogle ? "flex" : "none" }}
@@ -714,7 +931,15 @@ const Header = ({ location }) => {
             <form
               onSubmit={googlesignup ? signupwithgoogleHandler : signupHandler}
             >
-              <h1>Create Account</h1>
+              <h1
+                style={{
+                  color: "#671918",
+                  fontSize: "30px",
+                  marginTop: "30px",
+                }}
+              >
+                Create Account
+              </h1>
 
               <h5
                 style={{
@@ -792,9 +1017,7 @@ const Header = ({ location }) => {
           </div>
         </div>
       </div>
-
       {/* <!-- signup popup with OTP--> */}
-
       <div
         className="signup-popup"
         style={{ display: opensignupotp ? "flex" : "none" }}
@@ -822,7 +1045,15 @@ const Header = ({ location }) => {
             <form
               onSubmit={googlesignup ? signupwithgoogleHandler : signupHandler}
             >
-              <h1>Create Account</h1>
+              <h1
+                style={{
+                  color: "#671918",
+                  fontSize: "30px",
+                  marginTop: "30px",
+                }}
+              >
+                Create Account
+              </h1>
 
               <input
                 type="text"
@@ -845,6 +1076,59 @@ const Header = ({ location }) => {
           </div>
         </div>
       </div>
+      {/*-------------- Map PopUp--------------*/}
+      <Modal show={showmap} animation={false}>
+        <Modal.Header>
+          <Modal.Title>
+            <h5 style={{ margin: "0px" }}>Select your Nearest Store</h5>
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <LoadScript googleMapsApiKey="AIzaSyAOujeMycUY71Is3IopYHOzvYDaEBYZ1jI">
+            <GoogleMap
+              mapContainerStyle={mapStyles}
+              zoom={13}
+              center={currentPosition}
+            >
+              {currentPosition.lat ? (
+                <Marker
+                  position={currentPosition}
+                  onDragEnd={(e) => onMarkerDragEnd(e)}
+                  draggable={true}
+                />
+              ) : null}
+            </GoogleMap>
+          </LoadScript>
+          <div>
+            <form style={{ display: "flex", margin: "15px" }}>
+              <input
+                value={address}
+                onChange={(e) => setaddress(e.target.value)}
+                placeholder="Type here to search address"
+                style={{ width: "80%" }}
+              />
+              <Button
+                variant="btn btn-primary-gold btn-popup"
+                onClick={getltlnfromadd}
+                style={{ width: "20%" }}
+              >
+                search
+              </Button>
+            </form>
+          </div>
+        </Modal.Body>
+        <Modal.Footer>
+          {/* <Button variant="secondary" onClick={handleClose}>
+                        Close
+                      </Button> */}
+          <Button
+            variant="btn btn-primary-gold btn-popup"
+            onClick={verifyAddressHandler}
+          >
+            Sumbit
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 };

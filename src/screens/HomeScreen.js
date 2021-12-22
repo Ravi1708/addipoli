@@ -4,6 +4,7 @@ import { NavLink } from "react-router-dom";
 import { Link, Route, useParams, useRouteMatch } from "react-router-dom";
 import { listProducts } from "../actions/productActions";
 import ProductCard from "../components/ProductCard";
+import Alert from "@mui/material/Alert";
 import {
   login,
   loginwithgoogle,
@@ -12,8 +13,6 @@ import {
   registerWithGoogle,
 } from "../actions/userActions";
 import Message from "../components/Message";
-import Footer from "../components/Footer";
-import Header from "../components/Header";
 import { userLoginWithGoogleReducer } from "../reducers/userReducers";
 import GoogleLogin from "react-google-login";
 
@@ -35,6 +34,8 @@ const HomeScreen = ({ match, history }) => {
   const [username, setusername] = useState("");
   const [tokenId, settokenId] = useState("");
   const [redirect, setredirect] = useState(false);
+
+  const [showToast, setShowToast] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -70,7 +71,7 @@ const HomeScreen = ({ match, history }) => {
   } = productListByCombo;
 
   const cart = useSelector((state) => state.cart);
-  const { cartItems } = cart;
+  const { cartItems, shippingAddress } = cart;
 
   //get product list when dispatch changes
   useEffect(() => {
@@ -158,12 +159,17 @@ const HomeScreen = ({ match, history }) => {
   const checkoutHandler = (e) => {
     e.preventDefault();
     setopencart(false);
+    // if (shippingAddress.hubs == "unavailable") {
+    //   setShowToast(true);
+    // }
+    // if (shippingAddress.hubs != "unavailable") {
     if (userInfo) {
       history.push("/checkoutaddress");
     } else {
       setredirect(true);
       setopensignin(true);
     }
+    // }
   };
   const handleCart = (id, qty) => {
     dispatch(addToCart(id, qty));
@@ -171,6 +177,20 @@ const HomeScreen = ({ match, history }) => {
 
   return (
     <div>
+      <Alert
+        style={{
+          position: "fixed",
+          bottom: "20px",
+          right: "0px",
+          width: "300px",
+          fontSize: "17px",
+          display: showToast == "true" ? "unset" : "none",
+        }}
+        variant="filled"
+        severity="info"
+      >
+        No hubs are found near your area,
+      </Alert>
       <div className="wrapper">
         <main>
           <div className="main-part">

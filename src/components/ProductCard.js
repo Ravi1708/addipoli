@@ -46,7 +46,7 @@ function ProductCard(props) {
               <strong>&#8377; {props.product.price}</strong>
             </h5>
           </div>
-          {props.product.availability === "Available" ? (
+          {props.product.availability == "Available" ? (
             <>
               {cartbutton === "button" && (
                 <div className="col-lg-7 col-md-7 col-sm-7 col-xs-7 shop-dish">
