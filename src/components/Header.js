@@ -33,7 +33,7 @@ import {
 import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
 import Alert from "@mui/material/Alert";
 
-const Header = ({ location }) => {
+const Header = ({ location, match }) => {
   let history = useHistory();
 
   const [showmap, setShowmap] = useState(false);
@@ -55,19 +55,20 @@ const Header = ({ location }) => {
   const [tokenId, settokenId] = useState();
   const [redirect, setredirect] = useState(false);
   const [hashValue, sethashValue] = useState();
-  const [OTP, setotpvalue] = useState(0);
+  const [OTP, setotpvalue] = useState();
   const [ErrorSignin, setErrorSignin] = useState();
   const [ErrorSignup, setErrorSignup] = useState();
 
   //get location
   const [lat, setlatitude] = useState();
   const [lon, setlongitude] = useState();
+  const [address, setaddress] = useState();
   const [area, setArea] = useState();
+  const [pincode, setpincode] = useState();
   const [city, setcity] = useState();
   const [states, setstates] = useState();
-  const [pincode, setpincode] = useState();
   const [country, setcountry] = useState();
-  const [address, setaddress] = useState();
+
   const [currentPosition, setCurrentPosition] = useState({});
 
   const dispatch = useDispatch();
@@ -85,7 +86,7 @@ const Header = ({ location }) => {
   } = verifyaddress;
 
   const cart = useSelector((state) => state.cart);
-  const { cartItems } = cart;
+  const { cartItems, shippingAddress } = cart;
 
   const userRegister = useSelector((state) => state.userRegister);
   const { loading: signuploading, error: signupError } = userRegister;
@@ -156,16 +157,15 @@ const Header = ({ location }) => {
   Geocode.setLocationType("ROOFTOP");
 
   const onMarkerDragEnd = (e) => {
-    const lat = e.latLng.lat();
-    const lng = e.latLng.lng();
+    const lat = e.latLng.lat() || lat;
+    const lng = e.latLng.lng() || lng;
     setCurrentPosition({ lat, lng });
 
-    Geocode.fromLatLng(currentPosition.lat, currentPosition.lng).then(
+    Geocode.fromLatLng(e.latLng.lat(), e.latLng.lng()).then(
       (response) => {
         const address = response.results[0].formatted_address;
         setaddress(address);
-        console.log(address);
-        let city, state, country, pincode;
+        let area, city, state, country, pincode;
         for (
           let i = 0;
           i < response.results[0].address_components.length;
@@ -180,6 +180,11 @@ const Header = ({ location }) => {
               case "locality":
                 city = response.results[0].address_components[i].long_name;
                 setcity(city);
+                break;
+
+              case "sublocality":
+                area = response.results[0].address_components[i].long_name;
+                setArea(area);
                 break;
               case "administrative_area_level_1":
                 state = response.results[0].address_components[i].long_name;
@@ -213,6 +218,52 @@ const Header = ({ location }) => {
         setCurrentPosition({ lat, lng });
         setlatitude(lat);
         setlongitude(lng);
+        Geocode.fromLatLng(lat, lng).then(
+          (response) => {
+            const address = response.results[0].formatted_address;
+            setaddress(address);
+            let area, city, state, country, pincode;
+            for (
+              let i = 0;
+              i < response.results[0].address_components.length;
+              i++
+            ) {
+              for (
+                let j = 0;
+                j < response.results[0].address_components[i].types.length;
+                j++
+              ) {
+                switch (response.results[0].address_components[i].types[j]) {
+                  case "locality":
+                    city = response.results[0].address_components[i].long_name;
+                    setcity(city);
+                    break;
+                  case "sublocality":
+                    area = response.results[0].address_components[i].long_name;
+                    setArea(area);
+                    break;
+                  case "administrative_area_level_1":
+                    state = response.results[0].address_components[i].long_name;
+                    setstates(state);
+                    break;
+                  case "postal_code":
+                    pincode =
+                      response.results[0].address_components[i].long_name;
+                    setpincode(pincode);
+                    break;
+                  case "country":
+                    country =
+                      response.results[0].address_components[i].long_name;
+                    setcountry(country);
+                    break;
+                }
+              }
+            }
+          },
+          (error) => {
+            console.error(error);
+          }
+        );
       },
       (error) => {
         console.error(error);
@@ -233,6 +284,56 @@ const Header = ({ location }) => {
     setCurrentPosition(currentPosition);
     setlatitude(position.coords.latitude);
     setlongitude(position.coords.longitude);
+
+    Geocode.fromLatLng(
+      position.coords.latitude,
+      position.coords.longitude
+    ).then(
+      (response) => {
+        const address = response.results[0].formatted_address;
+        setaddress(address);
+
+        let area, city, state, country, pincode;
+        for (
+          let i = 0;
+          i < response.results[0].address_components.length;
+          i++
+        ) {
+          for (
+            let j = 0;
+            j < response.results[0].address_components[i].types.length;
+            j++
+          ) {
+            switch (response.results[0].address_components[i].types[j]) {
+              case "locality":
+                city = response.results[0].address_components[i].long_name;
+                setcity(city);
+                break;
+              case "sublocality":
+                area = response.results[0].address_components[i].long_name;
+                setArea(area);
+                break;
+              case "administrative_area_level_1":
+                state = response.results[0].address_components[i].long_name;
+                setstates(state);
+                break;
+              case "postal_code":
+                pincode = response.results[0].address_components[i].long_name;
+                setpincode(pincode);
+                break;
+              case "country":
+                country = response.results[0].address_components[i].long_name;
+                setcountry(country);
+                console.log(country);
+                break;
+            }
+          }
+        }
+      },
+      (error) => {
+        console.error(error);
+      }
+    );
   };
 
   // save shipping address
@@ -246,7 +347,13 @@ const Header = ({ location }) => {
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(success);
-    setShowmap(true);
+    if (verifiedaddress || verifyaddError) {
+      setShowmap(false);
+    } else {
+      if (history.location.pathname == "/") {
+        setShowmap(true);
+      }
+    }
     if (opensignin == true) {
       if (signinError == "User does exist in this method.") {
         setopensignin(false);
@@ -292,6 +399,7 @@ const Header = ({ location }) => {
       verifyaddError ==
       "No hubs are found near your area, Please try with another address or Order In"
     ) {
+      console.log(verifyaddError);
       setShowToast(true);
       dispatch(
         saveShippingAddress({
@@ -321,13 +429,21 @@ const Header = ({ location }) => {
           states,
           lat,
           lon,
-          nearbyhub: verifiedaddress.hubId,
+          hubId: verifiedaddress.hubId,
           distance: verifiedaddress.distance,
           hubs: "available",
         })
       );
     }
-  }, [dispatch, history, userInfo, signinError, otp]);
+  }, [
+    dispatch,
+    history,
+    userInfo,
+    signinError,
+    otp,
+    verifyaddError,
+    verifiedaddress,
+  ]);
 
   return (
     <div>
@@ -516,6 +632,7 @@ const Header = ({ location }) => {
                             onClick={handleShowmap}
                             value="delivery"
                             onChange={(e) => setdeliveryoption(e.target.value)}
+                            checked={true}
                           />
                           <label
                             className="form-check-label"
@@ -533,6 +650,7 @@ const Header = ({ location }) => {
                             onClick={handleShowmap}
                             value="home"
                             onChange={(e) => setdeliveryoption(e.target.value)}
+                            disabled={true}
                           />
                           <label
                             className="form-check-label"
@@ -610,13 +728,6 @@ const Header = ({ location }) => {
                       items
                     </a>
                   </div>
-                  {/* <!-- <div className="search-part">
-                          <a href="#"></a>
-                          <div className="search-box">
-                              <input type="text" name="txt" placeholder="Search">
-                              <input type="submit" name="submit" value=" ">
-                          </div>
-                      </div> --> */}
                 </div>
               </div>
               <div className="menu-icon">
@@ -626,9 +737,7 @@ const Header = ({ location }) => {
                   <span className="bar-3"></span>
                 </a>
               </div>
-              {/* <!-- <div className="book-table header-collect book-sm">
-                                <a href="#" data-toggle="modal" data-target="#booktable"><img src="images/icon-table.png" alt="">Book a Table</a>
-                            </div> --> */}
+
               <div className="menu-main">
                 <ul>
                   <li className="has-child">
@@ -637,24 +746,16 @@ const Header = ({ location }) => {
                     </LinkContainer>
                   </li>
                   <li className="has-child">
-                    <LinkContainer to="/about">
-                      <a>About Us</a>
-                    </LinkContainer>
+                    <a href="/about">About Us</a>
                   </li>
                   <li className="has-child">
-                    <LinkContainer to="/gallery">
-                      <a>Gallery</a>
-                    </LinkContainer>
+                    <a href="/gallery"> Gallery</a>
                   </li>
                   <li className="has-child">
-                    <LinkContainer to="/blog">
-                      <a>Blog</a>
-                    </LinkContainer>
+                    <a href="/blog">Blog</a>
                   </li>
                   <li className="has-child">
-                    <LinkContainer to="/contact">
-                      <a>Contact Us</a>
-                    </LinkContainer>
+                    <a href="/contact"> Contact Us</a>
                   </li>
                 </ul>
               </div>
@@ -804,22 +905,7 @@ const Header = ({ location }) => {
                 cookiePolicy={"single_host_origin"}
               />
               <span>or use your Mobile Number</span>
-              {/* <input
-                type="email"
-                name="email"
-                placeholder="Email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-              <input
-                type="password"
-                name="password"
-                placeholder="Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              /> */}
 
-              {/* <div style={{ display: "flex", justifyContent: "space-between" }}> */}
               <div
                 style={{
                   display: "flex",
@@ -852,7 +938,7 @@ const Header = ({ location }) => {
                 {otp && (
                   <input
                     style={{
-                      display: hashValue ? "unset" : "hidden",
+                      visibility: hashValue ? "unset" : "hidden",
                       width: "65%",
                     }}
                     type="text"
@@ -863,7 +949,6 @@ const Header = ({ location }) => {
                 )}
 
                 <button
-                  // style={{ display: hashValue ? "none" : "unset" }}
                   onClick={(e) => {
                     e.preventDefault();
                     getotpHandler();
@@ -883,19 +968,6 @@ const Header = ({ location }) => {
               >
                 Sign In
               </button>
-              {/* <p>
-                Don't have an account?
-                <a
-                  href="#"
-                  id="signup"
-                  onClick={() => {
-                    setopensignin(false);
-                    setopensignup(true);
-                  }}
-                >
-                  Sign Up
-                </a>
-              </p> */}
             </form>
           </div>
         </div>
@@ -950,69 +1022,68 @@ const Header = ({ location }) => {
                 Enter Your Mobile Number
               </h5>
 
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  width: "100%",
+                }}
+              >
+                <p
+                  style={{
+                    width: "50px",
+                    textAlign: "center",
+                    backgroundColor: "#04e04c",
+                    borderRadius: "50px",
+                    height: "50px",
+                  }}
+                >
+                  +91
+                </p>
+                <input
+                  type="text"
+                  name="phone"
+                  placeholder="Phone Number"
+                  value={phoneNumber}
+                  onChange={(e) => setphoneNumber(e.target.value)}
+                  style={{ width: "85%" }}
+                />
+              </div>
+              {otpError && <Message>{otpError}</Message>}
               <div style={{ display: "flex", justifyContent: "space-between" }}>
-                <input
-                  type="text"
-                  name="phone"
-                  placeholder="Phone Number"
-                  value={phoneNumber}
-                  onChange={(e) => setphoneNumber(e.target.value)}
-                  style={{ width: "65%" }}
-                />
+                {otp && (
+                  <input
+                    style={{
+                      visibility: hashValue ? "unset" : "hidden",
+                      width: "65%",
+                    }}
+                    type="text"
+                    vale={OTP}
+                    onChange={(e) => setotpvalue(Number(e.target.value))}
+                    placeholder="Enter OTP"
+                  />
+                )}
+
                 <button
-                  // style={{ display: hashValue ? "none" : "unset" }}
                   onClick={(e) => {
                     e.preventDefault();
                     getotpHandler();
                   }}
                 >
-                  {hashValue ? "Resend" : "Next"}
+                  {hashValue ? "Resend" : "Get OTP"}
                 </button>
               </div>
-              {otpError && <Message>{otpError}</Message>}
-              {otp && (
-                <input
-                  style={{ display: hashValue ? "unset" : "none" }}
-                  type="text"
-                  vale={OTP}
-                  onChange={(e) => setotpvalue(Number(e.target.value))}
-                  placeholder="Enter OTP"
-                />
-              )}
 
-              {/* <div style={{ display: "flex", justifyContent: "space-between" }}>
-                <input
-                  type="text"
-                  name="phone"
-                  placeholder="Phone Number"
-                  value={phoneNumber}
-                  onChange={(e) => setphoneNumber(e.target.value)}
-                  style={{ width: "65%" }}
-                  style={{ display: hashValue ? "none" : "unset" }}
-                />
-                <button
-                  style={{ display: hashValue ? "none" : "unset" }}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    getotpHandler();
-                  }}
-                >
-                  verify
-                </button>
-              </div>
-              {otpError && <Message>{otpError}</Message>}
-              {otp && (
-                <input
-                  type="text"
-                  vale={OTP}
-                  placeholder={OTP ? OTP : "Enter OTP"}
-                  onChange={(e) => setotpvalue(Number(e.target.value))}
-                  style={{ display: hashValue ? "unset" : "none" }}
-                />
-              )} */}
+              {/* </div> */}
 
-              <Message>{signupError}</Message>
-              <button type="submit">SignUp</button>
+              {ErrorSignup && <Message>{ErrorSignup}</Message>}
+
+              <button
+                type="submit"
+                style={{ display: hashValue ? "unset" : "none" }}
+              >
+                SignUp
+              </button>
             </form>
           </div>
         </div>
@@ -1077,10 +1148,10 @@ const Header = ({ location }) => {
         </div>
       </div>
       {/*-------------- Map PopUp--------------*/}
-      <Modal show={showmap} animation={false}>
+      <Modal show={showmap} animation={false} backdrop="static">
         <Modal.Header>
           <Modal.Title>
-            <h5 style={{ margin: "0px" }}>Select your Nearest Store</h5>
+            <h5 style={{ margin: "0px" }}>Select your Location</h5>
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>

@@ -148,19 +148,24 @@ const CheckoutPayment = ({ history }) => {
         quantity: val.qty,
       };
     });
+    console.log(cart.shippingAddress);
     dispatch(
       createOrder({
+        orderType: "Delivery",
         orderItems: orderItems,
         shippingAddress: cart.shippingAddress,
         paymentMethod: paymentMethod,
-        itemsPrice: cart.itemsPrice,
-        shippingPrice: cart.shippingPrice,
-        taxPrice: cart.taxPrice,
+        basePrice: parseFloat(cart.basePrice),
+        deliveryCharge: parseFloat(cart.deliveryCharge),
+        tax: parseFloat(cart.taxPrice),
+        couponDiscount: parseFloat(cart.couponDiscount),
         totalPrice: parseFloat(cart.totalPrice),
         payprice: cart.payprice,
         paymentResult: "Unpaid",
         deliveryStatus: "Order Placed",
         orderStatus: "Ongoing",
+        receiptId: "",
+        hubId: cart.shippingAddress.hubId,
       })
     );
     localStorage.removeItem("cartItems");
@@ -269,15 +274,15 @@ const CheckoutPayment = ({ history }) => {
                       </div>
                       <div className="product-cart-total">
                         <small>Total Amount</small>
-                        <span> &#8377; {cart.itemsPrice}</span>
+                        <span> &#8377; {cart.basePrice}</span>
                       </div>
                       <div className="product-cart-total">
                         <small>Coupon Applied</small>
-                        <span>&#8377; 00.00</span>
+                        <span>&#8377; {cart.couponDiscount}</span>
                       </div>
                       <div className="product-cart-total">
                         <small>Delivery Charge</small>
-                        <span> &#8377; {cart.shippingPrice}</span>
+                        <span> &#8377; {cart.deliveryCharge}</span>
                       </div>
                       <div className="product-cart-total">
                         <small>Tax</small>

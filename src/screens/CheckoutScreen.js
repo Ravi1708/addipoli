@@ -25,27 +25,27 @@ const CheckoutScreen = ({ match, history }) => {
     return (Math.round(num * 100) / 100).toFixed(2);
   };
 
-  cart.itemsPrice = addDecimals(
+  cart.basePrice = addDecimals(
     cart.cartItems.reduce((acc, item) => acc + item.price * item.qty, 0)
   );
 
-  cart.shippingPrice = addDecimals(20);
+  cart.deliveryCharge = addDecimals(20);
 
-  cart.taxPrice = addDecimals(Number((0.05 * cart.itemsPrice).toFixed(2)));
+  cart.taxPrice = addDecimals(Number((0.05 * cart.basePrice).toFixed(2)));
+
+  cart.couponDiscount = 0;
 
   cart.totalPrice = (
-    Number(cart.itemsPrice) +
-    Number(cart.shippingPrice) +
-    Number(cart.taxPrice)
+    Number(cart.basePrice) +
+    Number(cart.deliveryCharge) +
+    Number(cart.taxPrice) -
+    Number(cart.couponDiscount)
   ).toFixed(2);
-
-  cart.coupenprice = 50;
 
   const applycoupen = () => {
     if (coupencode === "ADDIPOLIFIRST") {
       if (cart.totalPrice > 199) {
-        cart.totalPrice = cart.totalPrice - Number(cart.coupenprice);
-        console.log(cart.totalPrice);
+        cart.totalPrice = cart.totalPrice - 50;
       }
     }
   };
@@ -183,86 +183,6 @@ const CheckoutScreen = ({ match, history }) => {
                               </tr>
                             );
                           })}
-                          {/* <tr>
-                            <th>PRODUCT</th>
-                            <td>
-                              <div className="product-cart">
-                                <img
-                                  src="assets/images/img71.png"
-                                  alt="image"
-                                />
-                              </div>
-                              <div className="product-cart-title">
-                                <span>Blanched Garlic</span>
-                              </div>
-                            </td>
-                            <th>PRICE</th>
-                            <td>
-                              <strong>$59</strong>
-                              <del>$5400.00</del>
-                            </td>
-                            <th>QUANTITY</th>
-                            <td>
-                              <div className="price-textbox">
-                                <span className="minus-text">
-                                  <i className="icon-minus"></i>
-                                </span>
-                                <input
-                                  name="txt"
-                                  placeholder="1"
-                                  type="text"
-                                ></input>
-                                <span className="plus-text">
-                                  <i className="icon-plus"></i>
-                                </span>
-                              </div>
-                            </td>
-                            <th>TOTAL</th>
-                            <td>$59</td>
-                            <td className="shop-cart-close">
-                              <i className="icon-cancel-5"></i>
-                            </td>
-                          </tr>
-                          <tr>
-                            <th>PRODUCT</th>
-                            <td>
-                              <div className="product-cart">
-                                <img
-                                  src="assets/images/img72.png"
-                                  alt="image"
-                                />
-                              </div>
-                              <div className="product-cart-title">
-                                <span>Blanched Garlic</span>
-                              </div>
-                            </td>
-                            <th>PRICE</th>
-                            <td>
-                              <strong>$59</strong>
-                              <del>$5400.00</del>
-                            </td>
-                            <th>QUANTITY</th>
-                            <td>
-                              <div className="price-textbox">
-                                <span className="minus-text">
-                                  <i className="icon-minus"></i>
-                                </span>
-                                <input
-                                  name="txt"
-                                  placeholder="1"
-                                  type="text"
-                                ></input>
-                                <span className="plus-text">
-                                  <i className="icon-plus"></i>
-                                </span>
-                              </div>
-                            </td>
-                            <th>TOTAL</th>
-                            <td>$59</td>
-                            <td className="shop-cart-close">
-                              <i className="icon-cancel-5"></i>
-                            </td>
-                          </tr> */}
                         </tbody>
                       </table>
                     </div>
@@ -324,7 +244,7 @@ const CheckoutScreen = ({ match, history }) => {
                       </div>
                       <div className="product-cart-total">
                         <small>Total products</small>
-                        <span> &#8377; {cart.itemsPrice}</span>
+                        <span> &#8377; {cart.basePrice}</span>
                       </div>
                       <div className="product-cart-total">
                         <small>Coupon Applied</small>
@@ -332,7 +252,7 @@ const CheckoutScreen = ({ match, history }) => {
                       </div>
                       <div className="product-cart-total">
                         <small>Delivery Charge</small>
-                        <span> &#8377; {cart.shippingPrice}</span>
+                        <span> &#8377; {cart.deliveryCharge}</span>
                       </div>
                       <div className="product-cart-total">
                         <small>Tax</small>

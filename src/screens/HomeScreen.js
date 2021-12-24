@@ -11,6 +11,7 @@ import {
   logout,
   register,
   registerWithGoogle,
+  sendotp,
 } from "../actions/userActions";
 import Message from "../components/Message";
 import { userLoginWithGoogleReducer } from "../reducers/userReducers";
@@ -27,13 +28,18 @@ const HomeScreen = ({ match, history }) => {
   const [opencart, setopencart] = useState(false);
   const [googlesignup, setGooglesignup] = useState(false);
   const [opensignin, setopensignin] = useState(false);
+  const [opensignupgoogle, setopensignupgoogle] = useState(false);
+  const [opensignupotp, setopensignupotp] = useState(false);
   const [opensignup, setopensignup] = useState(false);
   const [email, setEmail] = useState("");
   const [phoneNumber, setphoneNumber] = useState();
-  const [password, setPassword] = useState("");
   const [username, setusername] = useState("");
-  const [tokenId, settokenId] = useState("");
+  const [tokenId, settokenId] = useState();
   const [redirect, setredirect] = useState(false);
+  const [hashValue, sethashValue] = useState();
+  const [OTP, setotpvalue] = useState();
+  const [ErrorSignin, setErrorSignin] = useState();
+  const [ErrorSignup, setErrorSignup] = useState();
 
   const [showToast, setShowToast] = useState(false);
 
@@ -42,6 +48,9 @@ const HomeScreen = ({ match, history }) => {
   const userLogin = useSelector((state) => state.userLogin);
   const { loading: signinLoading, error: signinError, userInfo } = userLogin;
 
+  const userOtp = useSelector((state) => state.userOtp);
+  const { loading: otpLoading, error: otpError, otp } = userOtp;
+
   const userRegister = useSelector((state) => state.userRegister);
   const {
     loading: signuploading,
@@ -49,103 +58,47 @@ const HomeScreen = ({ match, history }) => {
     userInfo: userInfos,
   } = userRegister;
 
-  //get sliderlist from state
-  // const listSlider = useSelector((state) => state.listSlider);
-  // const {
-  //   loading: sliderLoading,
-  //   error: slderError,
-  //   products: Sliders,
-  // } = listSlider;
-
   //get productlist from state
   const productList = useSelector((state) => state.productList);
   const { loading, error, products, page, pages } = productList;
 
-  //get combo list from state
-
-  const productListByCombo = useSelector((state) => state.productListByCombo);
-  const {
-    loading: comboLoading,
-    error: comboError,
-    products: comboProducts,
-  } = productListByCombo;
-
   const cart = useSelector((state) => state.cart);
   const { cartItems, shippingAddress } = cart;
 
-  //get product list when dispatch changes
-  useEffect(() => {
-    if (opensignin == true) {
-      if (userInfo) {
-        setopensignin(false);
-      }
-    }
-    if (opensignup == true) {
-      if (userInfos) {
-        setopensignup(false);
-      }
-    }
-    if (redirect == true) {
-      if (userInfo) {
-        history.push("/checkoutaddress");
-      }
-    }
-    // dispatch(listSliders());
-    dispatch(listProducts());
-  }, [dispatch, userInfo]);
+  //sign in with google Handler
 
-  const signinHandler = (e) => {
-    e.preventDefault();
-    dispatch(login(email, password));
-  };
-
-  const handleLogin = (googleData) => {
+  const handleLoginWithGoogle = (googleData) => {
     setGooglesignup(true);
     settokenId(googleData.tokenId);
     dispatch(loginwithgoogle(googleData.tokenId));
-
-    // const res = await fetch("/login", {
-    //   method: "POST",
-    //   body: JSON.stringify({
-    //     token: googleData.tokenId,
-    //   }),
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    // });
-    // const data = await res.json();
-    // store returned user somehow
   };
 
-  // const signinWithGoogleHandler = (e) => {
-  //   e.preventDefault();
+  //sign up with google Handler
 
-  // };
+  const signupwithgoogleHandler = (e) => {
+    e.preventDefault();
+    console.log(hashValue);
+    console.log(OTP);
+    dispatch(registerWithGoogle(tokenId, phoneNumber, hashValue, OTP));
+  };
+
+  //sign in with OTP Handler
+
+  const signinHandler = (e) => {
+    e.preventDefault();
+    dispatch(login(phoneNumber, OTP, hashValue));
+  };
+
+  //sign up  with OTP Handler
+
+  const signupHandler = (e) => {
+    e.preventDefault();
+    dispatch(register(username, phoneNumber, email, hashValue, OTP));
+  };
 
   const handleSignup = (googleData) => {
     setGooglesignup(true);
     settokenId(googleData.tokenId);
-    // const res = await fetch("/login", {
-    //   method: "POST",
-    //   body: JSON.stringify({
-    //     token: googleData.tokenId,
-    //   }),
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    // });
-    // const data = await res.json();
-    // store returned user somehow
-  };
-
-  const signupHandler = (e) => {
-    e.preventDefault();
-    dispatch(register(username, phoneNumber, email, password));
-  };
-
-  const signupwithgoogleHandler = (e) => {
-    e.preventDefault();
-    dispatch(registerWithGoogle(tokenId, phoneNumber));
   };
 
   const logoutHandler = (e) => {
@@ -158,41 +111,87 @@ const HomeScreen = ({ match, history }) => {
 
   const checkoutHandler = (e) => {
     e.preventDefault();
-    setopencart(false);
-    // if (shippingAddress.hubs == "unavailable") {
-    //   setShowToast(true);
-    // }
-    // if (shippingAddress.hubs != "unavailable") {
+
     if (userInfo) {
       history.push("/checkoutaddress");
     } else {
       setredirect(true);
       setopensignin(true);
     }
-    // }
   };
+
+  const getotpHandler = (e) => {
+    dispatch(sendotp(phoneNumber));
+  };
+
   const handleCart = (id, qty) => {
     dispatch(addToCart(id, qty));
   };
 
+  //get product list when dispatch changes
+  useEffect(() => {
+    if (opensignin == true) {
+      if (signinError == "User does exist in this method.") {
+        setopensignin(false);
+        setopensignupotp(true);
+      }
+    }
+    if (opensignin == true) {
+      if (signinError == "User does not exist, Please sign in") {
+        setopensignin(false);
+        setopensignupgoogle(true);
+      }
+    }
+    if (opensignin == true) {
+      if (userInfo) {
+        setopensignin(false);
+      }
+    }
+    if (opensignupgoogle == true) {
+      if (userInfo) {
+        setopensignupgoogle(false);
+      }
+    }
+    if (opensignupotp == true) {
+      if (userInfo) {
+        setopensignupotp(false);
+      }
+    }
+    if (signupError) {
+      setErrorSignup(signupError);
+    }
+    if (signinError) {
+      setErrorSignin(signinError);
+    }
+    if (redirect == true) {
+      if (userInfo) {
+        history.push("/checkoutaddress");
+      }
+    }
+    if (otp) {
+      sethashValue(otp.hashValue);
+    }
+    dispatch(listProducts());
+  }, [dispatch, userInfo]);
+
   return (
     <div>
-      <Alert
-        style={{
-          position: "fixed",
-          bottom: "20px",
-          right: "0px",
-          width: "300px",
-          fontSize: "17px",
-          display: showToast == "true" ? "unset" : "none",
-        }}
-        variant="filled"
-        severity="info"
-      >
-        No hubs are found near your area,
-      </Alert>
       <div className="wrapper">
         <main>
+          {/* <Alert
+            style={{
+              position: "fixed",
+              bottom: "20px",
+              right: "0px",
+              width: "300px",
+              fontSize: "17px",
+              display: showToast == "true" ? "unset" : "none",
+            }}
+            variant="filled"
+            severity="info"
+          >
+            No hubs are found near your area,
+          </Alert> */}
           <div className="main-part">
             <section className="home-slider">
               <Banner />
@@ -554,8 +553,73 @@ const HomeScreen = ({ match, history }) => {
           </div>
         </main>
       </div>
-      {/* <!-- login popup --> */}
+      {/* <!-- cart popup --> */}
+      <div
+        className="cart-popup"
+        style={{ display: opencart ? "flex" : "none" }}
+      >
+        <div className="cart-wrap">
+          <div className="cart-blog">
+            <div
+              className="close"
+              onClick={(e) => {
+                e.preventDefault();
+                setopencart(false);
+              }}
+            >
+              <h3 className="close1">X</h3>
+            </div>
+            {cartItems.reduce((acc, item) => acc + item.qty, 0) === 0 ? (
+              <img src="assets/images/empty-cart.png" />
+            ) : (
+              <>
+                {cartItems.map((item) => {
+                  if (item.qty === 0) {
+                    removeFromCartHandler(item.product);
+                  }
 
+                  return (
+                    <>
+                      <div className="cart-item">
+                        <div className="cart-item-left">
+                          <img src={`${item.image}`} alt="" />
+                        </div>
+                        <div className="cart-item-right">
+                          <h6>{item.name}</h6>
+                          <span>&#8377; {item.price}</span>
+                        </div>
+                        <span
+                          className="delete-icon"
+                          onClick={() => removeFromCartHandler(item.product)}
+                        ></span>
+                      </div>
+                    </>
+                  );
+                })}
+                <div className="subtotal">
+                  <div className="col-md-6 col-sm-6 col-xs-6">
+                    <h6>Subtotal :</h6>
+                  </div>
+                  <div className="col-md-6 col-sm-6 col-xs-6">
+                    <span>
+                      &#8377;
+                      {cartItems
+                        .reduce((acc, item) => acc + item.qty * item.price, 0)
+                        .toFixed(2)}
+                    </span>
+                  </div>
+                </div>
+                <div className="cart-btn">
+                  <a onClick={checkoutHandler} className="btn-main checkout">
+                    CHECK OUT
+                  </a>
+                </div>
+              </>
+            )}
+          </div>
+        </div>
+      </div>
+      {/* <!-- login popup --> */}
       <div
         className="login-popup"
         style={{ display: opensignin ? "flex" : "none" }}
@@ -566,6 +630,23 @@ const HomeScreen = ({ match, history }) => {
               className="close2"
               onClick={() => {
                 setopensignin(false);
+                if (
+                  signinError !=
+                    "User does not exist in this method. Please use your original form of registration" ||
+                  signinError != "User does not exist, Please sign in"
+                ) {
+                  setEmail("");
+                  setphoneNumber("");
+                  setusername("");
+                  settokenId();
+                  sethashValue();
+                  setotpvalue();
+                  setErrorSignin(null);
+                  setErrorSignup(null);
+                  setErrorSignin(null);
+                  settokenId(null);
+                  setGooglesignup(false);
+                }
               }}
             >
               X
@@ -573,79 +654,127 @@ const HomeScreen = ({ match, history }) => {
           </div>
           <div>
             <form onSubmit={signinHandler}>
-              <h1>Sign In</h1>
-              {/* <div className="social-container">
-                <a href="#" className="social">
-                  <i className="fa fa-facebook"></i>
-                </a>
-                <a href="#" className="social">
-                  <i className="fa fa-google"></i>
-                </a>
-                <a href="#" className="social">
-                  <i className="fa fa-linkedin"></i>
-                </a>
-              </div> */}
+              <h4
+                style={{
+                  color: "#671918",
+                  fontSize: "22px",
+                  marginTop: "30px",
+                }}
+              >
+                Welcome To{" "}
+                <span style={{ color: "#04e04c", fontSize: "22px" }}>
+                  Addipoli
+                </span>{" "}
+                <span style={{ color: "#d8391a", fontSize: "22px" }}>
+                  Puttu's
+                </span>
+              </h4>
               <GoogleLogin
-                // clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
+                style={{
+                  fontSize: "50px",
+                  padding: "0px !important",
+                  margin: "0px !important",
+                }}
+                theme="dark"
+                // live key
                 // clientId="859216769475-tqnheotaog2h84dbpq3g11u2h88nhpnn.apps.googleusercontent.com"
+                //test key
                 clientId="859216769475-103gs96n5kpq7hfh8dbsfp9horvb4bii.apps.googleusercontent.com"
                 buttonText="Log in with Google"
-                onSuccess={handleLogin}
-                onFailure={handleLogin}
+                onSuccess={handleLoginWithGoogle}
+                onFailure={handleLoginWithGoogle}
                 cookiePolicy={"single_host_origin"}
               />
-              <span>or use your account</span>
-              <input
-                type="email"
-                name="email"
-                placeholder="Email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-              <input
-                type="password"
-                name="password"
-                placeholder="Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-              {/* <a href="#">Forgot Your Password</a> */}
+              <span>or use your Mobile Number</span>
 
-              {/* {signinErrorGoogle && <Message>{signinErrorGoogle}</Message>} */}
-
-              {signinError && <Message>{signinError}</Message>}
-
-              <button type="submit">Sign In</button>
-              <p>
-                Don't have an account?
-                <a
-                  href="#"
-                  id="signup"
-                  onClick={() => {
-                    setopensignin(false);
-                    setopensignup(true);
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  width: "100%",
+                }}
+              >
+                <p
+                  style={{
+                    width: "50px",
+                    textAlign: "center",
+                    backgroundColor: "#04e04c",
+                    borderRadius: "50px",
+                    height: "50px",
                   }}
                 >
-                  Sign Up
-                </a>
-              </p>
+                  +91
+                </p>
+                <input
+                  type="text"
+                  name="phone"
+                  placeholder="Phone Number"
+                  value={phoneNumber}
+                  onChange={(e) => setphoneNumber(e.target.value)}
+                  style={{ width: "85%" }}
+                />
+              </div>
+              {otpError && <Message>{otpError}</Message>}
+              <div style={{ display: "flex", justifyContent: "space-between" }}>
+                {otp && (
+                  <input
+                    style={{
+                      visibility: hashValue ? "unset" : "hidden",
+                      width: "65%",
+                    }}
+                    type="text"
+                    vale={OTP}
+                    onChange={(e) => setotpvalue(Number(e.target.value))}
+                    placeholder="Enter OTP"
+                  />
+                )}
+
+                <button
+                  onClick={(e) => {
+                    e.preventDefault();
+                    getotpHandler();
+                  }}
+                >
+                  {hashValue ? "Resend" : "Get OTP"}
+                </button>
+              </div>
+
+              {/* </div> */}
+
+              {ErrorSignin && <Message>{ErrorSignin}</Message>}
+
+              <button
+                type="submit"
+                style={{ display: hashValue ? "unset" : "none" }}
+              >
+                Sign In
+              </button>
             </form>
           </div>
         </div>
       </div>
-
-      {/* <!-- signup popup --> */}
-
+      {/* <!-- signup popup with google--> */}
       <div
         className="signup-popup"
-        style={{ display: opensignup ? "flex" : "none" }}
+        style={{ display: opensignupgoogle ? "flex" : "none" }}
       >
         <div className="container" id="container">
           <div className="close">
             <h3
               className="close3"
               onClick={() => {
-                setopensignup(false);
+                setopensignupgoogle(false);
+                setEmail("");
+                setphoneNumber(null);
+                setusername("");
+                settokenId();
+                sethashValue(null);
+                setotpvalue(null);
+                setErrorSignin(null);
+                setErrorSignup(null);
+                setErrorSignin(null);
+                settokenId(null);
+                setGooglesignup(false);
               }}
             >
               X
@@ -655,37 +784,16 @@ const HomeScreen = ({ match, history }) => {
             <form
               onSubmit={googlesignup ? signupwithgoogleHandler : signupHandler}
             >
-              <h1>Create Account</h1>
-
-              {/* <div className="social-container">
-                <a href="#" className="social">
-                  <i className="fa fa-facebook"></i>
-                </a>
-                <a href="#" className="social">
-                  <i className="fa fa-google"></i>
-                </a>
-                <a href="#" className="social">
-                  <i className="fa fa-linkedin"></i>
-                </a>
-              </div> */}
-              <div
+              <h1
                 style={{
-                  display: googlesignup ? "none" : "unset",
+                  color: "#671918",
+                  fontSize: "30px",
+                  marginTop: "30px",
                 }}
               >
-                <GoogleLogin
-                  // clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
-                  // clientId="859216769475-tqnheotaog2h84dbpq3g11u2h88nhpnn.apps.googleusercontent.com"
-                  clientId="859216769475-103gs96n5kpq7hfh8dbsfp9horvb4bii.apps.googleusercontent.com"
-                  buttonText="Signup with Google"
-                  onSuccess={handleSignup}
-                  onFailure={handleSignup}
-                  cookiePolicy={"single_host_origin"}
-                />
-              </div>
-              <span style={{ display: googlesignup ? "none" : "unset" }}>
-                or use your email for registration
-              </span>
+                Create Account
+              </h1>
+
               <h5
                 style={{
                   display: googlesignup ? "unset" : "none",
@@ -694,13 +802,117 @@ const HomeScreen = ({ match, history }) => {
               >
                 Enter Your Mobile Number
               </h5>
+
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  width: "100%",
+                }}
+              >
+                <p
+                  style={{
+                    width: "50px",
+                    textAlign: "center",
+                    backgroundColor: "#04e04c",
+                    borderRadius: "50px",
+                    height: "50px",
+                  }}
+                >
+                  +91
+                </p>
+                <input
+                  type="text"
+                  name="phone"
+                  placeholder="Phone Number"
+                  value={phoneNumber}
+                  onChange={(e) => setphoneNumber(e.target.value)}
+                  style={{ width: "85%" }}
+                />
+              </div>
+              {otpError && <Message>{otpError}</Message>}
+              <div style={{ display: "flex", justifyContent: "space-between" }}>
+                {otp && (
+                  <input
+                    style={{
+                      visibility: hashValue ? "unset" : "hidden",
+                      width: "65%",
+                    }}
+                    type="text"
+                    vale={OTP}
+                    onChange={(e) => setotpvalue(Number(e.target.value))}
+                    placeholder="Enter OTP"
+                  />
+                )}
+
+                <button
+                  onClick={(e) => {
+                    e.preventDefault();
+                    getotpHandler();
+                  }}
+                >
+                  {hashValue ? "Resend" : "Get OTP"}
+                </button>
+              </div>
+
+              {/* </div> */}
+
+              {ErrorSignup && <Message>{ErrorSignup}</Message>}
+
+              <button
+                type="submit"
+                style={{ display: hashValue ? "unset" : "none" }}
+              >
+                SignUp
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+      {/* <!-- signup popup with OTP--> */}
+      <div
+        className="signup-popup"
+        style={{ display: opensignupotp ? "flex" : "none" }}
+      >
+        <div className="container" id="container">
+          <div className="close">
+            <h3
+              className="close3"
+              onClick={() => {
+                setopensignupotp(false);
+                setEmail("");
+                setphoneNumber("");
+                setusername("");
+                settokenId();
+                sethashValue();
+                setotpvalue();
+                setErrorSignin(null);
+                setErrorSignup();
+              }}
+            >
+              X
+            </h3>
+          </div>
+          <div>
+            <form
+              onSubmit={googlesignup ? signupwithgoogleHandler : signupHandler}
+            >
+              <h1
+                style={{
+                  color: "#671918",
+                  fontSize: "30px",
+                  marginTop: "30px",
+                }}
+              >
+                Create Account
+              </h1>
+
               <input
                 type="text"
                 name="name"
                 placeholder="Name"
                 value={username}
                 onChange={(e) => setusername(e.target.value)}
-                style={{ display: googlesignup ? "none" : "unset" }}
               />
               <input
                 type="email"
@@ -708,24 +920,9 @@ const HomeScreen = ({ match, history }) => {
                 placeholder="Email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                style={{ display: googlesignup ? "none" : "unset" }}
               />
-              <input
-                type="text"
-                name="phone"
-                placeholder="Phone Number"
-                value={phoneNumber}
-                onChange={(e) => setphoneNumber(e.target.value)}
-              />
-              <input
-                type="password"
-                name="password"
-                placeholder="Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                style={{ display: googlesignup ? "none" : "unset" }}
-              />
-              {signupError && <Message>{signupError}</Message>}
+
+              <Message>{signupError}</Message>
               <button type="submit">SignUp</button>
             </form>
           </div>
