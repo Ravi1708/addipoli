@@ -112,11 +112,15 @@ const HomeScreen = ({ match, history }) => {
   const checkoutHandler = (e) => {
     e.preventDefault();
 
-    if (userInfo) {
-      history.push("/checkoutaddress");
+    if (shippingAddress.hubs == "unavailable") {
+      setShowToast(true);
     } else {
-      setredirect(true);
-      setopensignin(true);
+      if (userInfo) {
+        history.push("/checkoutaddress");
+      } else {
+        setredirect(true);
+        setopensignin(true);
+      }
     }
   };
 
@@ -178,20 +182,6 @@ const HomeScreen = ({ match, history }) => {
     <div>
       <div className="wrapper">
         <main>
-          {/* <Alert
-            style={{
-              position: "fixed",
-              bottom: "20px",
-              right: "0px",
-              width: "300px",
-              fontSize: "17px",
-              display: showToast == "true" ? "unset" : "none",
-            }}
-            variant="filled"
-            severity="info"
-          >
-            No hubs are found near your area,
-          </Alert> */}
           <div className="main-part">
             <section className="home-slider">
               <Banner />
@@ -233,6 +223,20 @@ const HomeScreen = ({ match, history }) => {
                 <img src="assets/img/icon5.png" alt="" />
               </div>
               <div className="container">
+                <Alert
+                  style={{
+                    position: "fixed",
+                    bottom: "10px",
+                    right: "10px",
+                    width: "350px",
+                    fontSize: "17px",
+                    display: showToast ? "unset" : "none",
+                  }}
+                  variant="filled"
+                  severity="info"
+                >
+                  No hubs are found near your area,
+                </Alert>
                 <h3 style={{ color: "#04e04c" }}>Special Combo Offer</h3>
                 <div className="row" data-defaultfilter=".breakfast">
                   <div className="col-lg-8 col-md-12 col-sm-12 col-xs-12">
