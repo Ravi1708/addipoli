@@ -56,6 +56,7 @@ const Header = ({ location, match }) => {
   const [redirect, setredirect] = useState(false);
   const [hashValue, sethashValue] = useState();
   const [OTP, setotpvalue] = useState();
+  const [otpsent, setotpsent] = useState(false);
   const [ErrorSignin, setErrorSignin] = useState();
   const [ErrorSignup, setErrorSignup] = useState();
 
@@ -148,6 +149,7 @@ const Header = ({ location, match }) => {
 
   const getotpHandler = (e) => {
     dispatch(sendotp(phoneNumber));
+    setotpsent(true);
   };
 
   //geocoding
@@ -867,6 +869,7 @@ const Header = ({ location, match }) => {
                   setErrorSignin(null);
                   settokenId(null);
                   setGooglesignup(false);
+                  setotpsent(false);
                 }
               }}
             >
@@ -937,18 +940,16 @@ const Header = ({ location, match }) => {
               </div>
               {otpError && <Message>{otpError}</Message>}
               <div style={{ display: "flex", justifyContent: "space-between" }}>
-                {otp && (
-                  <input
-                    style={{
-                      visibility: hashValue ? "unset" : "hidden",
-                      width: "65%",
-                    }}
-                    type="text"
-                    vale={OTP}
-                    onChange={(e) => setotpvalue(Number(e.target.value))}
-                    placeholder="Enter OTP"
-                  />
-                )}
+                <input
+                  style={{
+                    visibility: hashValue ? "unset" : "hidden",
+                    width: "65%",
+                  }}
+                  type="text"
+                  vale={OTP}
+                  onChange={(e) => setotpvalue(Number(e.target.value))}
+                  placeholder="Enter OTP"
+                />
 
                 <button
                   onClick={(e) => {

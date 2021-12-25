@@ -1,6 +1,16 @@
-import React from "react";
+import * as React from "react";
+import Box from "@mui/material/Box";
+import Tab from "@mui/material/Tab";
+import TabContext from "@mui/lab/TabContext";
+import TabList from "@mui/lab/TabList";
+import TabPanel from "@mui/lab/TabPanel";
 
 const ContactScreen = () => {
+  const [value, setValue] = React.useState("one");
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
   return (
     <div>
       <div className="wrapper">
@@ -86,41 +96,202 @@ const ContactScreen = () => {
                     data-wow-duration="1000ms"
                     data-wow-delay="300ms"
                   >
-                    <h5 className="text-coffee">Drop your Feedback</h5>
-
-                    <form className="form" method="post" name="contact-form">
-                      <div className="row">
-                        <div className="alert-container"></div>
-                        <div className="col-md-6 col-sm-6 col-xs-12">
-                          <label>First Name *</label>
-                          <input name="first_name" type="text" required></input>
-                        </div>
-                        <div className="col-md-6 col-sm-6 col-xs-12">
-                          <label>Last Name *</label>
-                          <input name="last_name" type="text" required></input>
-                        </div>
-                        <div className="col-md-6 col-sm-6 col-xs-12">
-                          <label>Email *</label>
-                          <input name="email" type="email" required></input>
-                        </div>
-                        <div className="col-md-6 col-sm-6 col-xs-12">
-                          <label>Phone Number *</label>
-                          <input name="subject" type="text" required></input>
-                        </div>
-                        <div className="col-md-12 col-sm-12 col-xs-12">
-                          <label>Your Message *</label>
-                          <textarea name="message" required></textarea>
-                        </div>
-                        <div className="col-md-12 col-sm-12 col-xs-12">
-                          <input
-                            name="submit"
-                            value="SEND MESSAGE"
-                            className="btn-primary-gold btn-medium"
-                            type="submit"
-                          ></input>
-                        </div>
-                      </div>
-                    </form>
+                    <Box sx={{ width: "100%", typography: "body1" }}>
+                      <TabContext value={value}>
+                        <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+                          <TabList
+                            onChange={handleChange}
+                            aria-label="lab API tabs example"
+                          >
+                            <Tab
+                              label="Item One"
+                              value="1"
+                              style={{ outline: "none " }}
+                            />
+                            <Tab
+                              label="Item Two"
+                              value="2"
+                              style={{ outline: "none " }}
+                            />
+                            <Tab
+                              label="Item Three"
+                              value="3"
+                              style={{ outline: "none " }}
+                            />
+                          </TabList>
+                        </Box>
+                        <TabPanel value="1">
+                          {/* <h5 className="text-coffee">Drop your Feedback</h5> */}
+                          <form
+                            className="form"
+                            method="post"
+                            name="contact-form"
+                          >
+                            <div className="row">
+                              <div className="alert-container"></div>
+                              <div className="col-md-6 col-sm-6 col-xs-12">
+                                <label>First Name *</label>
+                                <input
+                                  name="first_name"
+                                  type="text"
+                                  required
+                                ></input>
+                              </div>
+                              <div className="col-md-6 col-sm-6 col-xs-12">
+                                <label>Last Name *</label>
+                                <input
+                                  name="last_name"
+                                  type="text"
+                                  required
+                                ></input>
+                              </div>
+                              <div className="col-md-6 col-sm-6 col-xs-12">
+                                <label>Email *</label>
+                                <input
+                                  name="email"
+                                  type="email"
+                                  required
+                                ></input>
+                              </div>
+                              <div className="col-md-6 col-sm-6 col-xs-12">
+                                <label>Phone Number *</label>
+                                <input
+                                  name="subject"
+                                  type="text"
+                                  required
+                                ></input>
+                              </div>
+                              <div className="col-md-12 col-sm-12 col-xs-12">
+                                <label>Your Message *</label>
+                                <textarea name="message" required></textarea>
+                              </div>
+                              <div className="col-md-12 col-sm-12 col-xs-12">
+                                <input
+                                  name="submit"
+                                  value="SEND MESSAGE"
+                                  className="btn-primary-gold btn-medium"
+                                  type="submit"
+                                ></input>
+                              </div>
+                            </div>
+                          </form>
+                        </TabPanel>
+                        <TabPanel value="2">
+                          {" "}
+                          <h5 className="text-coffee">Drop your Feedback</h5>
+                          <form
+                            className="form"
+                            method="post"
+                            name="contact-form"
+                          >
+                            <div className="row">
+                              <div className="alert-container"></div>
+                              <div className="col-md-6 col-sm-6 col-xs-12">
+                                <label>First Name *</label>
+                                <input
+                                  name="first_name"
+                                  type="text"
+                                  required
+                                ></input>
+                              </div>
+                              <div className="col-md-6 col-sm-6 col-xs-12">
+                                <label>Last Name *</label>
+                                <input
+                                  name="last_name"
+                                  type="text"
+                                  required
+                                ></input>
+                              </div>
+                              <div className="col-md-6 col-sm-6 col-xs-12">
+                                <label>Email *</label>
+                                <input
+                                  name="email"
+                                  type="email"
+                                  required
+                                ></input>
+                              </div>
+                              <div className="col-md-6 col-sm-6 col-xs-12">
+                                <label>Phone Number *</label>
+                                <input
+                                  name="subject"
+                                  type="text"
+                                  required
+                                ></input>
+                              </div>
+                              <div className="col-md-12 col-sm-12 col-xs-12">
+                                <label>Your Message *</label>
+                                <textarea name="message" required></textarea>
+                              </div>
+                              <div className="col-md-12 col-sm-12 col-xs-12">
+                                <input
+                                  name="submit"
+                                  value="SEND MESSAGE"
+                                  className="btn-primary-gold btn-medium"
+                                  type="submit"
+                                ></input>
+                              </div>
+                            </div>
+                          </form>
+                        </TabPanel>
+                        <TabPanel value="3">
+                          {" "}
+                          {/* <h5 className="text-coffee">Drop your Feedback</h5> */}
+                          <form
+                            className="form"
+                            method="post"
+                            name="contact-form"
+                          >
+                            <div className="row">
+                              <div className="alert-container"></div>
+                              <div className="col-md-6 col-sm-6 col-xs-12">
+                                <label>First Name *</label>
+                                <input
+                                  name="first_name"
+                                  type="text"
+                                  required
+                                ></input>
+                              </div>
+                              <div className="col-md-6 col-sm-6 col-xs-12">
+                                <label>Last Name *</label>
+                                <input
+                                  name="last_name"
+                                  type="text"
+                                  required
+                                ></input>
+                              </div>
+                              <div className="col-md-6 col-sm-6 col-xs-12">
+                                <label>Email *</label>
+                                <input
+                                  name="email"
+                                  type="email"
+                                  required
+                                ></input>
+                              </div>
+                              <div className="col-md-6 col-sm-6 col-xs-12">
+                                <label>Phone Number *</label>
+                                <input
+                                  name="subject"
+                                  type="text"
+                                  required
+                                ></input>
+                              </div>
+                              <div className="col-md-12 col-sm-12 col-xs-12">
+                                <label>Your Message *</label>
+                                <textarea name="message" required></textarea>
+                              </div>
+                              <div className="col-md-12 col-sm-12 col-xs-12">
+                                <input
+                                  name="submit"
+                                  value="SEND MESSAGE"
+                                  className="btn-primary-gold btn-medium"
+                                  type="submit"
+                                ></input>
+                              </div>
+                            </div>
+                          </form>
+                        </TabPanel>
+                      </TabContext>
+                    </Box>
                   </div>
                   <div
                     className="col-md-4 col-sm-4 col-xs-12 wow fadeInDown"

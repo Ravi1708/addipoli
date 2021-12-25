@@ -77,6 +77,7 @@ const CheckoutAddress = ({ history }) => {
       )
       .then((res) => {
         const verifiedaddress = res.data;
+        console.log(verifiedaddress);
 
         dispatch(
           saveShippingAddress({
