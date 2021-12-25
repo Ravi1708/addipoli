@@ -148,7 +148,6 @@ const CheckoutPayment = ({ history }) => {
         quantity: val.qty,
       };
     });
-    console.log(cart.shippingAddress);
     dispatch(
       createOrder({
         orderType: "Delivery",
