@@ -54,6 +54,9 @@ const CheckoutAddress = ({ history }) => {
 
   useEffect(() => {
     // navigator.geolocation.getCurrentPosition(success);
+    setCurrentPosition({ lat: shippingAddress.lat, lng: shippingAddress.lon });
+    setlatitude(shippingAddress.lat);
+    setlongitude(shippingAddress.lon);
     window.scrollTo(0, 0);
     dispatch(getUserAddresses());
   }, [dispatch]);
@@ -113,6 +116,8 @@ const CheckoutAddress = ({ history }) => {
     const lat = e.latLng.lat() || lat;
     const lng = e.latLng.lng() || lng;
     setCurrentPosition({ lat, lng });
+    setlatitude(lat);
+    setlongitude(lng);
 
     Geocode.fromLatLng(e.latLng.lat(), e.latLng.lng()).then(
       (response) => {

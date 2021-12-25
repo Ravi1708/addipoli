@@ -160,6 +160,8 @@ const Header = ({ location, match }) => {
     const lat = e.latLng.lat() || lat;
     const lng = e.latLng.lng() || lng;
     setCurrentPosition({ lat, lng });
+    setlatitude(lng);
+    setlatitude(lat);
 
     Geocode.fromLatLng(e.latLng.lat(), e.latLng.lng()).then(
       (response) => {
@@ -273,7 +275,7 @@ const Header = ({ location, match }) => {
 
   const mapStyles = {
     height: "50vh",
-    width: "20vw",
+    width: "100%",
   };
 
   const success = (position) => {
@@ -1148,7 +1150,12 @@ const Header = ({ location, match }) => {
         </div>
       </div>
       {/*-------------- Map PopUp--------------*/}
-      <Modal show={showmap} animation={false} backdrop="static">
+      <Modal
+        className="map-modal"
+        show={showmap}
+        animation={false}
+        backdrop="static"
+      >
         <Modal.Header>
           <Modal.Title>
             <h5 style={{ margin: "0px" }}>Select your Location</h5>
