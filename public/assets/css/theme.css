@@ -1252,13 +1252,13 @@ p {
   font-weight: 700;
 }
 .btn-popup {
-  height: 30px;
+  height: 30px;  
   font-family: "Quicksand", sans-serif;
   text-transform: uppercase;
   display: inline-block;
   width: 120px;
-  padding: 0px 0px;
-  border: 2px solid #04e04c;
+  padding: 0px 0px; 
+  border: 2px solid #04e04c;;
   -webkit-border-radius: 50px;
   -moz-border-radius: 50px;
   -ms-border-radius: 50px;
@@ -1276,18 +1276,18 @@ p {
   transition: all 0.5s ease 0s;
   font-weight: 600;
 }
-.btn-popup:hover {
+.btn-popup:hover{
   background: #04e04c;
   color: #ffffff;
   border-color: #04e04c;
 }
 .btn-medium-close {
-  height: 30px;
+  height: 30px;  
   font-family: "Quicksand", sans-serif;
   text-transform: uppercase;
   display: inline-block;
   width: 120px;
-  padding: 0px 0px;
+  padding: 0px 0px; 
   border: 1px solid #383848;
   -webkit-border-radius: 50px;
   -moz-border-radius: 50px;
@@ -1307,7 +1307,7 @@ p {
   font-weight: 600;
   background-color: #383848;
 }
-.btn-medium-close:hover {
+.btn-medium-close:hover{
   background: black;
   color: #ffffff;
   border-color: #383848;
@@ -2573,7 +2573,7 @@ textarea {
 }
 
 .modal-body {
-  padding: 20px;
+  padding: 30px 65px 50px;
 }
 
 .modal-content {
@@ -2798,11 +2798,19 @@ textarea {
 
 .tp-caption span {
   color: #04e04c;
+  /* -webkit-text-stroke: 2px #12121d */
+  /* text-shadow: 5px 2px 0 black; */
 }
 
 .tp-caption i {
   font-weight: 300;
   font-style: normal;
+}
+.medium_text{
+  font-size: 30px !important;
+}
+.very_large_text{
+  text-shadow: 5px 2px 0 black;
 }
 
 .button-white {
@@ -3399,7 +3407,7 @@ textarea {
 }
 
 .date-feature {
-  background: #20202f none repeat scroll 0 0;
+  background: #04e04c none repeat scroll 0 0;
   border-radius: 17px;
   color: #ffffff;
   font-family: "Quicksand", sans-serif;
@@ -3453,7 +3461,7 @@ textarea {
 }
 
 .icon-user {
-  background: url("../images/user.png") no-repeat center center;
+  background: url("../images/user1.png") no-repeat center center;
   width: 17px;
   height: 22px;
   vertical-align: middle;
@@ -3463,7 +3471,7 @@ textarea {
 }
 
 .icon-comment {
-  background: url("../images/comment.png") no-repeat center center;
+  background: url("../images/comment1.png") no-repeat center center;
   width: 23px;
   height: 21px;
   vertical-align: middle;
@@ -3483,7 +3491,7 @@ textarea {
 }
 
 .feature-info h5 {
-  color: #20202f;
+  color: #04e04c;
   letter-spacing: 1px;
   margin: 10px 0;
 }
@@ -3712,7 +3720,7 @@ textarea {
   letter-spacing: 1.5px;
   font-size: 16px;
 }
-.footer-info span:hover {
+.footer-info span:hover{
   color: #04e04c;
 }
 .footer-info h3 {
@@ -5238,7 +5246,7 @@ textarea {
   width: 100%;
   position: relative;
   height: 100%;
-  background: rgba(228, 185, 91, 0.9);
+  background: #04e04c;
   -webkit-border-radius: 17px;
   -moz-border-radius: 17px;
   -ms-border-radius: 17px;
@@ -5400,7 +5408,9 @@ textarea {
   display: block;
   padding-left: 10px;
 }
-
+.blog-left-section .list li a :hover{
+  color: #04e04c;
+}
 .blog-left-section small {
   color: #7a7676;
   font-size: 14px;
@@ -5455,6 +5465,10 @@ textarea {
   display: inline-block;
   margin-bottom: 22px;
   width: 100%;
+}
+.recent-blog-list img{
+border-radius: 30px;
+width: 80%;
 }
 
 .blog-recent-post .recent-blog-list:last-child {
@@ -5569,6 +5583,7 @@ textarea {
 
 .blog-right-listing .feature-img img {
   width: 100%;
+  border-radius: 30px;
 }
 
 .blog-right-listing .feature-info {
@@ -7557,8 +7572,7 @@ body main .team-page {
   text-align: center;
 }
 
-.login-popup p,
-.signup-popup p {
+.login-popup p {
   font-size: 16px;
   font-weight: 600;
   line-height: 45px;
@@ -7596,7 +7610,7 @@ body main .team-page {
   transition: transform 80ms ease-in;
   height: 50px;
 }
-.login-popup button:hover {
+.login-popup button:hover{
   background-color: #ec7d3c;
   color: #ffffff;
   border-color: #ec7d3c;
@@ -7639,11 +7653,10 @@ body main .team-page {
   /* border-radius: 10px; */
   box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
   position: relative;
-  overflow-x: hidden;
-  overflow-y: scroll;
-  max-width: 450px;
-  /* max-width: 100%; */
-  height: 100vh !important;
+  overflow: hidden;
+  width: 450px;
+  max-width: 100%;
+  min-height: 480px;
 }
 
 .login-popup .social-container {
@@ -7672,6 +7685,15 @@ body main .team-page {
   text-align: center;
 }
 
+.signup-popup p {
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 20px;
+  letter-spacing: 0.5px;
+  color: black;
+  margin: 20px 0 30px;
+}
+
 .signup-popup span {
   font-size: 12px;
 }
@@ -7686,7 +7708,7 @@ body main .team-page {
   border-radius: 50px;
   border: 2px solid #04e04c;
   background-color: #04e04c;
-  margin: 8px 0;
+  margin: 8px 0 ;
   color: #ffffff;
   font-size: 15px;
   font-weight: bold;
@@ -7753,18 +7775,18 @@ body main .team-page {
   height: 40px;
   width: 40px;
 }
-.form-drop-label {
+.form-drop-label{
   padding: 5px 5px 0px 0px;
-  font-size: 18px;
-  font-weight: 800;
+  font-size: 18px;   
+  font-weight: 800;  
   text-align: center;
   margin-top: 10px;
   align-items: center;
 }
-.form-drop-select {
+.form-drop-select{
   padding: 0px 5px 0px 0px;
-  font-size: 18px;
-  font-weight: 400;
+  font-size: 18px;   
+  font-weight: 400;  
   text-align: center;
   border: 2px solid #dddddd;
   border-radius: 50px;
@@ -7772,7 +7794,7 @@ body main .team-page {
   height: 50px;
   margin-bottom: 5px;
 }
-input[type="radio"]:after {
+input[type='radio']:after {
   width: 15px;
   height: 15px;
   border-radius: 15px;
@@ -7780,32 +7802,35 @@ input[type="radio"]:after {
   left: -1px;
   position: relative;
   background-color: #d1d3d1;
-  content: "";
+  content: '';
   display: inline-block;
   visibility: visible;
   border: 2px solid white;
 }
 
-input[type="radio"]:checked:after {
+input[type='radio']:checked:after {
   width: 15px;
   height: 15px;
   border-radius: 15px;
   top: -2px;
   left: -1px;
   position: relative;
-  background-color: #ffa500;
-  content: "";
+  background-color: #04e04c;
+  content: '';
   display: inline-block;
   visibility: visible;
   border: 2px solid white;
 }
-@media (min-width: 576px) {
-  .shop-product {
+/* @media (min-width: 576px){
+  .shop-product{
     width: 100%;
     height: 250px;
   }
+} */
 
-  .map-modal {
+
+ @media (min-width: 576px) {
+   .map-modal {
     max-height: 100vh;
     max-width: 90vw;
     padding: 0% !important;
@@ -7814,4 +7839,4 @@ input[type="radio"]:checked:after {
   .modal-body {
     padding: 0% !important;
   }
-}
+ }
