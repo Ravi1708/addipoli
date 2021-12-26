@@ -40,7 +40,6 @@ export const removeFromCart = (id) => (dispatch, getState) => {
 };
 
 export const saveShippingAddress = (data) => (dispatch) => {
-  console.log(data);
   dispatch({
     type: CART_SAVE_SHIPPING_ADDRESS,
     payload: data,
@@ -99,11 +98,14 @@ export const verifyAddress = (lat, lon) => async (dispatch) => {
       `${URL}/user/verify-address?lat=${lat}&lon=${lon}`
     );
 
+    console.log("verified add:" + data);
+
     dispatch({
       type: VERIFY_SHIPPING_ADDRESS_SUCCESS,
       payload: data,
     });
   } catch (error) {
+    console.log("verified add:" + error);
     dispatch({
       type: VERIFY_SHIPPING_ADDRESS_FAIL,
       payload:

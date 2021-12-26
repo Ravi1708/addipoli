@@ -53,10 +53,6 @@ const CheckoutAddress = ({ history }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    // navigator.geolocation.getCurrentPosition(success);
-    setCurrentPosition({ lat: shippingAddress.lat, lng: shippingAddress.lon });
-    setlatitude(shippingAddress.lat);
-    setlongitude(shippingAddress.lon);
     window.scrollTo(0, 0);
     dispatch(getUserAddresses());
   }, [dispatch]);

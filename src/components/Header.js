@@ -201,7 +201,6 @@ const Header = ({ location, match }) => {
               case "country":
                 country = response.results[0].address_components[i].long_name;
                 setcountry(country);
-                console.log(country);
                 break;
             }
           }
@@ -350,7 +349,10 @@ const Header = ({ location, match }) => {
   };
 
   useEffect(() => {
-    navigator.geolocation.getCurrentPosition(success);
+    if (!verifiedaddress && !verifyaddError) {
+      navigator.geolocation.getCurrentPosition(success);
+      setShowmap(false);
+    }
     if (verifiedaddress || verifyaddError) {
       setShowmap(false);
     } else {
@@ -445,8 +447,8 @@ const Header = ({ location, match }) => {
     userInfo,
     signinError,
     otp,
-    verifyaddError,
     verifiedaddress,
+    verifyaddError,
   ]);
 
   return (
